@@ -1,4 +1,0 @@
-JumpContact
-===========
-
-Contact sharing application
