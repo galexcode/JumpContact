@@ -13,6 +13,7 @@
     UILabel *navbartitle;
     UITextField* psw_Txt;
     UITextField *id_Txt;
+    UIScrollView* scrollview;
 }
 
 @end

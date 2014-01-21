@@ -18,7 +18,7 @@
     UIView *topview;
     UILabel *selectAll_lbl;
     UILabel *noofselected;
-    
+     NSMutableArray *alphabetsArray;
     NSArray * namesArry;
 }
 @property(nonatomic,retain)UITableView *tblContentList;

@@ -1,21 +1,18 @@
 //
-//  ContactDetailesViewController.m
+//  ContacsSentDetailsViewController.m
 //  ContactJump
 //
-//  Created by Raman on 12/01/14.
+//  Created by Dex on 21/01/14.
 //  Copyright (c) 2014 iyasoft. All rights reserved.
 //
 
-#import "ContactDetailesViewController.h"
-#import "SendContactsViewController.h"
+#import "ContacsSentDetailsViewController.h"
 #import "SelectRecipientsViewController.h"
-#import "KxMenu.h"
-#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
-@interface ContactDetailesViewController ()
+@interface ContacsSentDetailsViewController ()
 
 @end
 
-@implementation ContactDetailesViewController
+@implementation ContacsSentDetailsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,8 +26,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-   
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -69,7 +64,7 @@
 #pragma mark number of selected contacts.
     UILabel *noofselectedcontacts=[[UILabel alloc] init];
     noofselectedcontacts.frame=CGRectMake(15, 100, 150, 40);
-    noofselectedcontacts.text=@"25 Contacts Recieved";
+    noofselectedcontacts.text=@"25 Contacts Sent";
     noofselectedcontacts.textAlignment=UITextAlignmentLeft;
     noofselectedcontacts.textColor= [UIColor blackColor];
     noofselectedcontacts.backgroundColor=[UIColor clearColor];
@@ -116,48 +111,6 @@
     [textarea_img addSubview:textview];
     
 #pragma mark Canecl Button
-    UIButton *sendwithImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [sendwithImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
-    [sendwithImage_btn setTitle:@"Received with Images" forState:UIControlStateNormal];
-    [[sendwithImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
-    [sendwithImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sendwithImage_btn addTarget:self action:@selector(SendwithImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sendwithImage_btn];
-    
-#pragma mark send button sub title label.
-    UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
-    sendbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendbtnsubtitle_lbl.text=@"1.25 MB";
-    sendbtnsubtitle_lbl.textAlignment=1;
-    sendbtnsubtitle_lbl.textColor= [UIColor whiteColor];
-    sendbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
-    sendbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
-    sendbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    sendbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
-    [sendwithImage_btn addSubview:sendbtnsubtitle_lbl];
-    
-    
-#pragma mark Done Button
-    UIButton *sendwithoutImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [sendwithoutImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
-    [sendwithoutImage_btn setTitle:@"Received without Images" forState:UIControlStateNormal];
-    [[sendwithoutImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:10]];
-    [sendwithoutImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sendwithoutImage_btn addTarget:self action:@selector(sendwithoutImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sendwithoutImage_btn];
- 
-#pragma mark send button sub title label.
-    UILabel *sendwithoutbtnsubtitle_lbl=[[UILabel alloc] init];
-    sendwithoutbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendwithoutbtnsubtitle_lbl.text=@"1.25 MB";
-    sendwithoutbtnsubtitle_lbl.textAlignment=1;
-    sendwithoutbtnsubtitle_lbl.textColor= [UIColor whiteColor];
-    sendwithoutbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
-    sendwithoutbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
-    sendwithoutbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    sendwithoutbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
-    [sendwithoutImage_btn addSubview:sendwithoutbtnsubtitle_lbl];
-
     
     if (IS_IPHONE_5) {
         
@@ -166,8 +119,7 @@
         logout_btn.frame=CGRectMake(290,14+20, 21,18.5);
         back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
         navbartitle.frame=CGRectMake(0,20,320,50);
-        sendwithImage_btn.frame=CGRectMake(16.66,508, 135,39.5);
-        sendwithoutImage_btn.frame=CGRectMake(168.66,508, 135,39.5);
+       
         
     }else{
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
@@ -175,42 +127,30 @@
         logout_btn.frame=CGRectMake(290,14+20, 21,18.5);
         back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
         navbartitle.frame=CGRectMake(0,20,320,50);
-        sendwithImage_btn.frame=CGRectMake(16.66,410, 135,39.5);
-        sendwithoutImage_btn.frame=CGRectMake(168.66,410, 135,39.5);
-   
+       
+        
     }
-    
-	// Do any additional setup after loading the view.
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 -(void)Setting_btnAction
 {
     SelectRecipientsViewController *selectRecipient=[[SelectRecipientsViewController alloc]init];
     [self.navigationController pushViewController:selectRecipient animated:YES];
+
 }
 -(void)back_btnAction
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)SendwithImage_btnAction{
-    
-    SendContactsViewController *addContact_Cls=[[SendContactsViewController alloc]init];
-    [self.navigationController pushViewController:addContact_Cls animated:YES];
-    
+
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
--(void)sendwithoutImage_btnAction{
-    
-    SendContactsViewController *addContact_Cls=[[SendContactsViewController alloc]init];
-    [self.navigationController pushViewController:addContact_Cls animated:YES];
-
-}
-
-
 
 @end

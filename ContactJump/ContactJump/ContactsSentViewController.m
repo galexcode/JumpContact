@@ -1,20 +1,18 @@
 //
-//  ContactReceivedViewController.m
+//  ContactsSentViewController.m
 //  ContactJump
 //
-//  Created by Raman on 12/01/14.
+//  Created by Dex on 21/01/14.
 //  Copyright (c) 2014 iyasoft. All rights reserved.
 //
 
-#import "ContactReceivedViewController.h"
-#import "ContactDetailesViewController.h"
-#import "KxMenu.h"
-#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
-@interface ContactReceivedViewController ()
+#import "ContactsSentViewController.h"
+#import "ContacsSentDetailsViewController.h"
+@interface ContactsSentViewController ()
 
 @end
 
-@implementation ContactReceivedViewController
+@implementation ContactsSentViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,8 +25,6 @@
 
 - (void)viewDidLoad
 {
-    
-    
     [super viewDidLoad];
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
@@ -49,14 +45,11 @@
     [mainbg_img addSubview:back_btn];
     
 #pragma mark settings button.
-    UIButton *setting_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"setting-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:setting_btn];
+   
     
 #pragma Navigation Bar Title
     UILabel *navbartitle=[[UILabel alloc] init];
-    navbartitle.text=[NSString stringWithFormat:@"Received Contacts"];
+    navbartitle.text=[NSString stringWithFormat:@"Sent Contacts"];
     navbartitle.textAlignment=1;
     navbartitle.textColor= [UIColor whiteColor];
     navbartitle.backgroundColor=[UIColor clearColor];
@@ -76,23 +69,23 @@
         
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
         nav_img.frame=CGRectMake(0,0,320,90);
-        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        
         back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
         navbartitle.frame=CGRectMake(0,20,320,50);
         tableview.frame=CGRectMake(0, 91, 320, 477);
         
     }else{
-    mainbg_img.frame=CGRectMake(0,0, 320, 480);
-    nav_img.frame=CGRectMake(0,0,320,80);
-    setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
-    back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
-    navbartitle.frame=CGRectMake(0,20,320,50);
-    tableview.frame=CGRectMake(0, 81, 320, 399);
+        mainbg_img.frame=CGRectMake(0,0, 320, 480);
+        nav_img.frame=CGRectMake(0,0,320,80);
+       
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+        tableview.frame=CGRectMake(0, 81, 320, 399);
     }
+    
 
-	// Do any additional setup after loading the view.
 }
-#pragma mark - Table view data source
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -109,7 +102,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-// cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    // cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
 #pragma mark cell message image.
     UIImageView  *msgBox_Imge =[[UIImageView alloc] init];
@@ -171,7 +164,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ContactDetailesViewController *contactDetails_Cls=[[ContactDetailesViewController  alloc]init];
+    ContacsSentDetailsViewController *contactDetails_Cls=[[ContacsSentDetailsViewController  alloc]init];
     [self.navigationController pushViewController:contactDetails_Cls animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -194,60 +187,10 @@
     
 }
 
-#pragma mark Settings button Action
--(void)Setting_btnAction22:(UIButton *)sender{
-    NSInteger tagVal=((UIButton *)sender).tag;
-    NSLog(@"List button Action==%d",tagVal);
-    
-    //Email Facebook Share Tweet
-    NSArray *menuItems =
-    @[
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem1:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem2:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem3:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem4:)],
-      
-      ];
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.navigationController.view fromRect:sender.frame menuItems:menuItems];
-    
-}
 
--(void)pushMenuItem1:(id)sender{
-    
-    NSLog(@"FIRST Item Clicked");
-}
--(void)pushMenuItem2:(id)sender{
-    
-    NSLog(@"SECOND Item Clicked");
-}
--(void)pushMenuItem3:(id)sender{
-    
-    NSLog(@"THIRD Item Clicked");
-}
--(void)pushMenuItem4:(id)sender{
-    
-    NSLog(@"FOURTH Item Clicked");
-}
+
+
+
 
 
 

@@ -29,16 +29,6 @@
     [super viewDidLoad];
     
     
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        // iOS 7
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    } else {
-        // iOS 6
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -98,8 +88,25 @@
     backupcontactsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
     [backupyourcontacts_btn addSubview:backupcontactsubtitle_lbl];
    
+    NSDate *localDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
     
+
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm a";
     
+
+    UILabel *lastBackup_Date=[[UILabel alloc] init];
+    
+    lastBackup_Date.text=[NSString stringWithFormat:@"Last backup:  %@,  %@",[timeFormatter stringFromDate: localDate],[dateFormatter stringFromDate: localDate]];
+    lastBackup_Date.textAlignment=UITextAlignmentLeft;
+    lastBackup_Date.textColor= [UIColor whiteColor];
+    lastBackup_Date.backgroundColor=[UIColor clearColor];
+    lastBackup_Date.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
+    lastBackup_Date.shadowColor = [UIColor whiteColor];
+    lastBackup_Date.shadowOffset = CGSizeMake(0,0);
+    [mainbg_img addSubview:lastBackup_Date];
     
 #pragma mark Download With Image Button
     
@@ -153,40 +160,36 @@
     if (IS_IPHONE_5) {
         
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
-        navbartitle.frame=CGRectMake(0,5,320,50);
-        nav_img.frame=CGRectMake(0,0,320,46.5);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
+        nav_img.frame=CGRectMake(0,0,320,90);
+        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
         
-        backupyourcontacts_btn.frame=CGRectMake(20.5,98.25, 279,79);
-        downloadwithImage_btn.frame=CGRectMake(20.5,280.5, 279,79);
-        downloadwithoutImage_btn.frame=CGRectMake(20.5,389.5, 279,79);
+        backupyourcontacts_btn.frame=CGRectMake(20.5,140, 279,79);
+        lastBackup_Date.frame=CGRectMake(23.5,223, 279,30);
+        downloadwithImage_btn.frame=CGRectMake(20.5,310, 279,79);
+        downloadwithoutImage_btn.frame=CGRectMake(20.5,439, 279,79);
 
      
         
     }else{
         
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
-        nav_img.frame=CGRectMake(0,0,320,46.5);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        // navbartitle.frame=CGRectMake(0,5,320,50);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
+        nav_img.frame=CGRectMake(0,0,320,80);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
         
-        
-        backupyourcontacts_btn.frame=CGRectMake(20.5,92.5, 279,79);
-        downloadwithImage_btn.frame=CGRectMake(20.5,240.5, 279,79);
-        downloadwithoutImage_btn.frame=CGRectMake(20.5,349.5, 279,79);
+        lastBackup_Date.frame=CGRectMake(23.5,198, 279,30);
+        backupyourcontacts_btn.frame=CGRectMake(20.5,115, 279,79);
+        downloadwithImage_btn.frame=CGRectMake(20.5,257, 279,79);
+        downloadwithoutImage_btn.frame=CGRectMake(20.5,361+5, 279,79);
        
     }
 
 	// Do any additional setup after loading the view.
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
 
 -(void)Setting_btnAction
 {

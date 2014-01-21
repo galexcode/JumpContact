@@ -23,8 +23,11 @@
     BOOL  isBulkContacts;
     
     BOOL isSelectAll;
-    
-    
+   NSMutableArray *alphabetsArray;
+    UILabel  *name_lbl;
+    UIButton   * checkBox;
+    UIButton   * editbtn;
+    ContactGlobalDataClass *obj;
 }
 @property(nonatomic,retain)NSString *string1;
 @property(nonatomic,retain)UITableView *tblContentList;

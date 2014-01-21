@@ -31,17 +31,7 @@
 {
     [super viewDidLoad];
     
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        // iOS 7
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    } else {
-        // iOS 6
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
     
-    [super viewDidLoad];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
@@ -79,7 +69,29 @@
     [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:setting_btn];
     
+    
+    
+    scrollview3 = [[UIScrollView alloc] init];
+    scrollview3.backgroundColor = [UIColor clearColor];
+    if (IS_IPHONE_5) {
+        scrollview3.frame=CGRectMake(0,91, 320, [UIScreen mainScreen].bounds.size.height-90);
+        
+    }
+    else
+    {
+        scrollview3.frame=CGRectMake(0,81, 320, [UIScreen mainScreen].bounds.size.height-80);
+        
+    }
+    [scrollview3 setTag:111];
+    scrollview3.contentSize = CGSizeMake(320, 300);
+    [scrollview3 setCanCancelContentTouches:NO];
+    scrollview3.clipsToBounds = YES;
+    scrollview3.scrollEnabled = YES;
+    [mainbg_img addSubview:scrollview3];
+    
+    
     UIButton *shareContacts_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+   
     [shareContacts_btn setTitle:@"Share Contacts" forState:UIControlStateNormal];
     [[shareContacts_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:18]];
     [shareContacts_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -87,20 +99,21 @@
     CGFloat spacing = 50; // the amount of spacing to appear between image and title
     shareContacts_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing, 0, 0);
     [shareContacts_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:shareContacts_btn];
+    [scrollview3 addSubview:shareContacts_btn];
     
     
     //shareimg.png
     
     UIImageView  *share_image =[[UIImageView alloc] init];
     share_image.backgroundColor = [UIColor clearColor];
+    
     share_image.image=[UIImage imageNamed:@"shareimg.png"];
     [shareContacts_btn addSubview:share_image];
-
+    
     
     UIImageView  *seprator_image =[[UIImageView alloc] init];
     seprator_image.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image];
+    [scrollview3 addSubview:seprator_image];
     
 #pragma Navigation Bar Title
     selectContact_lbl=[[UILabel alloc] init];
@@ -111,7 +124,7 @@
     selectContact_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
     selectContact_lbl.shadowColor = [UIColor whiteColor];
     selectContact_lbl.shadowOffset = CGSizeMake(0,0);
-    [mainbg_img addSubview:selectContact_lbl];
+    [scrollview3 addSubview:selectContact_lbl];
     
     
     
@@ -120,7 +133,7 @@
     UIButton *add_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [add_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"add-icon" ofType:@"png"]] forState:UIControlStateNormal];
     [add_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:add_btn];
+    [scrollview3 addSubview:add_btn];
 
     
     
@@ -132,7 +145,7 @@
     
     UIImageView  *seprator_image1 =[[UIImageView alloc] init];
     seprator_image1.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image1];
+    [scrollview3 addSubview:seprator_image1];
     
     UIButton *createShareID_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [createShareID_btn setTitle:@"Create Share ID" forState:UIControlStateNormal];
@@ -142,7 +155,7 @@
     CGFloat spacing2 = 50; // the amount of spacing to appear between image and title
     createShareID_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing2, 0, 0);
     [createShareID_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:createShareID_btn];
+    [scrollview3 addSubview:createShareID_btn];
     
     UIImageView  *createShareID_image =[[UIImageView alloc] init];
     createShareID_image.image=[UIImage imageNamed:@"send-to-icon.png"];
@@ -150,7 +163,7 @@
     
     UIImageView  *seprator_image2 =[[UIImageView alloc] init];
     seprator_image2.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image2];
+    [scrollview3 addSubview:seprator_image2];
     
     UILabel *id_lbl=[[UILabel alloc] init];
     id_lbl.text=[NSString stringWithFormat:@"ID:1234567"];
@@ -161,62 +174,72 @@
     id_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:15];
     id_lbl.shadowColor = [UIColor whiteColor];
     id_lbl.shadowOffset = CGSizeMake(0,0);
-    [mainbg_img addSubview:id_lbl];
+    [scrollview3 addSubview:id_lbl];
 
     
-    UILabel *enterpsw_lbl=[[UILabel alloc] init];
+    enterpsw_lbl=[[UILabel alloc] init];
     enterpsw_lbl.text=[NSString stringWithFormat:@"Enter Password"];
     enterpsw_lbl.textAlignment=0;
  
-    enterpsw_lbl.textColor= [UIColor whiteColor];
+    enterpsw_lbl.textColor= [UIColor grayColor];
     enterpsw_lbl.backgroundColor=[UIColor clearColor];
     enterpsw_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:13];
     enterpsw_lbl.shadowColor = [UIColor whiteColor];
     enterpsw_lbl.shadowOffset = CGSizeMake(0,0);
-    [mainbg_img addSubview:enterpsw_lbl];
+    [scrollview3 addSubview:enterpsw_lbl];
     
     
-    UIImageView  *pswtxtbg_img =[[UIImageView alloc] init];
-    pswtxtbg_img.image=[UIImage imageNamed:@"text-box.png"];
-    pswtxtbg_img.userInteractionEnabled=YES;
-    [mainbg_img addSubview:pswtxtbg_img];
+
     
 
 #pragma Restaurent TextField
     psw_Txt = [[UITextField  alloc] init];
     psw_Txt.borderStyle = UITextBorderStyleNone;
-    psw_Txt.font = [UIFont fontWithName:@"ArialMT" size:(14.0)];
+    psw_Txt.font = [UIFont fontWithName:@"ArialMT" size:(13.0)];
+    psw_Txt.layer.borderColor=[[UIColor grayColor] CGColor];
+    psw_Txt.layer.borderWidth= 1.0f;
+
     psw_Txt.textColor=[UIColor grayColor];
     psw_Txt.placeholder=@"Password";
+    [psw_Txt setSecureTextEntry:YES];
     psw_Txt.backgroundColor=[UIColor clearColor];
     psw_Txt.delegate = self;
     psw_Txt.returnKeyType = UIReturnKeyDefault;
     psw_Txt.textAlignment=0;
     psw_Txt.tag=100;
+    [psw_Txt setUserInteractionEnabled:NO];
     psw_Txt.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    [pswtxtbg_img addSubview:psw_Txt];
+    [scrollview3 addSubview:psw_Txt];
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)] ;
+    psw_Txt.leftView = paddingView;
+    psw_Txt.leftViewMode = UITextFieldViewModeAlways;
     
     
-    UIButton *check_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    check_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [check_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"check-box-disable" ofType:@"png"]] forState:UIControlStateNormal];
-    [check_btn addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:check_btn];
+     [check_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"check-box" ofType:@"png"]] forState:UIControlStateSelected];
+    [check_btn setSelected:NO];
+    [check_btn setTag:1];
+    [check_btn addTarget:self action:@selector(checkBoxClicked) forControlEvents:UIControlEventTouchUpInside];
+    [scrollview3 addSubview:check_btn];
 
     
-    UILabel *protectpsw_lbl=[[UILabel alloc] init];
-    protectpsw_lbl.text=[NSString stringWithFormat:@"Protect Using Password"];
-    protectpsw_lbl.textAlignment=0;
-    protectpsw_lbl.textColor= [UIColor whiteColor];
-    protectpsw_lbl.backgroundColor=[UIColor clearColor];
-    protectpsw_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:11];
-    protectpsw_lbl.shadowColor = [UIColor whiteColor];
-    protectpsw_lbl.shadowOffset = CGSizeMake(0,0);
-    [mainbg_img addSubview:protectpsw_lbl];
+    UIButton *protectpsw_lbl=[UIButton buttonWithType:UIButtonTypeCustom];
+    [protectpsw_lbl setTitle:@"Protect Using Password" forState:UIControlStateNormal];
+    [protectpsw_lbl setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [protectpsw_lbl.titleLabel setFont:[UIFont fontWithName:@"AmericanTypewriter" size:13]];
+    [protectpsw_lbl setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [protectpsw_lbl setBackgroundColor:[UIColor clearColor]];
+    [protectpsw_lbl setTag:2];
+    [protectpsw_lbl addTarget:self action:@selector(checkBoxClicked) forControlEvents:UIControlEventTouchUpInside];
+    protectpsw_lbl.titleLabel.shadowOffset = CGSizeMake(0,0);
+    [scrollview3 addSubview:protectpsw_lbl];
     
     
     UIImageView  *seprator_image3 =[[UIImageView alloc] init];
     seprator_image3.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image3];
+    [scrollview3 addSubview:seprator_image3];
     
  
     
@@ -227,7 +250,7 @@
     [[sendwithImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
     [sendwithImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sendwithImage_btn addTarget:self action:@selector(SendwithImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sendwithImage_btn];
+    [scrollview3 addSubview:sendwithImage_btn];
     
 #pragma mark send button sub title label.
     UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
@@ -250,7 +273,7 @@
     [[sendwithoutImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
     [sendwithoutImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sendwithoutImage_btn addTarget:self action:@selector(sendwithoutImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sendwithoutImage_btn];
+    [scrollview3 addSubview:sendwithoutImage_btn];
     
     
 #pragma mark send button sub title label.
@@ -270,79 +293,85 @@
         
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
         navbartitle.frame=CGRectMake(0,5,320,50);
-        nav_img.frame=CGRectMake(0,0,320,46.5);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
-        shareContacts_btn.frame=CGRectMake(0,46.5, 320,70);
+        nav_img.frame=CGRectMake(0,0,320,90);
+        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+        shareContacts_btn.frame=CGRectMake(0,0, 320,70);
         share_image.frame=CGRectMake(20, 26, 20, 18);
-        seprator_image.frame=CGRectMake(0,120, 320, 2);
-        selectContact_lbl.frame=CGRectMake(50, 140, 150, 30);
-        add_btn.frame=CGRectMake(280, 146.75, 20, 20.5);
-        seprator_image1.frame=CGRectMake(0, 192, 320, 2);
-        createShareID_btn.frame=CGRectMake(0,194, 320,70);
+        seprator_image.frame=CGRectMake(0,70, 320, 2);
+        selectContact_lbl.frame=CGRectMake(50, 72, 150, 70);
+        add_btn.frame=CGRectMake(280, 146.75-50, 20, 20.5);
+        seprator_image1.frame=CGRectMake(0, 142, 320, 2);
+        createShareID_btn.frame=CGRectMake(0,144, 320,70);
         createShareID_image.frame=CGRectMake(20, 25, 20, 20);
-        seprator_image2.frame=CGRectMake(0, 264, 320, 2);
-        seprator_image3.frame=CGRectMake(0, 426, 320, 2);
-        sendwithImage_btn.frame=CGRectMake(16.66,495, 135,39.5);
-        sendwithoutImage_btn.frame=CGRectMake(168.66,495, 135,39.5);
+        seprator_image2.frame=CGRectMake(0, 214, 320, 2);
+        seprator_image3.frame=CGRectMake(0, 325, 320, 2);
+        sendwithImage_btn.frame=CGRectMake(15,scrollview3.frame.size.height-60, 135,39.5);
+        sendwithoutImage_btn.frame=CGRectMake(170,scrollview3.frame.size.height-60, 135,39.5);
         
         
-        id_lbl.frame=CGRectMake(50, 275, 100, 25);
-        enterpsw_lbl.frame=CGRectMake(50, 310, 105, 25);
-        pswtxtbg_img.frame=CGRectMake(157, 310, 150, 24);
-        psw_Txt.frame=CGRectMake(0, 0, 150, 24);
+        id_lbl.frame=CGRectMake(50, 225, 100, 25);
+        enterpsw_lbl.frame=CGRectMake(50, 290-3, 105, 25);
+        psw_Txt.frame=CGRectMake(157, 290-3, 150, 24);
+        check_btn.frame=CGRectMake(50, 260, 15, 15);
+        protectpsw_lbl.frame=CGRectMake(72, 255, 150, 25);
         
-        check_btn.frame=CGRectMake(50, 350, 13, 13);
-        protectpsw_lbl.frame=CGRectMake(70, 347, 150, 25);
-        
-    }else{
+    }
+    else{
         
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
-        nav_img.frame=CGRectMake(0,0,320,46.5);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-       // navbartitle.frame=CGRectMake(0,5,320,50);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
-        shareContacts_btn.frame=CGRectMake(0,46.5, 320,50);
+        nav_img.frame=CGRectMake(0,0,320,80);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+     
+        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+        shareContacts_btn.frame=CGRectMake(0,0, 320,50);
+
         share_image.frame=CGRectMake(20, 14.25, 20, 18);
-        seprator_image.frame=CGRectMake(0, 96.5, 320, 2);
-        selectContact_lbl.frame=CGRectMake(50, 108.5, 150, 30);
-        add_btn.frame=CGRectMake(280, 113.25, 20, 20.5);
-        seprator_image1.frame=CGRectMake(0, 148.5, 320, 2);
-        createShareID_btn.frame=CGRectMake(0,150.5, 320,50);
+        seprator_image.frame=CGRectMake(0,50, 320, 2);
+        selectContact_lbl.frame=CGRectMake(50, 52, 150, 50);
+        add_btn.frame=CGRectMake(280, 146.75-80, 20, 20.5);
+        seprator_image1.frame=CGRectMake(0, 102, 320, 2);
+        createShareID_btn.frame=CGRectMake(0,104, 320,50);
         createShareID_image.frame=CGRectMake(20, 15, 20, 20);
-        seprator_image2.frame=CGRectMake(0, 204, 320, 2);
+        seprator_image2.frame=CGRectMake(0, 154, 320, 2);
+        seprator_image3.frame=CGRectMake(0, 265, 320, 2);
+        sendwithImage_btn.frame=CGRectMake(15,scrollview3.frame.size.height-60, 135,39.5);
+        sendwithoutImage_btn.frame=CGRectMake(170,scrollview3.frame.size.height-60, 135,39.5);
         
         
-        seprator_image3.frame=CGRectMake(0, 321, 320, 2);
-        sendwithImage_btn.frame=CGRectMake(16.66,415, 135,39.5);
-        sendwithoutImage_btn.frame=CGRectMake(168.66,415, 135,39.5);
+        id_lbl.frame=CGRectMake(50, 165, 100, 25);
+        enterpsw_lbl.frame=CGRectMake(50, 227, 105, 25);
+       
+        psw_Txt.frame=CGRectMake(157, 227, 150, 24);
         
-        
-        id_lbl.frame=CGRectMake(50, 216, 100, 25);
-        enterpsw_lbl.frame=CGRectMake(50, 251, 105, 25);
-        pswtxtbg_img.frame=CGRectMake(157, 251, 150, 24);
-        psw_Txt.frame=CGRectMake(0, 0, 150, 24);
-        check_btn.frame=CGRectMake(50, 290, 13, 13);
-        protectpsw_lbl.frame=CGRectMake(70, 286, 150, 25);
-        
+        check_btn.frame=CGRectMake(50, 200, 15, 15);
+        protectpsw_lbl.frame=CGRectMake(72, 195, 150, 25);
     }
 
 
-	// Do any additional setup after loading the view.
+	
 }
 
 
--(void)checkBoxClicked:(id)sender {
+-(void)checkBoxClicked
+{
     
-    UIButton *tappedButton = (UIButton*)sender;
-    if([tappedButton.currentImage isEqual:[UIImage imageNamed:@"check-box-disable.png"]])
-    {
-        [sender  setImage:[UIImage imageNamed: @"check-box.png"] forState:UIControlStateNormal];
-    } else {
-        [sender setImage:[UIImage imageNamed:@"check-box-disable.png"]forState:UIControlStateNormal];
-    }
+        if ([check_btn isSelected]) {
+            [check_btn setSelected:NO];
+            [enterpsw_lbl setTextColor:[UIColor grayColor]];
+            [psw_Txt setUserInteractionEnabled:NO];
+            [psw_Txt setBackgroundColor:[UIColor clearColor]];
+        }
+        else
+        {
+            [check_btn setSelected:YES];
+            [enterpsw_lbl setTextColor:[UIColor whiteColor]];
+            [psw_Txt setUserInteractionEnabled:YES];
+            [psw_Txt setBackgroundColor:[UIColor whiteColor]];
+        }
+   
 }
 -(void)Setting_btnAction
 {
@@ -355,9 +384,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
+
 
 -(void)SendwithImage_btnAction{
     
@@ -366,15 +393,59 @@
 -(void)sendwithoutImage_btnAction{
     
 }
+#pragma TextField Delegate Method
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    
+    
+    
+    
+    UIScrollView *scrollview=(UIScrollView *)[self.view viewWithTag:111];
+    scrollview.scrollEnabled=YES;
+    
+    
+    [scrollview setContentOffset:CGPointMake(0, 100) animated:YES];
+
+    
+}
+
+#pragma TextField Delegate Method
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    
+    
+    UIScrollView *scrollview=(UIScrollView *)[self.view viewWithTag:111];
+    scrollview.scrollEnabled=YES;
+    [scrollview setContentOffset:CGPointMake(0, 0) animated:YES];
+    
+    
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    textField.textColor = [UIColor blackColor];
+    return YES;
+    
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-    [psw_Txt resignFirstResponder];
+    [textField resignFirstResponder];
+    UIScrollView *scrollview=(UIScrollView *)[self.view viewWithTag:111];
+    scrollview.scrollEnabled=YES;
+   
+    [scrollview setContentOffset:CGPointMake(0, 0) animated:YES];
+
     return YES;
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [psw_Txt resignFirstResponder];
+    UIScrollView *scrollview=(UIScrollView *)[self.view viewWithTag:111];
+    scrollview.scrollEnabled=YES;
+    
+    
+    [scrollview setContentOffset:CGPointMake(0, 0) animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning

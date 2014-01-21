@@ -17,7 +17,7 @@
     UILabel *noofselected1;
     UILabel *recipients_lbl;
     UITextView *addNote_txtview;
-   
+    UIScrollView* scrollview;
 }
 
 @end

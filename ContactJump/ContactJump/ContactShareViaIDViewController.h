@@ -16,7 +16,11 @@
     UILabel *selectContact_lbl;
     UILabel *selectContact_lbl1;
     
+    UIButton *check_btn;
+    UIScrollView *scrollview3;
     UITextField *psw_Txt ;
+    UILabel *enterpsw_lbl;
+    
     
 }
 

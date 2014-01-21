@@ -61,6 +61,11 @@
 		9DF749B21875E73A00CBB110 /* ContactMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF749B11875E73A00CBB110 /* ContactMainViewController.m */; };
 		9DF749B51875E9E700CBB110 /* Min-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF749B41875E9E700CBB110 /* Min-bg.png */; };
 		9DF749B71875EFDA00CBB110 /* seprator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF749B61875EFDA00CBB110 /* seprator.png */; };
+		DF4CDCAF188E58A3000B0075 /* ContactsSentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCAE188E58A3000B0075 /* ContactsSentViewController.m */; };
+		DF4CDCB2188E5B94000B0075 /* ContacsSentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCB1188E5B94000B0075 /* ContacsSentDetailsViewController.m */; };
+		DF4CDCB5188E7234000B0075 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB3188E7234000B0075 /* AddressBook.framework */; };
+		DF4CDCB6188E7234000B0075 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */; };
+		DF4CDCB9188E779B000B0075 /* ContactGlobalDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +148,14 @@
 		9DF749B11875E73A00CBB110 /* ContactMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactMainViewController.m; sourceTree = "<group>"; };
 		9DF749B41875E9E700CBB110 /* Min-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Min-bg.png"; sourceTree = "<group>"; };
 		9DF749B61875EFDA00CBB110 /* seprator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seprator.png; sourceTree = "<group>"; };
+		DF4CDCAD188E58A3000B0075 /* ContactsSentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsSentViewController.h; sourceTree = "<group>"; };
+		DF4CDCAE188E58A3000B0075 /* ContactsSentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsSentViewController.m; sourceTree = "<group>"; };
+		DF4CDCB0188E5B94000B0075 /* ContacsSentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContacsSentDetailsViewController.h; sourceTree = "<group>"; };
+		DF4CDCB1188E5B94000B0075 /* ContacsSentDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContacsSentDetailsViewController.m; sourceTree = "<group>"; };
+		DF4CDCB3188E7234000B0075 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		DF4CDCB7188E779B000B0075 /* ContactGlobalDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGlobalDataClass.h; sourceTree = "<group>"; };
+		DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGlobalDataClass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +163,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF4CDCB5188E7234000B0075 /* AddressBook.framework in Frameworks */,
+				DF4CDCB6188E7234000B0075 /* AddressBookUI.framework in Frameworks */,
 				9DF749841875E70100CBB110 /* CoreGraphics.framework in Frameworks */,
 				9DF749861875E70100CBB110 /* UIKit.framework in Frameworks */,
 				9DF749821875E70100CBB110 /* Foundation.framework in Frameworks */,
@@ -192,6 +207,8 @@
 			children = (
 				9DF749901875E70100CBB110 /* ContactAppDelegate.h */,
 				9DF749911875E70100CBB110 /* ContactAppDelegate.m */,
+				DF4CDCB7188E779B000B0075 /* ContactGlobalDataClass.h */,
+				DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */,
 			);
 			name = "App Delegate Class";
 			sourceTree = "<group>";
@@ -228,6 +245,8 @@
 			children = (
 				9D05B26618820BF500FD497D /* ContactDetailesViewController.h */,
 				9D05B26718820BF500FD497D /* ContactDetailesViewController.m */,
+				DF4CDCB0188E5B94000B0075 /* ContacsSentDetailsViewController.h */,
+				DF4CDCB1188E5B94000B0075 /* ContacsSentDetailsViewController.m */,
 			);
 			name = "Contact Details Class";
 			sourceTree = "<group>";
@@ -237,6 +256,8 @@
 			children = (
 				9D0EFF27187884A9002A22CB /* SendContactsViewController.h */,
 				9D0EFF28187884A9002A22CB /* SendContactsViewController.m */,
+				DF4CDCAD188E58A3000B0075 /* ContactsSentViewController.h */,
+				DF4CDCAE188E58A3000B0075 /* ContactsSentViewController.m */,
 			);
 			name = "Add to Contact Class";
 			sourceTree = "<group>";
@@ -264,6 +285,8 @@
 		9DF749801875E70100CBB110 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF4CDCB3188E7234000B0075 /* AddressBook.framework */,
+				DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */,
 				9DF749811875E70100CBB110 /* Foundation.framework */,
 				9DF749831875E70100CBB110 /* CoreGraphics.framework */,
 				9DF749851875E70100CBB110 /* UIKit.framework */,
@@ -508,7 +531,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF4CDCB9188E779B000B0075 /* ContactGlobalDataClass.m in Sources */,
 				9D3F4CA71886E47D0078257D /* ContactBackUpViewController.m in Sources */,
+				DF4CDCB2188E5B94000B0075 /* ContacsSentDetailsViewController.m in Sources */,
 				9D05B26818820BF500FD497D /* ContactDetailesViewController.m in Sources */,
 				9DF749B21875E73A00CBB110 /* ContactMainViewController.m in Sources */,
 				9DF7498E1875E70100CBB110 /* main.m in Sources */,
@@ -517,6 +542,7 @@
 				9DF749921875E70100CBB110 /* ContactAppDelegate.m in Sources */,
 				9D0EFF29187884A9002A22CB /* SendContactsViewController.m in Sources */,
 				9D3F4CA41886DBD60078257D /* KxMenu.m in Sources */,
+				DF4CDCAF188E58A3000B0075 /* ContactsSentViewController.m in Sources */,
 				9DEDEE17187C8CAE00C809F9 /* ContactShareViaIDViewController.m in Sources */,
 				9DEDEE14187C8C7E00C809F9 /* SelectShareMethodViewController.m in Sources */,
 				9DEDEE0B187C782A00C809F9 /* SelectContact toShareViewController.m in Sources */,
@@ -579,7 +605,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -597,6 +624,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -618,7 +646,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -629,6 +658,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -639,11 +669,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ContactJump/ContactJump-Prefix.pch";
 				INFOPLIST_FILE = "ContactJump/ContactJump-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -654,11 +688,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ContactJump/ContactJump-Prefix.pch";
 				INFOPLIST_FILE = "ContactJump/ContactJump-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

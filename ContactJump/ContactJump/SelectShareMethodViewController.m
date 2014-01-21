@@ -29,17 +29,7 @@
 - (void)viewDidLoad
 {
         
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        // iOS 7
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    } else {
-        // iOS 6
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
-    
-    [super viewDidLoad];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+   
     
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
@@ -65,6 +55,26 @@
     [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:setting_btn];
     
+    
+    scrollview = [[UIScrollView alloc] init];
+    scrollview.backgroundColor = [UIColor clearColor];
+    if (IS_IPHONE_5) {
+        scrollview.frame=CGRectMake(0,91, 320, [UIScreen mainScreen].bounds.size.height-90);
+        
+    }
+    else
+    {
+        scrollview.frame=CGRectMake(0,81, 320, [UIScreen mainScreen].bounds.size.height-80);
+        
+    }
+    [scrollview setTag:111];
+    scrollview.contentSize = CGSizeMake(320, 300);
+    [scrollview setCanCancelContentTouches:NO];
+    scrollview.clipsToBounds = YES;
+    scrollview.scrollEnabled = YES;
+    [mainbg_img addSubview:scrollview];
+
+    
 #pragma mark share contact button.
     UIButton *shareContacts_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [shareContacts_btn setTitle:@"Share Contacts" forState:UIControlStateNormal];
@@ -74,7 +84,7 @@
     CGFloat spacing = 50; // the amount of spacing to appear between image and title
     shareContacts_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing, 0, 0);
     [shareContacts_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:shareContacts_btn];
+    [scrollview addSubview:shareContacts_btn];
     
 #pragma mark share button left image share image.
     UIImageView  *share_image =[[UIImageView alloc] init];
@@ -85,7 +95,7 @@
 #pragma mark separator image.
     UIImageView  *seprator_image1 =[[UIImageView alloc] init];
     seprator_image1.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image1];
+    [scrollview addSubview:seprator_image1];
     
 #pragma mark selected contact label.
     selectContact_lbl=[[UILabel alloc] init];
@@ -96,18 +106,18 @@
     selectContact_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
     selectContact_lbl.shadowColor = [UIColor whiteColor];
     selectContact_lbl.shadowOffset = CGSizeMake(0,0);
-    [mainbg_img addSubview:selectContact_lbl];
+    [scrollview addSubview:selectContact_lbl];
     
 #pragma mark contact add button right side. plus button.
     UIButton *add1_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [add1_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"add-icon" ofType:@"png"]] forState:UIControlStateNormal];
     [add1_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:add1_btn];
+    [scrollview addSubview:add1_btn];
     
 #pragma mark separator image.
     UIImageView  *seprator_image2 =[[UIImageView alloc] init];
     seprator_image2.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image2];
+    [scrollview addSubview:seprator_image2];
     
 #pragma mark share with contacts button.
     UIButton *sharewithContacts_btn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -118,7 +128,7 @@
     CGFloat spacing2 = 50; // the amount of spacing to appear between image and title
     sharewithContacts_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing2, 0, 0);
     [sharewithContacts_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sharewithContacts_btn];
+    [scrollview addSubview:sharewithContacts_btn];
     
 #pragma mark share with contact button left image.
     UIImageView  *sharewithContact_image =[[UIImageView alloc] init];
@@ -128,7 +138,7 @@
 #pragma mark separator image.
     UIImageView  *seprator_image3 =[[UIImageView alloc] init];
     seprator_image3.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image3];
+    [scrollview addSubview:seprator_image3];
     
 #pragma mark Recipients label.
     recipients_lbl=[[UILabel alloc] init];
@@ -139,18 +149,18 @@
     recipients_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
     recipients_lbl.shadowColor = [UIColor whiteColor];
     recipients_lbl.shadowOffset = CGSizeMake(0,0);
-    [mainbg_img addSubview:recipients_lbl];
+    [scrollview addSubview:recipients_lbl];
 
 #pragma mark recipients add button plus image.
     UIButton *recipien_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [recipien_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"add-icon" ofType:@"png"]] forState:UIControlStateNormal];
     [recipien_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:recipien_btn];
+    [scrollview addSubview:recipien_btn];
     
 #pragma mark separator image.
     UIImageView  *seprator_image4 =[[UIImageView alloc] init];
     seprator_image4.image=[UIImage imageNamed:@"seprator.png"];
-    [mainbg_img addSubview:seprator_image4];
+    [scrollview addSubview:seprator_image4];
     
 #pragma Navigation Bar Title
     navbartitle=[[UILabel alloc] init];
@@ -166,7 +176,7 @@
 #pragma mark  text view iamge.
     UIImageView *txtView_img = [[UIImageView alloc]init];
     txtView_img.image = [UIImage imageNamed:@"add-note-box.png"];
-    [mainbg_img addSubview:txtView_img];
+    [scrollview addSubview:txtView_img];
     
     
 #pragma TextView
@@ -175,9 +185,9 @@
     addNote_txtview.text=@"Add Note";
     addNote_txtview.scrollEnabled=YES;
     addNote_txtview.delegate=self;
-    addNote_txtview.textColor = [UIColor whiteColor];
+    addNote_txtview.textColor = [UIColor lightGrayColor];
     addNote_txtview.font = [UIFont fontWithName:@"AmericanTypewriter" size:12];
-    [mainbg_img addSubview:addNote_txtview];
+    [scrollview addSubview:addNote_txtview];
     
 #pragma mark SendwithImage Button
     UIButton *sendwithImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -186,7 +196,7 @@
     [[sendwithImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
     [sendwithImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sendwithImage_btn addTarget:self action:@selector(SendwithImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sendwithImage_btn];
+    [scrollview addSubview:sendwithImage_btn];
     
 #pragma mark send button sub title label.
    UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
@@ -209,7 +219,7 @@
     [[sendwithoutImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
     [sendwithoutImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sendwithoutImage_btn addTarget:self action:@selector(sendwithoutImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:sendwithoutImage_btn];
+    [scrollview addSubview:sendwithoutImage_btn];
     
     
 #pragma mark send button sub title label.
@@ -227,50 +237,50 @@
     
     if (IS_IPHONE_5) {
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
-        nav_img.frame=CGRectMake(0,0,320,46.5);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
-        share_image.frame=CGRectMake(20, 14.25, 20, 18);
-        shareContacts_btn.frame=CGRectMake(0,50, 320,60);
-        seprator_image1.frame=CGRectMake(0, 110, 320, 2);
-        selectContact_lbl.frame=CGRectMake(50,127,150,30);
-        add1_btn.frame=CGRectMake(280, 131.75, 20, 20.5);
-        seprator_image2.frame=CGRectMake(0, 172, 320, 2);
-        sharewithContacts_btn.frame=CGRectMake(0,174, 320,60);
+        nav_img.frame=CGRectMake(0,0,320,90);
+        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+        share_image.frame=CGRectMake(20, 21, 20, 18);
+        shareContacts_btn.frame=CGRectMake(0,0, 320,60);
+        seprator_image1.frame=CGRectMake(0, 60, 320, 2);
+        selectContact_lbl.frame=CGRectMake(50,62,150,60);
+        add1_btn.frame=CGRectMake(280, 19.75+60, 20, 20.5);
+        seprator_image2.frame=CGRectMake(0, 122, 320, 2);
+        sharewithContacts_btn.frame=CGRectMake(0,124, 320,60);
         sharewithContact_image.frame=CGRectMake(20, 20, 20, 20);
-        seprator_image3.frame=CGRectMake(0, 234, 320, 2);
-        recipients_lbl.frame=CGRectMake(50,251,150,30);
-        recipien_btn.frame=CGRectMake(280, 255.75, 20, 20.5);
-        seprator_image4.frame=CGRectMake(0, 296, 320, 2);
-        addNote_txtview.frame = CGRectMake(13.5, 308, 293, 145);
-        txtView_img.frame = CGRectMake(13.5, 308, 293, 145);
-        sendwithImage_btn.frame=CGRectMake(16.66,500.5, 135,39.5);
-        sendwithoutImage_btn.frame=CGRectMake(168.66,500.5, 135,39.5);
+        seprator_image3.frame=CGRectMake(0, 184, 320, 2);
+        recipients_lbl.frame=CGRectMake(50,186,150,60);
+        recipien_btn.frame=CGRectMake(280, 19.75+185, 20, 20.5);
+        seprator_image4.frame=CGRectMake(0, 246, 320, 2);
+        addNote_txtview.frame = CGRectMake(15, 248+10, 290, 143);
+        txtView_img.frame = CGRectMake(15, 248+10, 290, 145);
+        sendwithImage_btn.frame=CGRectMake(15,scrollview.frame.size.height-60, 135,39.5);
+        sendwithoutImage_btn.frame=CGRectMake(170,scrollview.frame.size.height-60, 135,39.5);
         
     }else{
         
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
-        nav_img.frame=CGRectMake(0,0,320,46.5);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
-        shareContacts_btn.frame=CGRectMake(0,46.5, 320,50);
+        nav_img.frame=CGRectMake(0,0,320,80);
+        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+        shareContacts_btn.frame=CGRectMake(0,0, 320,50);
         share_image.frame=CGRectMake(20, 14.25, 20, 18);
-        seprator_image1.frame=CGRectMake(0, 96.5, 320, 2);
-        selectContact_lbl.frame=CGRectMake(50, 108.5, 150, 30);
-        add1_btn.frame=CGRectMake(280, 113.25, 20, 20.5);
-        seprator_image2.frame=CGRectMake(0, 148.5, 320, 2);
-        sharewithContacts_btn.frame=CGRectMake(0,150.5, 320,50);
+        seprator_image1.frame=CGRectMake(0, 50, 320, 2);
+        selectContact_lbl.frame=CGRectMake(50, 52, 150, 50);
+        add1_btn.frame=CGRectMake(280, 113.25-50, 20, 20.5);
+        seprator_image2.frame=CGRectMake(0, 102, 320, 2);
+        sharewithContacts_btn.frame=CGRectMake(0,104, 320,50);
         sharewithContact_image.frame=CGRectMake(20, 15, 20, 20);
-        seprator_image3.frame=CGRectMake(0, 200.5, 320, 2);
-        recipients_lbl.frame=CGRectMake(50, 212.5, 150, 30);
-        recipien_btn.frame=CGRectMake(280, 217.5, 20, 20.5);
-        seprator_image4.frame=CGRectMake(0, 252.5, 320, 2);
-        txtView_img.frame = CGRectMake(13.5, 262.5, 293, 145);
-        addNote_txtview.frame = CGRectMake(13.5+5, 262.5+5, 293-10, 145-10);
-        sendwithImage_btn.frame=CGRectMake(16.66,420, 135,39.5);
-        sendwithoutImage_btn.frame=CGRectMake(168.66,423, 135,39.5);
+        seprator_image3.frame=CGRectMake(0, 154, 320, 2);
+        recipients_lbl.frame=CGRectMake(50, 156, 150, 50);
+        recipien_btn.frame=CGRectMake(280, 217.5-50, 20, 20.5);
+        seprator_image4.frame=CGRectMake(0, 206, 320, 2);
+        txtView_img.frame = CGRectMake(15, 218, 290, 145-25);
+        addNote_txtview.frame = CGRectMake(17, 218, 290, 145-28);
+        sendwithImage_btn.frame=CGRectMake(15,scrollview.frame.size.height-50, 135,39.5);
+        sendwithoutImage_btn.frame=CGRectMake(170,scrollview.frame.size.height-50, 135,39.5);
 
     }
     
@@ -289,18 +299,62 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (BOOL)prefersStatusBarHidden {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
+        scrollview3.scrollEnabled=YES;
+        
+        
+        [scrollview3 setContentOffset:CGPointMake(0, 0) animated:YES];
+
+        if(textView.text.length == 0){
+            textView.textColor = [UIColor lightGrayColor];
+            textView.text = @"Add Note";
+            [textView resignFirstResponder];
+        }
+        return NO;
+    }
+    
+    return YES;
+}
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+{
+    UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
+    scrollview3.scrollEnabled=YES;
+    
+    
+    [scrollview3 setContentOffset:CGPointMake(0, 170) animated:YES];
+
+    if ([textView.text isEqualToString:@"Add Note"]) {
+        textView.text = @"";
+    }
+    textView.textColor = [UIColor whiteColor];
     return YES;
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [addNote_txtview resignFirstResponder];
-    return YES;
+-(void) textViewDidChange:(UITextView *)textView
+{
     
+    if(textView.text.length == 0){
+        textView.textColor = [UIColor lightGrayColor];
+        textView.text = @"Add Note";
+        [textView resignFirstResponder];
+        UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
+        scrollview3.scrollEnabled=YES;
+        [scrollview3 setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
     [addNote_txtview resignFirstResponder];
+    UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
+    scrollview3.scrollEnabled=YES;
+    
+    
+    [scrollview3 setContentOffset:CGPointMake(0, 0) animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning

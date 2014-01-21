@@ -19,6 +19,7 @@
     UILabel *selectAll_lbl;
     UILabel *noofselected;
     NSArray *namesArry;
+    NSMutableArray *alphabetsArray;
     
 }
 

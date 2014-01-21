@@ -10,7 +10,7 @@
 #import "SelectRecipientsViewController.h"
 #import "ContactShareViaIDViewController.h"
 #import  "KxMenu.h"
-#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+
 
 @interface SelectContact_toShareViewController ()
 
@@ -37,19 +37,45 @@
     }else{
         isBulkContacts=YES;
     }
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        // iOS 7
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    } else {
-        // iOS 6
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
+//    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+//        // iOS 7
+//        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+//    } else {
+//        // iOS 6
+//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+//    }
     
     [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
-    namesArry=[[NSArray alloc]initWithObjects:@"Aruna",@"Chandra",@"chinna",@"danam",@"Gangadhar",@"Gowthami",@"Japana",@"kareemulla",@"Kombi",@"Kirshna", nil];
-    
+    //[self.navigationController setNavigationBarHidden:YES animated:NO];
+    obj=[ContactGlobalDataClass getInstance];
+    namesArry=[[NSArray alloc]initWithObjects:@"Aruna",@"Chandra",@"chinna",@"danam",@"Gangadhar",@"Gowthami",@"Japana",@"kareemulla",@"Kombi",@"Kirshna",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T", nil];
+    alphabetsArray = [[NSMutableArray alloc] init];
+    [alphabetsArray addObject:@"A"];
+    [alphabetsArray addObject:@"B"];
+    [alphabetsArray addObject:@"C"];
+    [alphabetsArray addObject:@"D"];
+    [alphabetsArray addObject:@"E"];
+    [alphabetsArray addObject:@"F"];
+    [alphabetsArray addObject:@"G"];
+    [alphabetsArray addObject:@"H"];
+    [alphabetsArray addObject:@"I"];
+    [alphabetsArray addObject:@"J"];
+    [alphabetsArray addObject:@"K"];
+    [alphabetsArray addObject:@"L"];
+    [alphabetsArray addObject:@"M"];
+    [alphabetsArray addObject:@"N"];
+    [alphabetsArray addObject:@"O"];
+    [alphabetsArray addObject:@"P"];
+    [alphabetsArray addObject:@"Q"];
+    [alphabetsArray addObject:@"R"];
+    [alphabetsArray addObject:@"S"];
+    [alphabetsArray addObject:@"T"];
+    [alphabetsArray addObject:@"U"];
+    [alphabetsArray addObject:@"V"];
+    [alphabetsArray addObject:@"W"];
+    [alphabetsArray addObject:@"Y"];
+    [alphabetsArray addObject:@"X"];
+    [alphabetsArray addObject:@"Z"];
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -70,8 +96,11 @@
     
 #pragma mark setting button.
     UIButton *setting_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"setting-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
+    [setting_btn setTitle:@"Done" forState:UIControlStateNormal];
+    setting_btn.titleLabel.font=[UIFont fontWithName:@"AmericanTypewriter" size:18];
+    [setting_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"setting-icon" ofType:@"png"]] forState:UIControlStateNormal];
+    [setting_btn addTarget:self action:@selector(done_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:setting_btn];
     
 #pragma mark separator image.
@@ -85,10 +114,12 @@
     [mainbg_img addSubview:topview];
     
 #pragma mark check button.
-    UIButton   * checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
-    [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
-    [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [topview addSubview:checkBox];
+    UIButton   * checkBox_all=[UIButton buttonWithType:UIButtonTypeCustom];
+    [checkBox_all setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
+    [checkBox_all setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
+    [checkBox_all addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [checkBox_all setSelected:NO];
+    [topview addSubview:checkBox_all];
     
     isSelectAll=YES;
     
@@ -116,7 +147,7 @@
     
 #pragma Navigation Bar Title
     navbartitle=[[UILabel alloc] init];
-    navbartitle.text=[NSString stringWithFormat:@"Select Share to Contacts"];
+    navbartitle.text=[NSString stringWithFormat:@"Select Contacts"];
     navbartitle.textAlignment=1;
     navbartitle.textColor= [UIColor whiteColor];
     navbartitle.backgroundColor=[UIColor clearColor];
@@ -131,77 +162,35 @@
     tableview.delegate=self;
     tableview.dataSource=self;
     [mainbg_img addSubview:tableview];
-
-#pragma mark search bar.
-    searchBar1=[[UISearchBar alloc]init];
-    searchBar1.backgroundColor=[UIColor clearColor];
-    searchBar1.showsCancelButton=YES;
-    [searchBar1 setPlaceholder:@"Search Contact"];
-//  [searchBar1  setBackgroundImage:[UIImage imageNamed:@"search-box-1.png"]];
-    searchBar1.delegate = self;
-    [mainbg_img addSubview:searchBar1];
-    
-#pragma mark cancel button bottom.
-    UIButton *canel_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [canel_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
-    [canel_btn setTitle:@"CANCEL" forState:UIControlStateNormal];
-    [[canel_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
-    [canel_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [canel_btn addTarget:self action:@selector(addtocontact_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:canel_btn];
-    
-#pragma mark cancel button image bottom.
-    UIImageView  *cancel_image =[[UIImageView alloc] init];
-    cancel_image.image=[UIImage imageNamed:@"cancel.png"];
-    [canel_btn addSubview:cancel_image];
-
-#pragma mark done button.
-    UIButton *done_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [done_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
-    [done_btn setTitle:@"DONE" forState:UIControlStateNormal];
-    [[done_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
-    [done_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [done_btn addTarget:self action:@selector(done_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:done_btn];
-    
-#pragma mark done button image bottom.
-    UIImageView  *done_image =[[UIImageView alloc] init];
-    done_image.image=[UIImage imageNamed:@"done.png"];
-    [done_btn addSubview:done_image];
+    tableview.sectionIndexColor=[UIColor darkGrayColor];
     
     if (IS_IPHONE_5) {
-        nav_img.frame=CGRectMake(0, 0, 320, 46.5);
+        nav_img.frame=CGRectMake(0, 0, 320, 90);
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
-        searchBar1.frame=CGRectMake(0, 46.5, 320, 45);
-        topview.frame=CGRectMake(0, 91.5, 320, 45);
-        checkBox.frame=CGRectMake(20,15, 15, 15);
+        setting_btn.frame=CGRectMake(260,20, 59,50);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+      
+        topview.frame=CGRectMake(0, 91, 320, 45);
+        checkBox_all.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         noofselected.frame=CGRectMake(175,8,135,25);
-        tableview.frame=CGRectMake(0, 136.5, 320, 360);
-        canel_btn.frame=CGRectMake(16.66,515, 135,39.5);
-        cancel_image.frame=CGRectMake(10, 9.25, 21, 21);
-        done_btn.frame=CGRectMake(168.66,515, 135,39.5);
-        done_image.frame=CGRectMake(10, 9.25, 21, 21);
+        tableview.frame=CGRectMake(0, 136, 320, 432);
+
         
     }else{
-        nav_img.frame=CGRectMake(0, 0, 320, 46.5);
+        nav_img.frame=CGRectMake(0, 0, 320, 80);
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
-        setting_btn.frame=CGRectMake(290,13.625, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75, 9, 19);
-        navbartitle.frame=CGRectMake(0,0,320,50);
-        searchBar1.frame=CGRectMake(0, 46.5, 320, 45);
-        topview.frame=CGRectMake(0, 91.5, 320, 45);
-        checkBox.frame=CGRectMake(20,15, 15, 15);
+        setting_btn.frame=CGRectMake(260,20, 59,50);
+        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        navbartitle.frame=CGRectMake(0,20,320,50);
+      
+        topview.frame=CGRectMake(0, 81, 320, 45);
+        checkBox_all.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         noofselected.frame=CGRectMake(175,8,135,25);
-        tableview.frame=CGRectMake(0, 136.5, 320, 278);
-        canel_btn.frame=CGRectMake(16.66,427.5, 135,39.5);
-        cancel_image.frame=CGRectMake(10, 9.25, 21, 21);
-        done_btn.frame=CGRectMake(168.66,427.5, 135,39.5);
-        done_image.frame=CGRectMake(10, 9.25, 21, 21);
+        tableview.frame=CGRectMake(0, 126.5, 320, 353);
+
         
     }
 
@@ -222,9 +211,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
+//- (BOOL)prefersStatusBarHidden {
+//    return YES;
+//}
 
 - (void)viewDidUnload {
     
@@ -244,56 +233,109 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 26;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [namesArry count];
+    
+    return [obj.contactDetails count];
     
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return alphabetsArray;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+//    for (int i = 0; i< 26; i++) {
+//        // Here you return the name i.e. Honda,Mazda
+//        // and match the title for first letter of name
+//        // and move to that row corresponding to that indexpath as below
+//        NSString *letterString = [[alphabetsArray objectAtIndex:i] substringToIndex:1];
+//        if ([letterString isEqualToString:title]) {
+//            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//            break;
+//        }
+//    }
+    return index;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:nil];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Nil];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        
+        
+        
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        
+        name_lbl=[[UILabel alloc] init];
+        
+        name_lbl.frame=CGRectMake(60, 10, 150, 30);
+        name_lbl.textAlignment=0;
+        [name_lbl setTag:1];
+        name_lbl.text=[NSString stringWithFormat:@"%@",[obj.contactDetails objectAtIndex:indexPath.row]];
+        name_lbl.textColor= [UIColor blackColor];
+        name_lbl.backgroundColor=[UIColor clearColor];
+        name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
+        name_lbl.shadowColor = [UIColor whiteColor];
+        name_lbl.shadowOffset = CGSizeMake(0,0);
+        [cell.contentView addSubview:name_lbl];
+        
+    
+        checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
+        checkBox.tag=indexPath.row;
+        checkBox.frame=CGRectMake(20,15+3, 15, 15);
+        [cell.contentView addSubview:checkBox];
+        [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
+        [checkBox setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
+        [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [checkBox setSelected:NO];
+        isSelectAll=NO;
+        
+        editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
+        editbtn.tag=indexPath.row;
+        [editbtn setHidden:YES];
+        editbtn.frame=CGRectMake(280,15, 16, 16);
+        editbtn.backgroundColor=[UIColor clearColor];
+        [cell.contentView addSubview:editbtn];
+        [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
+        [editbtn addTarget:self action:@selector(editbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
-
-    UILabel  *name_lbl=[[UILabel alloc] init];
-    name_lbl.text=[NSString stringWithFormat:@"%@",[namesArry objectAtIndex:indexPath.row]];
-    name_lbl.frame=CGRectMake(60, 10, 150, 30);
-    name_lbl.textAlignment=0;
-    name_lbl.textColor= [UIColor blackColor];
-    name_lbl.backgroundColor=[UIColor clearColor];
-    name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
-    name_lbl.shadowColor = [UIColor whiteColor];
-    name_lbl.shadowOffset = CGSizeMake(0,0);
-    [cell addSubview:name_lbl];
+    NSArray *keys = [NSArray arrayWithObjects:@"key1", @"key2", nil];
+    NSArray *objects = [NSArray arrayWithObjects:@"value1", @"value2", nil];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects
+                                                           forKeys:keys];
     
-
-    
-    
-    
-    
-    UIButton   * checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
-    checkBox.tag=indexPath.row;
-    checkBox.frame=CGRectMake(20,15, 15, 15);
-    [cell.contentView addSubview:checkBox];
-    [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
-    [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    isSelectAll=NO;
-    
-    UIButton   * editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    editbtn.tag=indexPath.row;
-    editbtn.frame=CGRectMake(280,15, 16, 16);
-    editbtn.backgroundColor=[UIColor clearColor];
-    [cell.contentView addSubview:editbtn];
-    [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
-    [editbtn addTarget:self action:@selector(editbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    for (id key in dictionary) {
+        NSLog(@"key: %@, value: %@", key, [dictionary objectForKey:key]);
+    }
+    NSMutableDictionary *mutableDict = [dictionary mutableCopy] ;
+    [mutableDict setObject:@"value3" forKey:@"key3"];
+//    }
+//    
+//    else
+//    {
+//        name_lbl = (UILabel *)[cell.contentView viewWithTag:1];
+//        checkBox= (UIButton *)[cell.contentView viewWithTag:2];
+//        
+//        
+//    }
+//    
+//    name_lbl.text=[NSString stringWithFormat:@"%@",[namesArry objectAtIndex:indexPath.row]];
+//    [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
+//    [checkBox setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
+//    [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    if ([checkBox isSelected]) {
+//        [checkBox setSelected:YES];
+//    }
+//    else
+//    {
+//        [checkBox setSelected:NO];
+//    }
     
     return cell;
     
@@ -302,45 +344,45 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50.0f;
 }
-- (void)searchTableList {
-    NSString *searchString = searchBar1.text;
-    
-    for (NSString *tempStr in contentList) {
-        NSComparisonResult result = [tempStr compare:searchString options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchString length])];
-        if (result == NSOrderedSame) {
-            [filteredContentList addObject:tempStr];
-        }
-    }
-}
-
-
-#pragma mark - Search Implementation
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    NSLog(@"Text change - %d",isSearching);
-    //Remove all objects first.
-    [filteredContentList removeAllObjects];
-    
-    if([searchText length] != 0) {
-        isSearching = YES;
-      //  [self searchTableList];
-    }
-    else {
-        isSearching = NO;
-    }
-    [self.tblContentList reloadData];
-}
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    isSearching = YES;
-    [searchBar resignFirstResponder];
-}
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-     NSLog(@"Cancel clicked");
-    [searchBar resignFirstResponder];
-}
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"Search Clicked");
-    //[self searchTableList];
-}
+//- (void)searchTableList {
+//    NSString *searchString = searchBar1.text;
+//    
+//    for (NSString *tempStr in contentList) {
+//        NSComparisonResult result = [tempStr compare:searchString options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchString length])];
+//        if (result == NSOrderedSame) {
+//            [filteredContentList addObject:tempStr];
+//        }
+//    }
+//}
+//
+//
+//#pragma mark - Search Implementation
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    NSLog(@"Text change - %d",isSearching);
+//    //Remove all objects first.
+//    [filteredContentList removeAllObjects];
+//    
+//    if([searchText length] != 0) {
+//        isSearching = YES;
+//      //  [self searchTableList];
+//    }
+//    else {
+//        isSearching = NO;
+//    }
+//    [self.tblContentList reloadData];
+//}
+//- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+//    isSearching = YES;
+//    [searchBar resignFirstResponder];
+//}
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+//     NSLog(@"Cancel clicked");
+//    [searchBar resignFirstResponder];
+//}
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    NSLog(@"Search Clicked");
+//    //[self searchTableList];
+//}
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     NSLog(@"titleForHeaderInSection section=%d",section);
@@ -450,23 +492,57 @@
     }
     return NO;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell=(UITableViewCell*)[tableview cellForRowAtIndexPath:indexPath];
+    NSLog(@"%@", cell.contentView.subviews);
+    UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:1];
+    
+    UIButton *editButton = (UIButton*)[cell.contentView.subviews objectAtIndex:2];
+    if ([tappedButton isSelected]) {
+        [tappedButton setSelected:NO];
+         [editButton setHidden:YES];
+    } else {
+        [tappedButton setSelected:YES];
+         [editButton setHidden:NO];
+    }
+
+   
+   
+}
+
 -(void)checkBoxClicked:(id)sender {
     
+     UIButton *editButton = (UIButton*)[[[sender superview] subviews] objectAtIndex:2];
     UIButton *tappedButton = (UIButton*)sender;
-    if([tappedButton.currentImage isEqual:[UIImage imageNamed:@"check-box-inactive.png"]])
-    {
-        [sender  setImage:[UIImage imageNamed: @"cehck-box-active.png"] forState:UIControlStateNormal];
-    } else {
-        [sender setImage:[UIImage imageNamed:@"check-box-inactive.png"]forState:UIControlStateNormal];
+    if ([tappedButton isSelected]) {
+        [tappedButton setSelected:NO];
+    
+        [editButton setHidden:YES];
     }
+    else {
+        [tappedButton setSelected:YES];
+        [editButton setHidden:NO];
+}
+    
+    
+//    if([tappedButton.currentImage isEqual:[UIImage imageNamed:@"check-box-inactive.png"]])
+//    {
+//        [sender  setImage:[UIImage imageNamed: @"cehck-box-active.png"] forState:UIControlStateNormal];
+//    } else {
+//        [sender setImage:[UIImage imageNamed:@"check-box-inactive.png"]forState:UIControlStateNormal];
+//    }
     
 }
 -(void)editbtnClicked:(id)sender{
     
-}
--(void)addtocontact_btnAction{
     
+    NSLog(@"%ld",(long)[sender tag]);
 }
+//-(void)addtocontact_btnAction{
+//    
+//}
 -(void)done_btnAction{
     
     if (isBulkContacts==NO) {
@@ -479,44 +555,44 @@
     }
  }
 
--(void)Setting_btnAction22:(UIButton *)sender{
-    NSInteger tagVal=((UIButton *)sender).tag;
-    NSLog(@"List button Action==%d",tagVal);
-    
-    //Email Facebook Share Tweet
-    NSArray *menuItems =
-    @[
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem1:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem2:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem3:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem4:)],
-      
-      ];
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.navigationController.view fromRect:sender.frame menuItems:menuItems];
-    
-    
-    
-}
+//-(void)Setting_btnAction22:(UIButton *)sender{
+//    NSInteger tagVal=((UIButton *)sender).tag;
+//    NSLog(@"List button Action==%d",tagVal);
+//    
+//    //Email Facebook Share Tweet
+//    NSArray *menuItems =
+//    @[
+//      [KxMenuItem menuItem:@""
+//                     image:[UIImage imageNamed:@"popbtn.png"]
+//                    target:self
+//                    action:@selector(pushMenuItem1:)],
+//      
+//      [KxMenuItem menuItem:@""
+//                     image:[UIImage imageNamed:@"popbtn.png"]
+//                    target:self
+//                    action:@selector(pushMenuItem2:)],
+//      
+//      [KxMenuItem menuItem:@""
+//                     image:[UIImage imageNamed:@"popbtn.png"]
+//                    target:self
+//                    action:@selector(pushMenuItem3:)],
+//      
+//      [KxMenuItem menuItem:@""
+//                     image:[UIImage imageNamed:@"popbtn.png"]
+//                    target:self
+//                    action:@selector(pushMenuItem4:)],
+//      
+//      ];
+//    
+//    KxMenuItem *first = menuItems[0];
+//    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
+//    first.alignment = NSTextAlignmentCenter;
+//    
+//    [KxMenu showMenuInView:self.navigationController.view fromRect:sender.frame menuItems:menuItems];
+//    
+//    
+//    
+//}
 
 -(void)pushMenuItem1:(id)sender{
     

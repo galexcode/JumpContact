@@ -14,6 +14,7 @@
 #import "ContactGetSelectMethodViewController.h"
 #import "ContactReceivedViewController.h"
 #import "ContactBackUpViewController.h"
+#import "ContactsSentViewController.h"
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
 @interface ContactMainViewController ()
@@ -33,13 +34,6 @@
 
 - (void)viewDidLoad
 {
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        // iOS 7
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    } else {
-        // iOS 6
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
     
     [super viewDidLoad];
     
@@ -199,8 +193,8 @@
     if (IS_IPHONE_5) {
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
         topblack_image.frame=CGRectMake(0, 0, 320, 90);
-        nav_img.frame=CGRectMake(112, 10, 96.5, 55.5);
-        setting_btn.frame=CGRectMake(270,35.5, 19,19);
+        nav_img.frame=CGRectMake(112, 20, 96.5, 55.5);
+        setting_btn.frame=CGRectMake(270,45.5, 19,19);
         seprator_image.frame=CGRectMake(0, 90, 320, 2);
         sendC_btn.frame=CGRectMake(0,92, 320,60);
         sendC_image.frame=CGRectMake(25, 19, 22, 22);
@@ -222,8 +216,8 @@
     }else{
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
         topblack_image.frame=CGRectMake(0, 0, 320, 80);
-        nav_img.frame=CGRectMake(112, 10, 96.5, 45.5);
-        setting_btn.frame=CGRectMake(270,30.5, 19,19);
+        nav_img.frame=CGRectMake(112, 20, 96.5, 45.5);
+        setting_btn.frame=CGRectMake(270,40.5, 19,19);
         seprator_image.frame=CGRectMake(0, 80, 320, 2);
         sendC_btn.frame=CGRectMake(0,82, 320,50);
         sendC_image.frame=CGRectMake(25, 14, 22, 22);
@@ -258,9 +252,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
+
 -(void)ContactsSend_btnAction{
     SelectContact_toShareViewController *sharecontacts=[[SelectContact_toShareViewController alloc]init];
     sharecontacts.string1=@"SHARE";
@@ -281,7 +273,7 @@
 }
 -(void)Sent_btnAction{
     
-    SendContactsViewController *send_Cls=[[SendContactsViewController alloc]init];
+    ContactsSentViewController *send_Cls=[[ContactsSentViewController alloc]init];
    [self.navigationController pushViewController:send_Cls animated:YES];
 //
 }
@@ -298,7 +290,7 @@
 
 -(void)Setting_btnAction22:(UIButton *)sender{
     NSInteger tagVal=((UIButton *)sender).tag;
-    NSLog(@"List button Action==%d",tagVal);
+    NSLog(@"List button Action==%ld",(long)tagVal);
   
     //Email Facebook Share Tweet
     NSArray *menuItems =
