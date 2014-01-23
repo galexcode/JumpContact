@@ -64,11 +64,6 @@
     [mainbg_img addSubview:back_btn];
     
     
-    UIButton *setting_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"setting-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:setting_btn];
-    
     
     
     scrollview3 = [[UIScrollView alloc] init];
@@ -294,8 +289,8 @@
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
         navbartitle.frame=CGRectMake(0,5,320,50);
         nav_img.frame=CGRectMake(0,0,320,90);
-        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        
+        back_btn.frame=CGRectMake(15, 14, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
         shareContacts_btn.frame=CGRectMake(0,0, 320,70);
         share_image.frame=CGRectMake(20, 26, 20, 18);
@@ -322,9 +317,9 @@
         
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
         nav_img.frame=CGRectMake(0,0,320,80);
-        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        back_btn.frame=CGRectMake(15, 13, 33, 54);
      
-        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        
         navbartitle.frame=CGRectMake(0,20,320,50);
         shareContacts_btn.frame=CGRectMake(0,0, 320,50);
 
@@ -453,61 +448,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark Settings button Action
--(void)Setting_btnAction22:(UIButton *)sender{
-    NSInteger tagVal=((UIButton *)sender).tag;
-    NSLog(@"List button Action==%d",tagVal);
-    
-    //Email Facebook Share Tweet
-    NSArray *menuItems =
-    @[
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem1:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem2:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem3:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem4:)],
-      
-      ];
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.navigationController.view fromRect:sender.frame menuItems:menuItems];
-    
-}
-
--(void)pushMenuItem1:(id)sender{
-    
-    NSLog(@"FIRST Item Clicked");
-}
--(void)pushMenuItem2:(id)sender{
-    
-    NSLog(@"SECOND Item Clicked");
-}
--(void)pushMenuItem3:(id)sender{
-    
-    NSLog(@"THIRD Item Clicked");
-}
--(void)pushMenuItem4:(id)sender{
-    
-    NSLog(@"FOURTH Item Clicked");
-}
-
 
 
 @end

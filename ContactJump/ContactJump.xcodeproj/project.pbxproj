@@ -19,7 +19,6 @@
 		9D05B26D188213B000FD497D /* text=area.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D05B26C188213B000FD497D /* text=area.png */; };
 		9D0742641877DAD80046DA0B /* Header-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0742631877DAD80046DA0B /* Header-logo.png */; };
 		9D0EFF29187884A9002A22CB /* SendContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0EFF28187884A9002A22CB /* SendContactsViewController.m */; };
-		9D0EFF2B18788841002A22CB /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0EFF2A18788841002A22CB /* back-button.png */; };
 		9D3A3965187E51C4002ABE81 /* SelectRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A3964187E51C4002ABE81 /* SelectRecipientsViewController.m */; };
 		9D3A3967187E6D15002ABE81 /* send-to-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A3966187E6D15002ABE81 /* send-to-icon.png */; };
 		9D3A3969187E6D1A002ABE81 /* header-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A3968187E6D1A002ABE81 /* header-bg.png */; };
@@ -66,6 +65,10 @@
 		DF4CDCB5188E7234000B0075 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB3188E7234000B0075 /* AddressBook.framework */; };
 		DF4CDCB6188E7234000B0075 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */; };
 		DF4CDCB9188E779B000B0075 /* ContactGlobalDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */; };
+		DFABF5F01890E8FA00466CC7 /* done1.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5EE1890E8FA00466CC7 /* done1.png */; };
+		DFABF5F21890EC5200466CC7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F11890EC5200466CC7 /* back-button.png */; };
+		DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */; };
+		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +98,6 @@
 		9D0742631877DAD80046DA0B /* Header-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Header-logo.png"; sourceTree = "<group>"; };
 		9D0EFF27187884A9002A22CB /* SendContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendContactsViewController.h; sourceTree = "<group>"; };
 		9D0EFF28187884A9002A22CB /* SendContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendContactsViewController.m; sourceTree = "<group>"; };
-		9D0EFF2A18788841002A22CB /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
 		9D3A3963187E51C4002ABE81 /* SelectRecipientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectRecipientsViewController.h; sourceTree = "<group>"; };
 		9D3A3964187E51C4002ABE81 /* SelectRecipientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectRecipientsViewController.m; sourceTree = "<group>"; };
 		9D3A3966187E6D15002ABE81 /* send-to-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-to-icon.png"; sourceTree = "<group>"; };
@@ -104,8 +106,8 @@
 		9D3A396C187E6D28002ABE81 /* add-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-icon.png"; sourceTree = "<group>"; };
 		9D3F4CA21886DBD60078257D /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
 		9D3F4CA31886DBD60078257D /* KxMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxMenu.m; sourceTree = "<group>"; };
-		9D3F4CA51886E47D0078257D /* ContactBackUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactBackUpViewController.h; sourceTree = "<group>"; };
-		9D3F4CA61886E47D0078257D /* ContactBackUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactBackUpViewController.m; sourceTree = "<group>"; };
+		9D3F4CA51886E47D0078257D /* ContactBackUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactBackUpViewController.h; path = ContactJump/ContactBackUpViewController.h; sourceTree = "<group>"; };
+		9D3F4CA61886E47D0078257D /* ContactBackUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactBackUpViewController.m; path = ContactJump/ContactBackUpViewController.m; sourceTree = "<group>"; };
 		9D477AC9187A64030012EBB0 /* search-box-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-box-1.png"; sourceTree = "<group>"; };
 		9D5797571877A632007BCF2E /* button-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-bg.png"; sourceTree = "<group>"; };
 		9D7C8BCB1877DDE80053BE91 /* setting-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting-icon.png"; sourceTree = "<group>"; };
@@ -156,6 +158,14 @@
 		DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		DF4CDCB7188E779B000B0075 /* ContactGlobalDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGlobalDataClass.h; sourceTree = "<group>"; };
 		DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGlobalDataClass.m; sourceTree = "<group>"; };
+		DFABF5EE1890E8FA00466CC7 /* done1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done1.png; sourceTree = "<group>"; };
+		DFABF5F11890EC5200466CC7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
+		DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sectionheaderbackground.png; sourceTree = "<group>"; };
+		DFABF5F51890FFF000466CC7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DFABF5F61891000800466CC7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		DFABF5F71891008700466CC7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		DFABF5F91891073A00466CC7 /* SelectContactsForBackupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactsForBackupViewController.h; sourceTree = "<group>"; };
+		DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactsForBackupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +275,9 @@
 		9DF749751875E70100CBB110 = {
 			isa = PBXGroup;
 			children = (
+				DFABF5F71891008700466CC7 /* Default.png */,
+				DFABF5F61891000800466CC7 /* Default@2x.png */,
+				DFABF5F51890FFF000466CC7 /* Default-568h@2x.png */,
 				9DF749871875E70100CBB110 /* ContactJump */,
 				9DF749B31875E98500CBB110 /* Resources */,
 				9DF749A01875E70200CBB110 /* ContactJumpTests */,
@@ -312,6 +325,7 @@
 				9DFAFB1018823B0A0088E3C9 /* Contact Share ViaID Class */,
 				9DFAFB0F18823AF00088E3C9 /* Contact Get Select Method */,
 				9DF749931875E70100CBB110 /* Images.xcassets */,
+				DFABF5F8189106D100466CC7 /* Contact Backup */,
 				9DF749881875E70100CBB110 /* Supporting Files */,
 			);
 			path = ContactJump;
@@ -349,6 +363,9 @@
 		9DF749B31875E98500CBB110 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */,
+				DFABF5F11890EC5200466CC7 /* back-button.png */,
+				DFABF5EE1890E8FA00466CC7 /* done1.png */,
 				9D05B26C188213B000FD497D /* text=area.png */,
 				9D05B26A18820CEF00FD497D /* logount-icon.png */,
 				9D05B2641881FE0200FD497D /* arrow.png */,
@@ -374,7 +391,6 @@
 				9D7C8BD11877E6730053BE91 /* recieved-icon.png */,
 				9D9152D3187730A900890E70 /* bulk-contacts-icon.png */,
 				9D9152D51877329600890E70 /* get-contacts.png */,
-				9D0EFF2A18788841002A22CB /* back-button.png */,
 				9D477AC9187A64030012EBB0 /* search-box-1.png */,
 				9DEDEE0C187C80DB00C809F9 /* button-bg1.png */,
 				9DEDEE0E187C879100C809F9 /* cancel.png */,
@@ -389,8 +405,6 @@
 			children = (
 				9D00C0DB18815316002A6E3E /* ContactGetSelectMethodViewController.h */,
 				9D00C0DC18815316002A6E3E /* ContactGetSelectMethodViewController.m */,
-				9D3F4CA51886E47D0078257D /* ContactBackUpViewController.h */,
-				9D3F4CA61886E47D0078257D /* ContactBackUpViewController.m */,
 			);
 			name = "Contact Get Select Method";
 			sourceTree = "<group>";
@@ -402,6 +416,18 @@
 				9DEDEE16187C8CAE00C809F9 /* ContactShareViaIDViewController.m */,
 			);
 			name = "Contact Share ViaID Class";
+			sourceTree = "<group>";
+		};
+		DFABF5F8189106D100466CC7 /* Contact Backup */ = {
+			isa = PBXGroup;
+			children = (
+				9D3F4CA51886E47D0078257D /* ContactBackUpViewController.h */,
+				9D3F4CA61886E47D0078257D /* ContactBackUpViewController.m */,
+				DFABF5F91891073A00466CC7 /* SelectContactsForBackupViewController.h */,
+				DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */,
+			);
+			name = "Contact Backup";
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -493,18 +519,19 @@
 				9D05B26B18820CEF00FD497D /* logount-icon.png in Resources */,
 				9D3A396B187E6D21002ABE81 /* add-note-box.png in Resources */,
 				9D3A3967187E6D15002ABE81 /* send-to-icon.png in Resources */,
+				DFABF5F01890E8FA00466CC7 /* done1.png in Resources */,
 				9D00C0D818813AF4002A6E3E /* check-box.png in Resources */,
 				9DF5DDBD187FB14B008B8AB7 /* shareimg.png in Resources */,
 				9D05B2651881FE0200FD497D /* arrow.png in Resources */,
 				9D00C0D618813AED002A6E3E /* check-box-disable.png in Resources */,
 				9DEDEE08187C5ACC00C809F9 /* edit-icon.png in Resources */,
-				9D0EFF2B18788841002A22CB /* back-button.png in Resources */,
 				9D3A3969187E6D1A002ABE81 /* header-bg.png in Resources */,
 				9DF749941875E70100CBB110 /* Images.xcassets in Resources */,
 				9D3A396D187E6D28002ABE81 /* add-icon.png in Resources */,
 				9DEDEE0F187C879100C809F9 /* cancel.png in Resources */,
 				9D0742641877DAD80046DA0B /* Header-logo.png in Resources */,
 				9D7C8BD21877E6730053BE91 /* recieved-icon.png in Resources */,
+				DFABF5F21890EC5200466CC7 /* back-button.png in Resources */,
 				9DEDEE0D187C80DB00C809F9 /* button-bg1.png in Resources */,
 				9D7C8BCE1877E2AB0053BE91 /* send-contacts-icon.png in Resources */,
 				9DF749B51875E9E700CBB110 /* Min-bg.png in Resources */,
@@ -513,6 +540,7 @@
 				9DF749B71875EFDA00CBB110 /* seprator.png in Resources */,
 				9D00C0DA18813C44002A6E3E /* text-box.png in Resources */,
 				9D7C8BD01877E5140053BE91 /* sent-icon.png in Resources */,
+				DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +572,7 @@
 				9D3F4CA41886DBD60078257D /* KxMenu.m in Sources */,
 				DF4CDCAF188E58A3000B0075 /* ContactsSentViewController.m in Sources */,
 				9DEDEE17187C8CAE00C809F9 /* ContactShareViaIDViewController.m in Sources */,
+				DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */,
 				9DEDEE14187C8C7E00C809F9 /* SelectShareMethodViewController.m in Sources */,
 				9DEDEE0B187C782A00C809F9 /* SelectContact toShareViewController.m in Sources */,
 				9D3A3965187E51C4002ABE81 /* SelectRecipientsViewController.m in Sources */,
@@ -605,8 +634,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -624,7 +653,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
+				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -646,8 +675,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -658,7 +687,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
+				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -667,17 +696,15 @@
 		9DF749AB1875E70200CBB110 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ContactJump/ContactJump-Prefix.pch";
 				INFOPLIST_FILE = "ContactJump/ContactJump-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
+				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -686,17 +713,15 @@
 		9DF749AC1875E70200CBB110 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ContactJump/ContactJump-Prefix.pch";
 				INFOPLIST_FILE = "ContactJump/ContactJump-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6A73DD63-E33F-4E0C-A473-4CA7391C668A";
+				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

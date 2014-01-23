@@ -11,5 +11,7 @@
 @interface ContactGlobalDataClass : NSObject
 
 @property (nonatomic, retain) NSMutableArray      *contactDetails;
+
+
 +(ContactGlobalDataClass*)getInstance;
 @end

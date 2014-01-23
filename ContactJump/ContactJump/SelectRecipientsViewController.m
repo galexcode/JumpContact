@@ -91,10 +91,10 @@
     
 #pragma mark settings button.
     UIButton *setting_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [setting_btn setTitle:@"Done" forState:UIControlStateNormal];
-    setting_btn.titleLabel.font=[UIFont fontWithName:@"AmericanTypewriter" size:18];
-    [setting_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //[setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"setting-icon" ofType:@"png"]] forState:UIControlStateNormal];
+//    [setting_btn setTitle:@"Done" forState:UIControlStateNormal];
+//    setting_btn.titleLabel.font=[UIFont fontWithName:@"AmericanTypewriter" size:18];
+//    [setting_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"done1" ofType:@"png"]] forState:UIControlStateNormal];
     [setting_btn addTarget:self action:@selector(done_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:setting_btn];
     
@@ -154,85 +154,42 @@
     tableview.dataSource=self;
     [mainbg_img addSubview:tableview];
     [tableview setSectionIndexColor:[UIColor darkGrayColor]];
-//    [tableview setSectionIndexTrackingBackgroundColor:[UIColor purpleColor]];
-//    [tableview setSectionIndexBackgroundColor:[UIColor lightGrayColor]];
+
    
-#pragma  mark UIsearch bar.
-//    searchBar1=[[UISearchBar alloc]init];
-//    searchBar1.backgroundColor=[UIColor clearColor];
-//    searchBar1.showsCancelButton=YES;
-//    [searchBar1 setPlaceholder:@"Search Contact"];
-////  [searchBar1  setBackgroundImage:[UIImage imageNamed:@"search-box-1.png"]];
-//    searchBar1.delegate = self;
-//    [mainbg_img addSubview:searchBar1];
-//    
-    
-#pragma mark Cancel button bottom.
-//    UIButton *canel_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-//    [canel_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
-//    [canel_btn setTitle:@"CANCEL" forState:UIControlStateNormal];
-//    [[canel_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
-//    [canel_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [canel_btn addTarget:self action:@selector(addtocontact_btnAction) forControlEvents:UIControlEventTouchUpInside];
-//    [mainbg_img addSubview:canel_btn];
-//    
-//#pragma mark cancle button image bottom.
-//    UIImageView  *cancel_image =[[UIImageView alloc] init];
-//    cancel_image.image=[UIImage imageNamed:@"cancel.png"];
-//    [canel_btn addSubview:cancel_image];
-//
-//#pragma mark done button bottom.
-//    UIButton *done_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-//    [done_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
-//    [done_btn setTitle:@"DONE" forState:UIControlStateNormal];
-//    [[done_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
-//    [done_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [done_btn addTarget:self action:@selector(done_btnAction) forControlEvents:UIControlEventTouchUpInside];
-//    [mainbg_img addSubview:done_btn];
-//    
-//#pragma mark donebutton image bottom.
-//    UIImageView  *done_image =[[UIImageView alloc] init];
-//    done_image.image=[UIImage imageNamed:@"done.png"];
-//    [done_btn addSubview:done_image];
+
     
     
     if (IS_IPHONE_5) {
         nav_img.frame=CGRectMake(0, 0, 320, 90);
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
-        setting_btn.frame=CGRectMake(260,20, 59,50);
-        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        setting_btn.frame=CGRectMake(280,35, 22,22);
+        back_btn.frame=CGRectMake(15, 14, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
-       // searchBar1.frame=CGRectMake(0, 46.5, 320, 45);
+      
         topview.frame=CGRectMake(0, 91, 320, 45);
         checkBox.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         noofselected.frame=CGRectMake(175,8,135,25);
         tableview.frame=CGRectMake(0, 136, 320, 432);
-//        canel_btn.frame=CGRectMake(16.66,515, 135,39.5);
-//        cancel_image.frame=CGRectMake(10, 9.25, 21, 21);
-//        done_btn.frame=CGRectMake(168.66,515, 135,39.5);
-//        done_image.frame=CGRectMake(10, 9.25, 21, 21);
+
         
     }else{
         nav_img.frame=CGRectMake(0, 0, 320, 80);
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
-        setting_btn.frame=CGRectMake(260,20, 59,50);
-        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        setting_btn.frame=CGRectMake(280,29+5, 22,22);
+        back_btn.frame=CGRectMake(15, 13, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
-       // searchBar1.frame=CGRectMake(0, 46.5, 320, 45);
+       
         topview.frame=CGRectMake(0, 81, 320, 45);
         checkBox.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         noofselected.frame=CGRectMake(175,8,135,25);
         tableview.frame=CGRectMake(0, 126.5, 320, 353);
-//        canel_btn.frame=CGRectMake(16.66,427.5, 135,39.5);
-//        cancel_image.frame=CGRectMake(10, 9.25, 21, 21);
-//        done_btn.frame=CGRectMake(168.66,427.5, 135,39.5);
-//        done_image.frame=CGRectMake(10, 9.25, 21, 21);
+
         
     }
 
-	// Do any additional setup after loading the view.
+	
 }
 
 -(void)Setting_btnAction
@@ -492,60 +449,7 @@
     
 }
 
-#pragma mark Settings button Action
--(void)Setting_btnAction22:(UIButton *)sender{
-    NSInteger tagVal=((UIButton *)sender).tag;
-    NSLog(@"List button Action==%d",tagVal);
-    
-    //Email Facebook Share Tweet
-    NSArray *menuItems =
-    @[
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem1:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem2:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem3:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem4:)],
-      
-      ];
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.navigationController.view fromRect:sender.frame menuItems:menuItems];
- 
-}
 
--(void)pushMenuItem1:(id)sender{
-    
-    NSLog(@"FIRST Item Clicked");
-}
--(void)pushMenuItem2:(id)sender{
-    
-    NSLog(@"SECOND Item Clicked");
-}
--(void)pushMenuItem3:(id)sender{
-    
-    NSLog(@"THIRD Item Clicked");
-}
--(void)pushMenuItem4:(id)sender{
-    
-    NSLog(@"FOURTH Item Clicked");
-}
 
 
 

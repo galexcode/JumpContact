@@ -7,7 +7,8 @@
 //
 
 #import "ContactBackUpViewController.h"
-#import "KxMenu.h"
+#import "SelectContactsForBackupViewController.h"
+
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 @interface ContactBackUpViewController ()
 
@@ -60,16 +61,14 @@
     [mainbg_img addSubview:back_btn];
     
     
-    UIButton *setting_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"setting-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:setting_btn];
+  
     
     
 #pragma mark Backup Your Contacs Button
     UIButton *backupyourcontacts_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [backupyourcontacts_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
     [backupyourcontacts_btn setTitle:@"Backup Your Contacts" forState:UIControlStateNormal];
+    [backupyourcontacts_btn setTitleEdgeInsets:UIEdgeInsetsMake(-20.0f, 10.0f, 0.0f, 0.0f)];
     [[backupyourcontacts_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
     [backupyourcontacts_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backupyourcontacts_btn addTarget:self action:@selector(backupyourcontacts_btnAction) forControlEvents:UIControlEventTouchUpInside];
@@ -78,14 +77,12 @@
 
 #pragma mark backupcontactsubtitle_lbl button sub title label.
     UILabel *backupcontactsubtitle_lbl=[[UILabel alloc] init];
-    backupcontactsubtitle_lbl.frame=CGRectMake(114.5, 55, 50, 18);
+    backupcontactsubtitle_lbl.frame=CGRectMake(0, 45, 279, 18);
     backupcontactsubtitle_lbl.text=@"1.25 MB";
-    backupcontactsubtitle_lbl.textAlignment=1;
-    backupcontactsubtitle_lbl.textColor= [UIColor whiteColor];
+    backupcontactsubtitle_lbl.textAlignment=UITextAlignmentCenter;
+    backupcontactsubtitle_lbl.textColor= [UIColor lightGrayColor];
     backupcontactsubtitle_lbl.backgroundColor=[UIColor clearColor];
-    backupcontactsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
-    backupcontactsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    backupcontactsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
+    backupcontactsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:13];
     [backupyourcontacts_btn addSubview:backupcontactsubtitle_lbl];
    
     NSDate *localDate = [NSDate date];
@@ -112,6 +109,7 @@
     
     UIButton *downloadwithImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [downloadwithImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
+    [downloadwithImage_btn setTitleEdgeInsets:UIEdgeInsetsMake(-20.0f, 10.0f, 0.0f, 0.0f)];
     [downloadwithImage_btn setTitle:@"Download With Images" forState:UIControlStateNormal];
     [[downloadwithImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
     [downloadwithImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -120,14 +118,13 @@
     
 #pragma mark downloadwithimgsubtitle_lbl button sub title label.
     UILabel *downloadwithimgsubtitle_lbl=[[UILabel alloc] init];
-    downloadwithimgsubtitle_lbl.frame=CGRectMake(114.5, 55, 50, 18);
+    downloadwithimgsubtitle_lbl.frame=CGRectMake(0, 45, 279, 18);
     downloadwithimgsubtitle_lbl.text=@"1.25 MB";
-    downloadwithimgsubtitle_lbl.textAlignment=1;
-    downloadwithimgsubtitle_lbl.textColor= [UIColor whiteColor];
+    downloadwithimgsubtitle_lbl.textAlignment=UITextAlignmentCenter;
+    downloadwithimgsubtitle_lbl.textColor= [UIColor lightGrayColor];
     downloadwithimgsubtitle_lbl.backgroundColor=[UIColor clearColor];
-    downloadwithimgsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
-    downloadwithimgsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    downloadwithimgsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
+    downloadwithimgsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:13];
+    
     [downloadwithImage_btn addSubview:downloadwithimgsubtitle_lbl];
     
 
@@ -138,6 +135,7 @@
     
     UIButton *downloadwithoutImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [downloadwithoutImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
+     [downloadwithoutImage_btn setTitleEdgeInsets:UIEdgeInsetsMake(-20.0f, 10.0f, 0.0f, 0.0f)];
     [downloadwithoutImage_btn setTitle:@"Download without Images" forState:UIControlStateNormal];
     [[downloadwithoutImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:16]];
     [downloadwithoutImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -147,22 +145,19 @@
     
 #pragma mark downloadwithoutimgsubtitle_lbl button sub title label.
     UILabel *downloadwithoutimgsubtitle_lbl=[[UILabel alloc] init];
-    downloadwithoutimgsubtitle_lbl.frame=CGRectMake(114.5, 55, 50, 18);
+    downloadwithoutimgsubtitle_lbl.frame=CGRectMake(0, 45, 279, 18);
     downloadwithoutimgsubtitle_lbl.text=@"1.25 MB";
-    downloadwithoutimgsubtitle_lbl.textAlignment=1;
-    downloadwithoutimgsubtitle_lbl.textColor= [UIColor whiteColor];
+    downloadwithoutimgsubtitle_lbl.textAlignment=UITextAlignmentCenter;
+    downloadwithoutimgsubtitle_lbl.textColor= [UIColor lightGrayColor];
     downloadwithoutimgsubtitle_lbl.backgroundColor=[UIColor clearColor];
-    downloadwithoutimgsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
-    downloadwithoutimgsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    downloadwithoutimgsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
+    downloadwithoutimgsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:13];
     [downloadwithoutImage_btn addSubview:downloadwithoutimgsubtitle_lbl];
     
     if (IS_IPHONE_5) {
         
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
         nav_img.frame=CGRectMake(0,0,320,90);
-        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
-        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
+        back_btn.frame=CGRectMake(15, 14, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
         
         backupyourcontacts_btn.frame=CGRectMake(20.5,140, 279,79);
@@ -176,8 +171,7 @@
         
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
         nav_img.frame=CGRectMake(0,0,320,80);
-        back_btn.frame=CGRectMake(15, 13.75+21.5, 9, 19);
-        setting_btn.frame=CGRectMake(290,13.625+20, 19,19);
+        back_btn.frame=CGRectMake(15, 13, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
         
         lastBackup_Date.frame=CGRectMake(23.5,198, 279,30);
@@ -191,10 +185,7 @@
 }
 
 
--(void)Setting_btnAction
-{
-    NSLog(@"BtnAction");
-}
+
 
 -(void)back_btnAction
 {
@@ -202,65 +193,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark Settings button Action
--(void)Setting_btnAction22:(UIButton *)sender{
-    NSInteger tagVal=((UIButton *)sender).tag;
-    NSLog(@"List button Action==%d",tagVal);
-    
-    //Email Facebook Share Tweet
-    NSArray *menuItems =
-    @[
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem1:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem2:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem3:)],
-      
-      [KxMenuItem menuItem:@""
-                     image:[UIImage imageNamed:@"popbtn.png"]
-                    target:self
-                    action:@selector(pushMenuItem4:)],
-      
-      ];
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.navigationController.view fromRect:sender.frame menuItems:menuItems];
-    
-}
-
--(void)pushMenuItem1:(id)sender{
-    
-    NSLog(@"FIRST Item Clicked");
-}
--(void)pushMenuItem2:(id)sender{
-    
-    NSLog(@"SECOND Item Clicked");
-}
--(void)pushMenuItem3:(id)sender{
-    
-    NSLog(@"THIRD Item Clicked");
-}
--(void)pushMenuItem4:(id)sender{
-    
-    NSLog(@"FOURTH Item Clicked");
-}
 
 -(void)backupyourcontacts_btnAction{
     
-//    BackupContactsViewController *backupcontacts=[[BackupContactsViewController alloc]init];
-//    [self.navigationController pushViewController:backupcontacts animated:YES];
+    SelectContactsForBackupViewController *backupcontacts=[[SelectContactsForBackupViewController alloc]init];
+    [self.navigationController pushViewController:backupcontacts animated:YES];
     
 }
 -(void)downloadwithImage_btnAction{

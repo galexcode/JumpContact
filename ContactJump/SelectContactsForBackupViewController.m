@@ -1,21 +1,18 @@
 //
-//  SendContactsViewController.m
+//  SelectContactsForBackupViewController.m
 //  ContactJump
 //
-//  Created by Raman on 04/01/14.
+//  Created by Dex on 23/01/14.
 //  Copyright (c) 2014 iyasoft. All rights reserved.
 //
 
-#import "SendContactsViewController.h"
-#import "KxMenu.h"
-#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
-@interface SendContactsViewController ()
+#import "SelectContactsForBackupViewController.h"
+
+@interface SelectContactsForBackupViewController ()
 
 @end
 
-@implementation SendContactsViewController
-
-
+@implementation SelectContactsForBackupViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,8 +25,7 @@
 
 - (void)viewDidLoad
 {
-    
-    
+    [super viewDidLoad];
     [super viewDidLoad];
     namesArry=[[NSArray alloc]initWithObjects:@"Aruna",@"Chandra",@"chinna",@"danam",@"Gangadhar",@"Gowthami",@"Japana",@"kareemulla",@"Kombi",@"Kirshna", nil];
     alphabetsArray = [[NSMutableArray alloc] init];
@@ -59,7 +55,7 @@
     [alphabetsArray addObject:@"Y"];
     [alphabetsArray addObject:@"X"];
     [alphabetsArray addObject:@"Z"];
-
+    
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -78,9 +74,9 @@
     [back_btn addTarget:self action:@selector(back_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:back_btn];
     
-
     
-
+    
+    
     
 #pragma mark topview.
     topview=[[UIView alloc]init];
@@ -119,7 +115,7 @@
     
 #pragma Navigation Bar Title
     navbartitle=[[UILabel alloc] init];
-    navbartitle.text=[NSString stringWithFormat:@"Add to Contacts"];
+    navbartitle.text=[NSString stringWithFormat:@"Backup Contacts"];
     navbartitle.textAlignment=1;
     navbartitle.textColor= [UIColor whiteColor];
     navbartitle.backgroundColor=[UIColor clearColor];
@@ -136,16 +132,55 @@
     [mainbg_img addSubview:tableview];
     tableview.sectionIndexColor=[UIColor darkGrayColor];
 #pragma mark search bar.
-   
     
-#pragma mark Add contacts Button
-    UIButton *addcontact_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [addcontact_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg" ofType:@"png"]] forState:UIControlStateNormal];
-    [addcontact_btn setTitle:@"Add to Contacts" forState:UIControlStateNormal];
-    [[addcontact_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
-    [addcontact_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addcontact_btn addTarget:self action:@selector(addcontact_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [mainbg_img addSubview:addcontact_btn];
+    
+
+#pragma mark BackupwithImage Button
+    UIButton *backupWithImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    [backupWithImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
+    [backupWithImage_btn setTitle:@"Backup with Images" forState:UIControlStateNormal];
+    [[backupWithImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
+    [backupWithImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [backupWithImage_btn addTarget:self action:@selector(backupWithImages_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [mainbg_img addSubview:backupWithImage_btn];
+    
+#pragma mark backup button sub title label.
+    UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
+    sendbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
+    sendbtnsubtitle_lbl.text=@"1.25 MB";
+    sendbtnsubtitle_lbl.textAlignment=1;
+    sendbtnsubtitle_lbl.textColor= [UIColor whiteColor];
+    sendbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
+    sendbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
+    sendbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
+    sendbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
+    [backupWithImage_btn addSubview:sendbtnsubtitle_lbl];
+    
+    
+    
+#pragma mark SendwithoutImage Button
+    UIButton *backupWithoutImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    [backupWithoutImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
+    [backupWithoutImage_btn setTitle:@"Backup without Images" forState:UIControlStateNormal];
+    [[backupWithoutImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
+    [backupWithoutImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [backupWithoutImage_btn addTarget:self action:@selector(backupWithoutImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [mainbg_img addSubview:backupWithoutImage_btn];
+    
+    
+#pragma mark send button sub title label.
+    UILabel *sendwithoutbtnsubtitle_lbl=[[UILabel alloc] init];
+    sendwithoutbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
+    sendwithoutbtnsubtitle_lbl.text=@"1.25 MB";
+    sendwithoutbtnsubtitle_lbl.textAlignment=1;
+    sendwithoutbtnsubtitle_lbl.textColor= [UIColor whiteColor];
+    sendwithoutbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
+    sendwithoutbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
+    sendwithoutbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
+    sendwithoutbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
+    [backupWithoutImage_btn addSubview:sendwithoutbtnsubtitle_lbl];
+    
+
     
     if (IS_IPHONE_5) {
         nav_img.frame=CGRectMake(0, 0, 320, 90);
@@ -153,13 +188,15 @@
         
         back_btn.frame=CGRectMake(15, 14, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
-       
+        
         topview.frame=CGRectMake(0, 91, 320, 45);
         checkBox.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         noofselected.frame=CGRectMake(175,8,135,25);
         tableview.frame=CGRectMake(0, 136, 320, 360);
-        addcontact_btn.frame=CGRectMake(46.5, 515, 226.5, 39.5);
+        backupWithImage_btn.frame=CGRectMake(15,518, 135,39.5);
+        backupWithoutImage_btn.frame=CGRectMake(170,518, 135,39.5);
+
         
     }else{
         nav_img.frame=CGRectMake(0, 0, 320, 80);
@@ -167,15 +204,17 @@
         
         back_btn.frame=CGRectMake(15, 13, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
-       
+        
         topview.frame=CGRectMake(0, 81, 320, 45);
         checkBox.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         noofselected.frame=CGRectMake(175,8,135,25);
         tableview.frame=CGRectMake(0, 126, 320, 278+10);
-        addcontact_btn.frame=CGRectMake(46.5, 427.5, 226.5, 39.5);
-    }
+        backupWithImage_btn.frame=CGRectMake(15,430, 135,39.5);
+        backupWithoutImage_btn.frame=CGRectMake(170,430, 135,39.5);
 
+    }
+    
     
 	// Do any additional setup after loading the view.
 }
@@ -183,11 +222,14 @@
 {
     NSLog(@"BtnAction");
 }
--(void)addcontact_btnAction
+-(void)backupWithoutImage_btnAction
 {
     NSLog(@"BtnAction");
 }
-
+-(void)backupWithImages_btnAction
+{
+    NSLog(@"BtnAction");
+}
 -(void)back_btnAction
 {
     
@@ -201,15 +243,12 @@
 
 - (void)viewDidUnload {
     
-  
+    
     [super viewDidUnload];
-   
+    
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
+
 
 #pragma mark - Table view data source
 
@@ -221,7 +260,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [namesArry count];
-
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -247,7 +286,7 @@
     name_lbl.shadowOffset = CGSizeMake(0,0);
     [cell.contentView addSubview:name_lbl];
     
-
+    
     
     UIButton   * checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
     checkBox.tag=indexPath.row;
@@ -261,16 +300,16 @@
     
     UIButton   * editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
     editbtn.tag=indexPath.row;
-     [editbtn setHidden:YES];
+    [editbtn setHidden:YES];
     editbtn.frame=CGRectMake(280,15, 16, 16);
     editbtn.backgroundColor=[UIColor clearColor];
     [cell.contentView addSubview:editbtn];
     [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
     [editbtn addTarget:self action:@selector(editbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-
     
-
+    
+    
     return cell;
     
 }
@@ -279,7 +318,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-   
+    
     return index;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -432,13 +471,8 @@
 
 -(void)editbtnClicked:(id)sender
 {
-     NSLog(@"%ld",(long)[sender tag]);
+    NSLog(@"%ld",(long)[sender tag]);
 }
--(void)addtocontact_btnAction{
-    
-    
-}
-
 
 
 
