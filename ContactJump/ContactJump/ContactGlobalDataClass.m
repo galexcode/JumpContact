@@ -9,7 +9,8 @@
 #import "ContactGlobalDataClass.h"
 
 @implementation ContactGlobalDataClass
-@synthesize contactDetails;
+
+@synthesize contactDetails,contactsToBeShared_selected,recipients_selected,from_ShareMethodViewController;
 
 static ContactGlobalDataClass *instance =nil;
 +(ContactGlobalDataClass *)getInstance

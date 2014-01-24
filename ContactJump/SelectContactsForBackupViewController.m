@@ -13,7 +13,7 @@
 @end
 
 @implementation SelectContactsForBackupViewController
-
+static int k=0;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,35 +26,58 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [super viewDidLoad];
-    namesArry=[[NSArray alloc]initWithObjects:@"Aruna",@"Chandra",@"chinna",@"danam",@"Gangadhar",@"Gowthami",@"Japana",@"kareemulla",@"Kombi",@"Kirshna", nil];
-    alphabetsArray = [[NSMutableArray alloc] init];
-    [alphabetsArray addObject:@"A"];
-    [alphabetsArray addObject:@"B"];
-    [alphabetsArray addObject:@"C"];
-    [alphabetsArray addObject:@"D"];
-    [alphabetsArray addObject:@"E"];
-    [alphabetsArray addObject:@"F"];
-    [alphabetsArray addObject:@"G"];
-    [alphabetsArray addObject:@"H"];
-    [alphabetsArray addObject:@"I"];
-    [alphabetsArray addObject:@"J"];
-    [alphabetsArray addObject:@"K"];
-    [alphabetsArray addObject:@"L"];
-    [alphabetsArray addObject:@"M"];
-    [alphabetsArray addObject:@"N"];
-    [alphabetsArray addObject:@"O"];
-    [alphabetsArray addObject:@"P"];
-    [alphabetsArray addObject:@"Q"];
-    [alphabetsArray addObject:@"R"];
-    [alphabetsArray addObject:@"S"];
-    [alphabetsArray addObject:@"T"];
-    [alphabetsArray addObject:@"U"];
-    [alphabetsArray addObject:@"V"];
-    [alphabetsArray addObject:@"W"];
-    [alphabetsArray addObject:@"Y"];
-    [alphabetsArray addObject:@"X"];
-    [alphabetsArray addObject:@"Z"];
+    
+    obj=[ContactGlobalDataClass getInstance];
+    
+    
+    sectionIndex = [NSArray arrayWithObjects:
+                    @"A", @"B", @"C", @"D",
+                    @"E", @"F", @"G", @"H",
+                    @"I", @"J", @"K", @"L", @"M",
+                    @"N", @"O", @"P", @"Q", @"R",@"S",
+                    @"T", @"U", @"V", @"W",@"X",@"Y",@"Z",
+                    nil];
+    self.alphabetsArray = [[NSMutableDictionary alloc] init];
+    self.checkboxClicked_Dict = [[NSMutableDictionary alloc] init];
+    
+    
+    
+    BOOL found;
+    
+    // Loop through the books and create our keys
+    for (NSString *chr in obj.contactDetails)
+    {
+        NSString *c = [chr substringToIndex:1];
+        
+        found = NO;
+        
+        for (NSString *str in [self.alphabetsArray allKeys])
+        {
+            
+            if ([str isEqualToString:c])
+            {
+                found = YES;
+            }
+        }
+        
+        if (!found)
+        {
+            [self.checkboxClicked_Dict setValue:[[NSMutableArray alloc] init] forKey:[NSString stringWithFormat:@"checked-%@",c]];
+            [self.alphabetsArray setValue:[[NSMutableArray alloc] init] forKey:c];
+        }
+    }
+    
+    
+    for (NSString *contct_name in obj.contactDetails)
+    {
+        
+        
+        [[self.alphabetsArray objectForKey:[contct_name substringToIndex:1]] addObject:contct_name];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[contct_name substringToIndex:1]]] addObject:@"1"];
+    }
+    
+    
+
     
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
@@ -84,12 +107,12 @@
     [mainbg_img addSubview:topview];
     
 #pragma mark check button.
-    UIButton   * checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
-    [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
-    [checkBox setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
-    [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [checkBox setSelected:NO];
-    [topview addSubview:checkBox];
+    checkBox_all=[UIButton buttonWithType:UIButtonTypeCustom];
+    [checkBox_all setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
+    [checkBox_all setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
+    [checkBox_all addTarget:self action:@selector(checkBoxClicked1:) forControlEvents:UIControlEventTouchUpInside];
+    [checkBox_all setSelected:YES];
+    [topview addSubview:checkBox_all];
     
 #pragma mark select all label.
     selectAll_lbl=[[UILabel alloc] init];
@@ -102,9 +125,14 @@
     selectAll_lbl.shadowOffset = CGSizeMake(0,0);
     [topview addSubview:selectAll_lbl];
     
+    UIButton   * checkBox_all1=[UIButton buttonWithType:UIButtonTypeCustom];
+    [checkBox_all1 setBackgroundColor:[UIColor clearColor]];
+    [checkBox_all1 addTarget:self action:@selector(checkBoxClicked1:) forControlEvents:UIControlEventTouchUpInside];
+    [topview addSubview:checkBox_all1];
+
 #pragma mark number of selected contacts label.
     noofselected=[[UILabel alloc] init];
-    noofselected.text=[NSString stringWithFormat:@"100 Contacts Selected"];
+    noofselected.text=[NSString stringWithFormat:@"%d contacts selected",(int)[obj.contactDetails count]];
     noofselected.textAlignment=1;
     noofselected.textColor= [UIColor blackColor];
     noofselected.backgroundColor=[UIColor clearColor];
@@ -190,9 +218,10 @@
         navbartitle.frame=CGRectMake(0,20,320,50);
         
         topview.frame=CGRectMake(0, 91, 320, 45);
-        checkBox.frame=CGRectMake(20,15, 15, 15);
+        checkBox_all.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
-        noofselected.frame=CGRectMake(175,8,135,25);
+        checkBox_all1.frame=CGRectMake(40,8,80,30);
+        noofselected.frame=CGRectMake(185,10,135,25);
         tableview.frame=CGRectMake(0, 136, 320, 360);
         backupWithImage_btn.frame=CGRectMake(15,518, 135,39.5);
         backupWithoutImage_btn.frame=CGRectMake(170,518, 135,39.5);
@@ -206,9 +235,10 @@
         navbartitle.frame=CGRectMake(0,20,320,50);
         
         topview.frame=CGRectMake(0, 81, 320, 45);
-        checkBox.frame=CGRectMake(20,15, 15, 15);
+        checkBox_all.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
-        noofselected.frame=CGRectMake(175,8,135,25);
+        checkBox_all1.frame=CGRectMake(40,8,80,30);
+        noofselected.frame=CGRectMake(185,10,135,25);
         tableview.frame=CGRectMake(0, 126, 320, 278+10);
         backupWithImage_btn.frame=CGRectMake(15,430, 135,39.5);
         backupWithoutImage_btn.frame=CGRectMake(170,430, 135,39.5);
@@ -251,34 +281,45 @@
 
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    // Return the number of sections.
-    return 1;
+    return [[self.alphabetsArray allKeys] count];
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [namesArry count];
+    
+    return  [[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:section]] count];
     
 }
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return sectionIndex;
+}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    
+    return index;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     //static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:nil];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Nil];
+        
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    NSLog(@"sssssss----\n%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
     
     
     
-    UILabel  *name_lbl=[[UILabel alloc] init];
-    name_lbl.text=[NSString stringWithFormat:@"%@",[namesArry objectAtIndex:indexPath.row]];
-    name_lbl.frame=CGRectMake(60, 7, 150, 30);
+    name_lbl=[[UILabel alloc] init];
+    
+    name_lbl.frame=CGRectMake(60, 10, 150, 30);
     name_lbl.textAlignment=0;
+    [name_lbl setTag:1];
+    name_lbl.text=[NSString stringWithFormat:@"%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
     name_lbl.textColor= [UIColor blackColor];
     name_lbl.backgroundColor=[UIColor clearColor];
     name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
@@ -287,192 +328,198 @@
     [cell.contentView addSubview:name_lbl];
     
     
-    
-    UIButton   * checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
+    checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
     checkBox.tag=indexPath.row;
-    checkBox.frame=CGRectMake(20,15, 15, 15);
+    checkBox.frame=CGRectMake(20,15+3, 15, 15);
     [cell.contentView addSubview:checkBox];
     [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
     [checkBox setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
     [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [checkBox setSelected:NO];
     
     
-    UIButton   * editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    editbtn.tag=indexPath.row;
-    [editbtn setHidden:YES];
-    editbtn.frame=CGRectMake(280,15, 16, 16);
-    editbtn.backgroundColor=[UIColor clearColor];
-    [cell.contentView addSubview:editbtn];
-    [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
-    [editbtn addTarget:self action:@selector(editbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    
+    if ([[[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] objectAtIndex:indexPath.row] isEqualToString:@"0"]) {
+        [checkBox setSelected:NO];
+        
+    } else {
+        [checkBox setSelected:YES];
+        
+    }
     
     
     
     return cell;
     
 }
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return alphabetsArray;
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50.0f;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
-    return index;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 50.0f;
+    return [[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:section];
+    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell=(UITableViewCell*)[tableview cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell=(UITableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%@", cell.contentView.subviews);
     UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:1];
     
-    UIButton *editButton = (UIButton*)[cell.contentView.subviews objectAtIndex:2];
+    
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        [editButton setHidden:YES];
-    } else {
+        
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
+        if (k>0) {
+            k--;
+        }
+        
+    }
+    else {
+        
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
-        [editButton setHidden:NO];
+        
+        k++;
     }
     
+    if (k==0) {
+        k=0;
+        noofselected.text=@" ";
+    } else {
+        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
+    }
     
+    if (k==[obj.contactDetails count]) {
+        [checkBox_all setSelected:YES];
+    }
+    else
+    {
+        [checkBox_all setSelected:NO];
+    }
+    NSLog(@"CHECK BOX -----%@",self.checkboxClicked_Dict);
     
 }
 
 -(void)checkBoxClicked:(id)sender {
     
-    UIButton *editButton = (UIButton*)[[[sender superview] subviews] objectAtIndex:2];
+    
+    //UIButton *editButton = (UIButton*)[[[sender superview] subviews] objectAtIndex:2];
     UIButton *tappedButton = (UIButton*)sender;
+    
+    
+    UITableViewCell* cell;
+    UITableView *tv;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
+    {
+        //UIView *contentView = (UIView *)[tappedButton superview];
+        cell = (UITableViewCell *)[[[tappedButton superview] superview] superview];
+        NSLog(@"[tappedButton superview]  ----%@",[[[tappedButton superview] superview] superview]);
+        tv = (UITableView *)cell.superview.superview;
+    }
+    else
+    {
+        cell = (UITableViewCell*)[[tappedButton superview] superview];
+        tv=(UITableView *)[[cell.contentView superview] superview];
+    }
+    
+    
+    NSIndexPath *indexPath = [(UITableView *)tv indexPathForCell:(UITableViewCell *)cell];
+    
+    
+    
+    
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"0"];
+        //[editButton setHidden:YES];
+        [cell.accessoryView setHidden:YES];
+        if (k>0) {
+            k--;
+        }
         
-        [editButton setHidden:YES];
     }
     else {
+        
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"1"];
         [tappedButton setSelected:YES];
-        [editButton setHidden:NO];
+        //[editButton setHidden:NO];
+        
+        [cell.accessoryView setHidden:NO];
+        k++;
+        
     }
-}
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (k==0) {
+        k=0;
+        noofselected.text=@" ";
+    } else {
+        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
+    }
     
-    NSLog(@"titleForHeaderInSection section=%ld",(long)section);
-    if (section ==0) {
-        
-        return @"A";
+    if (k==[obj.contactDetails count]) {
+        [checkBox_all setSelected:YES];
     }
-    else if(section ==1){
-        
-        return @"B";
+    else
+    {
+        [checkBox_all setSelected:NO];
     }
-    else if(section ==2){
-        
-        return @"C";
-    }
-    else if(section ==3){
-        
-        return @"D";
-    }
-    else if(section ==4){
-        
-        return @"E";
-    }
-    else if(section ==5){
-        
-        return @"F";
-    }
-    else if(section ==6){
-        
-        return @"G";
-    }
-    else if(section ==7){
-        
-        return @"H";
-    }
-    else if(section ==8){
-        
-        return @"I";
-    }
-    else if(section ==9){
-        
-        return @"J";
-    }
-    else if(section ==10){
-        
-        return @"K";
-    }
-    else if(section ==11){
-        
-        return @"L";
-    }
-    else if(section ==12){
-        
-        return @"M";
-    }
-    else if(section ==13){
-        
-        return @"N";
-    }
-    else if(section ==14){
-        
-        return @"O";
-    }
-    else if(section ==15){
-        
-        return @"P";
-    }
-    else if(section ==16){
-        
-        return @"Q";
-    }
-    else if(section ==17){
-        
-        return @"R";
-    }
-    else if(section ==18){
-        
-        return @"S";
-    }
-    else if(section ==19){
-        
-        return @"T";
-    }
-    else if(section ==20){
-        
-        return @"U";
-    }
-    else if(section ==21){
-        
-        return @"V";
-    }
-    else if(section ==22){
-        
-        return @"W";
-    }
-    else if(section ==23){
-        
-        return @"X";
-    }
-    else if(section ==24){
-        
-        return @"Y";
-    }
-    else if(section ==25){
-        
-        return @"Z";
-    }
-    return NO;
+    
+    
 }
 
--(void)editbtnClicked:(id)sender
-{
-    NSLog(@"%ld",(long)[sender tag]);
+
+
+
+
+-(void)checkBoxClicked1:(id)sender {
+    
+    
+    
+    UIButton *tappedButton =  checkBox_all;
+    
+    
+    
+    
+    if ([tappedButton isSelected]) {
+        [tappedButton setSelected:NO];
+        for (int i=0; i<[[self.alphabetsArray allKeys]  count]; i++) {
+            for (int j=0; j<[[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:i]]] count]; j++) {
+                [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:i]]] replaceObjectAtIndex:j withObject:@"0"];
+            }
+            
+        }
+        k=0;
+        noofselected.text=@" ";
+        
+    }
+    else {
+        
+        
+        [tappedButton setSelected:YES];
+        for (int i=0; i<[[self.alphabetsArray allKeys]  count]; i++) {
+            for (int j=0; j<[[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:i]]] count]; j++) {
+                [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:i]]] replaceObjectAtIndex:j withObject:@"1"];
+                
+            }
+            
+        }
+        k=(int)[obj.contactDetails count];
+        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
+    }
+    
+    
+    NSLog(@"CHECK BOX -----%@",self.checkboxClicked_Dict);
+    [tableview reloadData];
 }
+
+
 
 
 

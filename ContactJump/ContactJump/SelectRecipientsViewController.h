@@ -18,10 +18,19 @@
     UIView *topview;
     UILabel *selectAll_lbl;
     UILabel *noofselected;
-     NSMutableArray *alphabetsArray;
-    NSArray * namesArry;
+    
+  
+    
+    
+    NSArray *sectionIndex;
+    UIButton   * checkBox_all;
+    
+    UILabel  *name_lbl;
+    UIButton   * checkBox;
+    UIButton   * editbtn;
+    ContactGlobalDataClass *obj;
 }
-@property(nonatomic,retain)UITableView *tblContentList;
-@property(strong, nonatomic)UISearchBar *searchBar1;
-@property(strong, nonatomic)UISearchDisplayController *searchBarController;
+@property(nonatomic,retain)NSString *string1;
+@property (nonatomic,retain) NSMutableDictionary *alphabetsArray;
+@property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 @end

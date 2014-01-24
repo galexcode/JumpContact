@@ -28,9 +28,9 @@
 
 - (void)viewDidLoad
 {
-        
-   
     
+    obj=[ContactGlobalDataClass getInstance];
+     [obj setFrom_ShareMethodViewController:@"1"]; 
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -78,7 +78,6 @@
     shareContacts_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     CGFloat spacing = 50; // the amount of spacing to appear between image and title
     shareContacts_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing, 0, 0);
-    [shareContacts_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollview addSubview:shareContacts_btn];
     
 #pragma mark share button left image share image.
@@ -94,7 +93,7 @@
     
 #pragma mark selected contact label.
     selectContact_lbl=[[UILabel alloc] init];
-    selectContact_lbl.text=[NSString stringWithFormat:@"100 Contacts Selected"];
+    selectContact_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.contactsToBeShared_selected];
     selectContact_lbl.textAlignment=0;
     selectContact_lbl.textColor= [UIColor whiteColor];
     selectContact_lbl.backgroundColor=[UIColor clearColor];
@@ -106,7 +105,8 @@
 #pragma mark contact add button right side. plus button.
     UIButton *add1_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [add1_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"add-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [add1_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    add1_btn.tag=1;
+    [add1_btn addTarget:self action:@selector(Setting_btnAction:) forControlEvents:UIControlEventTouchUpInside];
     [scrollview addSubview:add1_btn];
     
 #pragma mark separator image.
@@ -122,7 +122,6 @@
     sharewithContacts_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     CGFloat spacing2 = 50; // the amount of spacing to appear between image and title
     sharewithContacts_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing2, 0, 0);
-    [sharewithContacts_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollview addSubview:sharewithContacts_btn];
     
 #pragma mark share with contact button left image.
@@ -137,7 +136,7 @@
     
 #pragma mark Recipients label.
     recipients_lbl=[[UILabel alloc] init];
-    recipients_lbl.text=[NSString stringWithFormat:@"10 Recipients"];
+    recipients_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.recipients_selected];
     recipients_lbl.textAlignment=0;
     recipients_lbl.textColor= [UIColor whiteColor];
     recipients_lbl.backgroundColor=[UIColor clearColor];
@@ -149,7 +148,8 @@
 #pragma mark recipients add button plus image.
     UIButton *recipien_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [recipien_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"add-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [recipien_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    recipien_btn.tag=2;
+    [recipien_btn addTarget:self action:@selector(Setting_btnAction:) forControlEvents:UIControlEventTouchUpInside];
     [scrollview addSubview:recipien_btn];
     
 #pragma mark separator image.
@@ -283,9 +283,41 @@
 	// Do any additional setup after loading the view.
 }
 
--(void)Setting_btnAction
+-(void)Setting_btnAction:(id)sender
 {
-    NSLog(@"BtnAction");
+    
+    [obj setFrom_ShareMethodViewController:@"1"];
+    if([sender tag]==1)
+    {
+        
+             for (UIViewController *controller in self.navigationController.viewControllers)
+             {
+                 if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
+                     
+                     
+                     [self.navigationController popToViewController:controller
+                                                           animated:YES];
+                     break;
+                 }
+             }
+        
+    }
+    else if([sender tag]==2)
+    {
+        
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[SelectRecipientsViewController class]]) {
+                
+                
+                [self.navigationController popToViewController:controller
+                                                      animated:YES];
+                break;
+            }
+           
+        }
+
+    }
 }
 
 -(void)back_btnAction
@@ -363,6 +395,7 @@
 
 -(void)sendwithoutImage_btnAction{
     
+
 }
 
 @end

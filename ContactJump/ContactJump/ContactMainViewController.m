@@ -36,7 +36,7 @@
 {
     
     [super viewDidLoad];
-    
+   
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
   #pragma Main BG ImageView

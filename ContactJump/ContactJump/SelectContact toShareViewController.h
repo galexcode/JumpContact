@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SelectContact_toShareViewController : UIViewController<UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
+#import "SelectShareMethodViewController.h"
+@interface SelectContact_toShareViewController : UIViewController< UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *contentList;
     NSMutableArray *filteredContentList;
-    BOOL isSearching;
+    
     UILabel *navbartitle;
     UITableView *tableview;
     UIView *topview;
@@ -22,23 +22,21 @@
     
     BOOL  isBulkContacts;
     
-    BOOL isSelectAll;
-    NSMutableDictionary *alphabetsArray;
-    NSMutableDictionary *checkboxClicked_Dict;
-    UIButton   * checkBox_all;
+   
+    
+   
     NSArray *sectionIndex;
+    UIButton   * checkBox_all;
+   
     UILabel  *name_lbl;
     UIButton   * checkBox;
     UIButton   * editbtn;
     ContactGlobalDataClass *obj;
+    
 }
-@property(nonatomic,retain)NSString *string1;
-
-@property(nonatomic,retain)UITableView *tblContentList;
-@property(strong, nonatomic)UISearchBar *searchBar1;
-@property(strong, nonatomic)UISearchDisplayController *searchBarController;
 
 @property(assign,nonatomic)BOOL isBulkContacts;
+@property(nonatomic,retain)NSString *string1;
 @property (nonatomic,retain) NSMutableDictionary *alphabetsArray;
 @property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 @end

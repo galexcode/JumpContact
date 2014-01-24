@@ -17,10 +17,20 @@
     UIView *topview;
     UILabel *selectAll_lbl;
     UILabel *noofselected;
-    NSArray *namesArry;
-    NSMutableArray *alphabetsArray;
+   
+   
     
+    NSArray *sectionIndex;
+    UIButton   * checkBox_all;
+    
+    UILabel  *name_lbl;
+    UIButton   * checkBox;
+    UIButton   * editbtn;
+    ContactGlobalDataClass *obj;
 }
+@property(nonatomic,retain)NSString *string1;
+@property (nonatomic,retain) NSMutableDictionary *alphabetsArray;
+@property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 
 
 @end

@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface ContactGlobalDataClass : NSObject
+{
+    
+}
 
 @property (nonatomic, retain) NSMutableArray      *contactDetails;
-
-
+@property (nonatomic, retain) NSString      *contactsToBeShared_selected;
+@property (nonatomic, retain) NSString      *recipients_selected;
+@property (nonatomic, retain) NSString      *from_ShareMethodViewController;
 +(ContactGlobalDataClass*)getInstance;
 @end

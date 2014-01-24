@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SelectContact toShareViewController.h"
+#import "SelectRecipientsViewController.h"
 @interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate>{
     
     UILabel *navbartitle;
@@ -18,6 +19,7 @@
     UILabel *recipients_lbl;
     UITextView *addNote_txtview;
     UIScrollView* scrollview;
+    ContactGlobalDataClass *obj;
 }
 
 @end

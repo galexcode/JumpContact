@@ -60,6 +60,7 @@
 		9DF749B21875E73A00CBB110 /* ContactMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF749B11875E73A00CBB110 /* ContactMainViewController.m */; };
 		9DF749B51875E9E700CBB110 /* Min-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF749B41875E9E700CBB110 /* Min-bg.png */; };
 		9DF749B71875EFDA00CBB110 /* seprator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF749B61875EFDA00CBB110 /* seprator.png */; };
+		DF01469918926B0E00EDBE14 /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = DF01469818926B0E00EDBE14 /* Default-568h.png */; };
 		DF4CDCAF188E58A3000B0075 /* ContactsSentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCAE188E58A3000B0075 /* ContactsSentViewController.m */; };
 		DF4CDCB2188E5B94000B0075 /* ContacsSentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCB1188E5B94000B0075 /* ContacsSentDetailsViewController.m */; };
 		DF4CDCB5188E7234000B0075 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB3188E7234000B0075 /* AddressBook.framework */; };
@@ -150,6 +151,8 @@
 		9DF749B11875E73A00CBB110 /* ContactMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactMainViewController.m; sourceTree = "<group>"; };
 		9DF749B41875E9E700CBB110 /* Min-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Min-bg.png"; sourceTree = "<group>"; };
 		9DF749B61875EFDA00CBB110 /* seprator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seprator.png; sourceTree = "<group>"; };
+		DF01469718926A5E00EDBE14 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DF01469818926B0E00EDBE14 /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
 		DF4CDCAD188E58A3000B0075 /* ContactsSentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsSentViewController.h; sourceTree = "<group>"; };
 		DF4CDCAE188E58A3000B0075 /* ContactsSentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsSentViewController.m; sourceTree = "<group>"; };
 		DF4CDCB0188E5B94000B0075 /* ContacsSentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContacsSentDetailsViewController.h; sourceTree = "<group>"; };
@@ -161,7 +164,6 @@
 		DFABF5EE1890E8FA00466CC7 /* done1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done1.png; sourceTree = "<group>"; };
 		DFABF5F11890EC5200466CC7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
 		DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sectionheaderbackground.png; sourceTree = "<group>"; };
-		DFABF5F51890FFF000466CC7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		DFABF5F61891000800466CC7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		DFABF5F71891008700466CC7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		DFABF5F91891073A00466CC7 /* SelectContactsForBackupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactsForBackupViewController.h; sourceTree = "<group>"; };
@@ -275,9 +277,10 @@
 		9DF749751875E70100CBB110 = {
 			isa = PBXGroup;
 			children = (
+				DF01469818926B0E00EDBE14 /* Default-568h.png */,
+				DF01469718926A5E00EDBE14 /* Default-568h@2x.png */,
 				DFABF5F71891008700466CC7 /* Default.png */,
 				DFABF5F61891000800466CC7 /* Default@2x.png */,
-				DFABF5F51890FFF000466CC7 /* Default-568h@2x.png */,
 				9DF749871875E70100CBB110 /* ContactJump */,
 				9DF749B31875E98500CBB110 /* Resources */,
 				9DF749A01875E70200CBB110 /* ContactJumpTests */,
@@ -522,6 +525,7 @@
 				DFABF5F01890E8FA00466CC7 /* done1.png in Resources */,
 				9D00C0D818813AF4002A6E3E /* check-box.png in Resources */,
 				9DF5DDBD187FB14B008B8AB7 /* shareimg.png in Resources */,
+				DF01469918926B0E00EDBE14 /* Default-568h.png in Resources */,
 				9D05B2651881FE0200FD497D /* arrow.png in Resources */,
 				9D00C0D618813AED002A6E3E /* check-box-disable.png in Resources */,
 				9DEDEE08187C5ACC00C809F9 /* edit-icon.png in Resources */,

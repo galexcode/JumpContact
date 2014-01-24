@@ -17,8 +17,10 @@
 @end
 
 @implementation SelectContact_toShareViewController
-@synthesize tblContentList,searchBar1,searchBarController;
+
 @synthesize isBulkContacts,string1;
+static int k=0;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,7 +43,7 @@
     [super viewDidLoad];
    
     obj=[ContactGlobalDataClass getInstance];
-    
+    [obj setFrom_ShareMethodViewController:@"0"];
    
     sectionIndex = [NSArray arrayWithObjects:
                         @"A", @"B", @"C", @"D",
@@ -112,9 +114,6 @@
     
 #pragma mark setting button.
     UIButton *setting_btn =[UIButton buttonWithType:UIButtonTypeCustom];
-//    [setting_btn setTitle:@"Done" forState:UIControlStateNormal];
-//    setting_btn.titleLabel.font=[UIFont fontWithName:@"AmericanTypewriter" size:18];
-//    [setting_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [setting_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"done1" ofType:@"png"]] forState:UIControlStateNormal];
     [setting_btn addTarget:self action:@selector(done_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:setting_btn];
@@ -137,7 +136,7 @@
     [checkBox_all setSelected:NO];
     [topview addSubview:checkBox_all];
     
-    isSelectAll=YES;
+    
     
 #pragma mark select all label.
     selectAll_lbl=[[UILabel alloc] init];
@@ -157,7 +156,7 @@
     
 #pragma mark number of selected contacts label.
     noofselected=[[UILabel alloc] init];
-    noofselected.text=[NSString stringWithFormat:@"100 Contacts Selected"];
+    noofselected.text=@" ";
     noofselected.textAlignment=1;
     noofselected.textColor= [UIColor blackColor];
     noofselected.backgroundColor=[UIColor clearColor];
@@ -196,28 +195,33 @@
         checkBox_all.frame=CGRectMake(20,15, 15, 15);
         selectAll_lbl.frame=CGRectMake(40,8,80,30);
         checkBox_all1.frame=CGRectMake(40,8,80,30);
-        noofselected.frame=CGRectMake(175,8,135,25);
+        noofselected.frame=CGRectMake(185,10,135,25);
         tableview.frame=CGRectMake(0, 136, 320, 432);
 
         
-    }else{
-        nav_img.frame=CGRectMake(0, 0, 320, 80);
-        mainbg_img.frame=CGRectMake(0,0, 320, 480);
-        setting_btn.frame=CGRectMake(280,29+5, 22,22);
-        back_btn.frame=CGRectMake(15, 13, 33, 54);
-        navbartitle.frame=CGRectMake(0,20,320,50);
-      
-        topview.frame=CGRectMake(0, 81, 320, 45);
-        checkBox_all.frame=CGRectMake(20,15, 15, 15);
-        selectAll_lbl.frame=CGRectMake(40,8,80,30);
-        checkBox_all1.frame=CGRectMake(40,8,80,30);
-        noofselected.frame=CGRectMake(175,8,135,25);
-        tableview.frame=CGRectMake(0, 126.5, 320, 353);
+    }
+    else
+    {
+        
+            nav_img.frame=CGRectMake(0, 0, 320, 80);
+            mainbg_img.frame=CGRectMake(0,0, 320, 480);
+            setting_btn.frame=CGRectMake(280,29+5, 22,22);
+            back_btn.frame=CGRectMake(15, 13, 33, 54);
+            navbartitle.frame=CGRectMake(0,20,320,50);
+            
+            topview.frame=CGRectMake(0, 81, 320, 45);
+            checkBox_all.frame=CGRectMake(20,15, 15, 15);
+            selectAll_lbl.frame=CGRectMake(40,8,80,30);
+            checkBox_all1.frame=CGRectMake(40,8,80,30);
+            noofselected.frame=CGRectMake(185,10,135,25);
+            tableview.frame=CGRectMake(0, 126.5, 320, 353);
 
+       
+       
         
     }
 
-	// Do any additional setup after loading the view.
+	
 }
 
 -(void)Setting_btnAction
@@ -239,17 +243,12 @@
 
 - (void)viewDidUnload {
     
-    [self setTblContentList:nil];
-    [self setSearchBar1:nil];
-    [self setSearchBarController:nil];
+    
     [super viewDidUnload];
 
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
+
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -277,9 +276,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:nil];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Nil];
-        
-        
-        
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
@@ -310,7 +307,7 @@
         [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
-        isSelectAll=NO;
+       
         
         editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
         editbtn.tag=indexPath.row;
@@ -319,9 +316,8 @@
         editbtn.backgroundColor=[UIColor clearColor];
         //[cell.contentView addSubview:editbtn];
         [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
-      //  [editbtn addTarget:self action:@selector(editbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [editbtn addTarget:self action:@selector(editbtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView=editbtn;
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     
     
@@ -364,15 +360,34 @@
          //[editButton setHidden:YES];
         [cell.accessoryView setHidden:YES];
          [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
-    } else {
+        if (k>0) {
+            k--;
+        }
+    
+    }
+    else {
         
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
          //[editButton setHidden:NO];
         [cell.accessoryView setHidden:NO];
+        k++;
     }
 
+    if (k==0) {
+        k=0;
+        noofselected.text=@" ";
+    } else {
+        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
+    }
     
+    if (k==[obj.contactDetails count]) {
+        [checkBox_all setSelected:YES];
+    }
+    else
+    {
+        [checkBox_all setSelected:NO];
+    }
      NSLog(@"CHECK BOX -----%@",self.checkboxClicked_Dict);
    
 }
@@ -396,8 +411,8 @@
     }
     else
     {
-        cell = (UITableViewCell*)[tappedButton superview];
-        tv=(UITableView *)[cell.contentView superview];
+        cell = (UITableViewCell*)[[tappedButton superview] superview];
+        tv=(UITableView *)[[cell.contentView superview] superview];
     }
     
     
@@ -411,6 +426,10 @@
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"0"];
         //[editButton setHidden:YES];
         [cell.accessoryView setHidden:YES];
+        if (k>0) {
+            k--;
+        }
+        
     }
     else {
         
@@ -419,35 +438,82 @@
         //[editButton setHidden:NO];
         
         [cell.accessoryView setHidden:NO];
+        k++;
         
 }
+    if (k==0) {
+        k=0;
+        noofselected.text=@" ";
+    } else {
+        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
+    }
     
-    
+    if (k==[obj.contactDetails count]) {
+        [checkBox_all setSelected:YES];
+    }
+    else
+    {
+        [checkBox_all setSelected:NO];
+    }
     NSLog(@"CHECK BOX -----%@",self.checkboxClicked_Dict);
     
 }
-//-(void)editbtnClicked:(id)sender
-//{
-//    
-//    
-//    NSLog(@"%ld",(long)[sender tag]);
-//}
+-(void)editbtnClicked:(id)sender event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:tableview];
+    NSIndexPath *indexPath = [tableview indexPathForRowAtPoint: currentTouchPosition];
+    if (indexPath != nil){
+        [self tableView: tableview accessoryButtonTappedForRowWithIndexPath: indexPath];
+    }
+    
+    NSLog(@"%ld",(long)[sender tag]);
+}
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"gdhd------%ld",(long)indexPath.row);
+    NSLog(@"gdhd------%ld",(long)indexPath.section);
 }
 
--(void)done_btnAction{
+-(void)done_btnAction
+{
     
-    if (isBulkContacts==NO) {
-        SelectRecipientsViewController *recipients=[[SelectRecipientsViewController alloc]init];
-        [self.navigationController pushViewController:recipients animated:YES];
-    }else{
-        ContactShareViaIDViewController *ShareViaID_Cls=[[ContactShareViaIDViewController alloc]init];
-        [self.navigationController pushViewController:ShareViaID_Cls animated:YES];
+    if (k==0 || [noofselected.text isEqualToString:@" "])
+    {
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please select atleast one contact" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
         
     }
+    else
+    {
+        [obj setContactsToBeShared_selected:[NSString stringWithFormat:@"%d",k]];
+        if (isBulkContacts==NO)
+        {
+//            if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+//            {
+                SelectRecipientsViewController *recipients=[[SelectRecipientsViewController alloc]init];
+                [self.navigationController pushViewController:recipients animated:YES];
+//            }
+//            else  if ([obj.from_ShareMethodViewController isEqualToString:@"1"])
+//            {
+//                SelectShareMethodViewController *shareMethod_cls=[[SelectShareMethodViewController alloc]init];
+//                [self.navigationController pushViewController:shareMethod_cls animated:YES];
+//                
+//            }
+            
+            
+        }
+        else
+        {
+            ContactShareViaIDViewController *ShareViaID_Cls=[[ContactShareViaIDViewController alloc]init];
+            [self.navigationController pushViewController:ShareViaID_Cls animated:YES];
+            
+        }
+        
+        
+    }
+    
  }
 
 
@@ -468,20 +534,23 @@
             }
            
         }
-       
+        k=0;
+        noofselected.text=@" ";
        
     }
     else {
         
-
+        
         [tappedButton setSelected:YES];
         for (int i=0; i<[[self.alphabetsArray allKeys]  count]; i++) {
             for (int j=0; j<[[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:i]]] count]; j++) {
                 [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:i]]] replaceObjectAtIndex:j withObject:@"1"];
+                
             }
             
         }
-        
+        k=(int)[obj.contactDetails count];
+        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
     }
     
     

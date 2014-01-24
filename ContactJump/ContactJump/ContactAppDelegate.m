@@ -24,7 +24,12 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
+        
+        self.window.clipsToBounds =YES;
+       self.window.frame =  CGRectMake(0,0,self.window.frame.size.width,self.window.frame.size.height+20);
+       
+    }
     ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
     
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,NULL);
