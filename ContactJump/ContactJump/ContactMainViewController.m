@@ -237,9 +237,162 @@
         seprator_image6.frame=CGRectMake(0, 392, 320, 2);
         ContactBackup_btn.frame=CGRectMake(46.75,417.25, 226.5,39.5);
     }
-	// Do any additional setup after loading the view.
+    
+    
+    
+    [self getPersonOutOfAddressBook];
+    
+
 }
 
+
+- (void)getPersonOutOfAddressBook
+{
+    
+    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
+    
+    
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    __block BOOL accessGranted = NO;
+    
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined)
+    {
+        NSLog(@"kABAuthorizationStatusNotDetermined");
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            accessGranted = granted;
+            dispatch_semaphore_signal(sema);
+        });
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        dispatch_release(sema);
+    }
+    else  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+    {
+        NSLog(@"kABAuthorizationStatusAuthorized");
+        accessGranted = YES;
+    }
+    
+    if (accessGranted) {
+        CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+        CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+        
+        
+        NSMutableArray *contacts = [[NSMutableArray alloc] init];
+        
+        
+        for (int i = 0; i < nPeople; i++)
+        {
+             Person *person = [[Person alloc] init];
+             ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
+            
+            
+            NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
+            NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
+            NSLog(@"Name %@", firstName);
+
+            person.firstName = firstName;
+            person.lastName = lastName;
+            
+            ABMultiValueRef phones = ABRecordCopyValue(ref, kABPersonPhoneProperty);
+            ABMultiValueRef emails = ABRecordCopyValue(ref, kABPersonEmailProperty);
+            
+            NSUInteger j = 0;
+            for(j = 0; j < ABMultiValueGetCount(emails); j++)
+            {
+                
+        
+               
+                NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
+                if (j == 0)
+                {
+                    person.homeEmail = email;
+                    NSLog(@"person.homeEmail = %@ ", person.homeEmail);
+                }
+                else if (j==1)
+                {
+                    person.workEmail = email;
+                }
+               
+                
+            }
+            NSLog(@"PHONE NUMBERS COUNT %ld",ABMultiValueGetCount(phones));
+            for(j = 0; j < ABMultiValueGetCount(phones); j++)
+            {
+                
+                
+               
+                NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
+                if (j == 0)
+                {
+                    [person.phoneNumber_home addObject:phone];
+                    
+                }
+                else if (j==1)
+                {
+                    person.phoneNumber_Work = phone;
+                }
+                else if (j==2)
+                {
+                    person.phoneNumber_iPhone=phone;
+                }
+                else if (j==3)
+                {
+                    person.phoneNumber_mobile=phone;
+                }
+                else if (j==4)
+                {
+                    person.phoneNumber_main=phone;
+                }
+                else if (j==5)
+                {
+                    person.phoneNumber_HomeFax=phone;
+                }
+                else if (j==6)
+                {
+                    person.phoneNumber_WorkFax=phone;
+                }
+                else if (j==7)
+                {
+                    person.phoneNumber_Pager=phone;
+                }
+                else if (j==8)
+                {
+                    person.phoneNumber_other=phone;
+                }
+                else if (j==9)
+                {
+                    [person.phoneNumber_home addObject:phone];
+                }
+
+              
+            }
+            [contacts addObject:person];
+            
+        }
+        CFRelease(addressBook);
+        
+        obj.contactDetails=[[NSMutableArray alloc] init];
+        obj.firstNameArr=[[NSMutableArray alloc] init];
+        [obj setContactDetails:contacts];
+        NSLog(@"%@",obj.contactDetails);
+        
+        
+        
+        for (int p=0; p<[obj.contactDetails count]; p++) {
+            Person *per=[obj.contactDetails objectAtIndex:p];
+            if ([per.firstName length]==0) {
+                [obj.firstNameArr addObject:@"#"];
+            } else {
+                [obj.firstNameArr addObject:per.firstName];
+            }
+            
+        }
+    }
+
+   
+    
+ 
+}
 - (void)ContactBackUp_btnAction{
 
     

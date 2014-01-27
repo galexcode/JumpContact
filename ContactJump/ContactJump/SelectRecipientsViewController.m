@@ -50,7 +50,7 @@ static int k=0;
     BOOL found;
     
     // Loop through the books and create our keys
-    for (NSString *chr in obj.contactDetails)
+    for (NSString *chr in obj.firstNameArr)
     {
         NSString *c = [chr substringToIndex:1];
         
@@ -73,7 +73,7 @@ static int k=0;
     }
     
     
-    for (NSString *contct_name in obj.contactDetails)
+    for (NSString *contct_name in obj.firstNameArr)
     {
         
         
@@ -360,7 +360,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.contactDetails count]) {
+    if (k==[obj.firstNameArr count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -427,7 +427,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.contactDetails count]) {
+    if (k==[obj.firstNameArr count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -491,8 +491,8 @@ static int k=0;
             }
             
         }
-        k=(int)[obj.contactDetails count];
-        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
+        k=(int)[obj.firstNameArr count];
+        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.firstNameArr count]];
     }
     
     

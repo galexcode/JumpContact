@@ -30,62 +30,7 @@
        self.window.frame =  CGRectMake(0,0,self.window.frame.size.width,self.window.frame.size.height+20);
        
     }
-    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
-    
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,NULL);
-    __block BOOL accessGranted = NO;
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined)
-    {
-        NSLog(@"kABAuthorizationStatusNotDetermined");
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-            accessGranted = granted;
-            dispatch_semaphore_signal(sema);
-        });
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        dispatch_release(sema);
-    }
-    else  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-    {
-         NSLog(@"kABAuthorizationStatusAuthorized");
-        accessGranted = YES;
-    }
-    
-    if (accessGranted) {
-        CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
-        CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
-        
-        NSMutableArray *contacts = [[NSMutableArray alloc] init];
-        
-        
-        for (int i = 0; i < nPeople; i++)
-        {
-            ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
-            NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
-            NSLog(@"Name %@", firstName);
-            if (firstName.length==0 ) {
-                [contacts addObject:@"##"];
-            } else {
-                [contacts addObject:firstName];
-            }
-            
-            ABMultiValueRef phones = ABRecordCopyValue(ref, kABPersonPhoneProperty);
-            for(CFIndex j = 0; j < ABMultiValueGetCount(phones); j++)
-            {
-                
-                CFStringRef locLabel1 = ABMultiValueCopyLabelAtIndex(phones, j);
-                NSString *phoneLabel1 =(__bridge NSString*) ABAddressBookCopyLocalizedLabel(locLabel1);
-                
-                NSLog(@"  ### %@  --- %@ ### )", locLabel1, phoneLabel1);
-                
-            }
-        }
-        NSLog(@"%@",contacts);
-        obj.contactDetails=[[NSMutableArray alloc] init];
-        [obj setContactDetails:contacts];
-    }
-    
-    return YES;
+       return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

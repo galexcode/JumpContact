@@ -70,6 +70,8 @@
 		DFABF5F21890EC5200466CC7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F11890EC5200466CC7 /* back-button.png */; };
 		DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */; };
 		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
+		DFB94A1018963994005F768B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A0F18963994005F768B /* Person.m */; };
+		DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +170,10 @@
 		DFABF5F71891008700466CC7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		DFABF5F91891073A00466CC7 /* SelectContactsForBackupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactsForBackupViewController.h; sourceTree = "<group>"; };
 		DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactsForBackupViewController.m; sourceTree = "<group>"; };
+		DFB94A0E18963994005F768B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		DFB94A0F18963994005F768B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		DFB94A1218966A28005F768B /* ContactEditDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditDetailsViewController.h; sourceTree = "<group>"; };
+		DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactEditDetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +227,8 @@
 				9DF749911875E70100CBB110 /* ContactAppDelegate.m */,
 				DF4CDCB7188E779B000B0075 /* ContactGlobalDataClass.h */,
 				DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */,
+				DFB94A0E18963994005F768B /* Person.h */,
+				DFB94A0F18963994005F768B /* Person.m */,
 			);
 			name = "App Delegate Class";
 			sourceTree = "<group>";
@@ -277,6 +285,7 @@
 		9DF749751875E70100CBB110 = {
 			isa = PBXGroup;
 			children = (
+				DFB94A1118965C62005F768B /* EditContactDetails */,
 				DF01469818926B0E00EDBE14 /* Default-568h.png */,
 				DF01469718926A5E00EDBE14 /* Default-568h@2x.png */,
 				DFABF5F71891008700466CC7 /* Default.png */,
@@ -433,6 +442,15 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		DFB94A1118965C62005F768B /* EditContactDetails */ = {
+			isa = PBXGroup;
+			children = (
+				DFB94A1218966A28005F768B /* ContactEditDetailsViewController.h */,
+				DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */,
+			);
+			name = EditContactDetails;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -569,7 +587,9 @@
 				9D05B26818820BF500FD497D /* ContactDetailesViewController.m in Sources */,
 				9DF749B21875E73A00CBB110 /* ContactMainViewController.m in Sources */,
 				9DF7498E1875E70100CBB110 /* main.m in Sources */,
+				DFB94A1018963994005F768B /* Person.m in Sources */,
 				9D00C0DD18815316002A6E3E /* ContactGetSelectMethodViewController.m in Sources */,
+				DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */,
 				9D05B2601881F82300FD497D /* ContactReceivedViewController.m in Sources */,
 				9DF749921875E70100CBB110 /* ContactAppDelegate.m in Sources */,
 				9D0EFF29187884A9002A22CB /* SendContactsViewController.m in Sources */,
@@ -638,8 +658,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -657,7 +677,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
+				PROVISIONING_PROFILE = "837E5B2D-FA24-43B9-8002-86AEB5D92ED2";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -679,8 +699,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -691,7 +711,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
+				PROVISIONING_PROFILE = "837E5B2D-FA24-43B9-8002-86AEB5D92ED2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -701,14 +721,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ContactJump/ContactJump-Prefix.pch";
 				INFOPLIST_FILE = "ContactJump/ContactJump-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
+				PROVISIONING_PROFILE = "837E5B2D-FA24-43B9-8002-86AEB5D92ED2";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -718,14 +738,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dex Consulting (8E6M7S3Q9P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satayender Chaudhary (CVU3K3489X)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ContactJump/ContactJump-Prefix.pch";
 				INFOPLIST_FILE = "ContactJump/ContactJump-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2009861C-2C6C-42A3-9FDD-9EBF17496138";
+				PROVISIONING_PROFILE = "837E5B2D-FA24-43B9-8002-86AEB5D92ED2";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

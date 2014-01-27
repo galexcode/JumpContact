@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SelectShareMethodViewController.h"
-@interface SelectContact_toShareViewController : UIViewController< UITableViewDataSource, UITableViewDelegate>
+#import "ContactEditDetailsViewController.h"
+@interface SelectContact_toShareViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *contentList;
     NSMutableArray *filteredContentList;
@@ -37,6 +38,7 @@
 
 @property(assign,nonatomic)BOOL isBulkContacts;
 @property(nonatomic,retain)NSString *string1;
+
 @property (nonatomic,retain) NSMutableDictionary *alphabetsArray;
 @property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 @end
