@@ -30,7 +30,7 @@
 {
     
     obj=[ContactGlobalDataClass getInstance];
-     [obj setFrom_ShareMethodViewController:@"1"]; 
+     //[obj setFrom_ShareMethodViewController:@"0"];
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -182,6 +182,8 @@
     addNote_txtview.delegate=self;
     addNote_txtview.textColor = [UIColor lightGrayColor];
     addNote_txtview.font = [UIFont fontWithName:@"AmericanTypewriter" size:12];
+    addNote_txtview.keyboardType=UIKeyboardTypeDefault;
+    addNote_txtview.returnKeyType=UIReturnKeyDefault;
     [scrollview addSubview:addNote_txtview];
     
 #pragma mark SendwithImage Button
@@ -229,6 +231,17 @@
     sendwithoutbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
     [sendwithoutImage_btn addSubview:sendwithoutbtnsubtitle_lbl];
     
+    bg=[[UIView alloc] init];
+    
+    if (IS_IPHONE_5) {
+        bg.frame=CGRectMake(0, 90, 320, 568-90);
+    } else {
+        bg.frame=CGRectMake(0, 80, 320, 400);
+    }
+    bg.backgroundColor=[UIColor clearColor];
+    
+    [bg setHidden:YES];
+    [self.view addSubview:bg];
     
     if (IS_IPHONE_5) {
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
@@ -282,14 +295,24 @@
 
 	// Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    selectContact_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.contactsToBeShared_selected];
 
+    recipients_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.recipients_selected];
+}
 -(void)Setting_btnAction:(id)sender
 {
-    
+    if ([obj.from_ShareMethodViewController isEqualToString:@"0"]) {
+        obj.vcs =  [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [self.navigationController setViewControllers:obj.vcs animated:NO];
+    }
     [obj setFrom_ShareMethodViewController:@"1"];
+   
     if([sender tag]==1)
     {
-        
+       
+    
              for (UIViewController *controller in self.navigationController.viewControllers)
              {
                  if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
@@ -305,12 +328,12 @@
     else if([sender tag]==2)
     {
         
-        for (UIViewController *controller in self.navigationController.viewControllers)
+        for (UIViewController *controller in obj.vcs)
         {
             if ([controller isKindOfClass:[SelectRecipientsViewController class]]) {
                 
                 
-                [self.navigationController popToViewController:controller
+                [self.navigationController pushViewController:controller
                                                       animated:YES];
                 break;
             }
@@ -326,25 +349,28 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
     if([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
-        scrollview3.scrollEnabled=YES;
+        //[textView resignFirstResponder];
         
-        
-        [scrollview3 setContentOffset:CGPointMake(0, 0) animated:YES];
-
-        if(textView.text.length == 0){
-            textView.textColor = [UIColor lightGrayColor];
-            textView.text = @"Add Note";
-            [textView resignFirstResponder];
-        }
-        return NO;
+//        UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
+//        scrollview3.scrollEnabled=YES;
+//        
+//        
+//        [scrollview3 setContentOffset:CGPointMake(0, 0) animated:YES];
+//
+//        if(textView.text.length == 0){
+//            textView.textColor = [UIColor lightGrayColor];
+//            textView.text = @"Add Note";
+//            [textView resignFirstResponder];
+//        }
+        return YES;
     }
     
     return YES;
+    
 }
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -358,6 +384,9 @@
         textView.text = @"";
     }
     textView.textColor = [UIColor whiteColor];
+    
+    [bg setHidden:NO];
+    
     return YES;
 }
 
@@ -368,6 +397,7 @@
         textView.textColor = [UIColor lightGrayColor];
         textView.text = @"Add Note";
         [textView resignFirstResponder];
+        [bg setHidden:YES];
         UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
         scrollview3.scrollEnabled=YES;
         [scrollview3 setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -376,6 +406,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
     [addNote_txtview resignFirstResponder];
+    [bg setHidden:YES];
     UIScrollView *scrollview3=(UIScrollView *)[self.view viewWithTag:111];
     scrollview3.scrollEnabled=YES;
     

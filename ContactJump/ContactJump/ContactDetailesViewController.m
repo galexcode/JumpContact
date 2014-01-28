@@ -163,7 +163,7 @@
         
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
         nav_img.frame=CGRectMake(0,0,320,90);
-        logout_btn.frame=CGRectMake(290,14+20, 21,18.5);
+        logout_btn.frame=CGRectMake(240,0, 90,90);
         back_btn.frame=CGRectMake(15, 14, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
         sendwithImage_btn.frame=CGRectMake(16.66,508, 135,39.5);
@@ -172,7 +172,7 @@
     }else{
         mainbg_img.frame=CGRectMake(0,0, 320, 480);
         nav_img.frame=CGRectMake(0,0,320,80);
-        logout_btn.frame=CGRectMake(290,14+20, 21,18.5);
+        logout_btn.frame=CGRectMake(240,0, 90,90);
         back_btn.frame=CGRectMake(15, 13, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
         sendwithImage_btn.frame=CGRectMake(16.66,410, 135,39.5);

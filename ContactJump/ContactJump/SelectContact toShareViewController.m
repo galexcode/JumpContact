@@ -40,7 +40,7 @@ static int k=0;
         isBulkContacts=YES;
     }
     
-    [super viewDidLoad];
+    
    
     obj=[ContactGlobalDataClass getInstance];
     [obj setFrom_ShareMethodViewController:@"0"];
@@ -61,9 +61,9 @@ static int k=0;
     BOOL found;
     
   
-    for (NSString *chr in obj.firstNameArr)
+    for (Person *chr in obj.contactDetails)
     {
-        NSString *c = [chr substringToIndex:1];
+        NSString *c = [chr.firstName substringToIndex:1];
         
         found = NO;
         
@@ -84,12 +84,12 @@ static int k=0;
     }
 
     NSLog(@"---------------\n%@\n---------------",self.alphabetsArray);
-    for (NSString *contct_name in obj.firstNameArr)
+    for (Person *person in obj.contactDetails)
     {
         
        
-        [[self.alphabetsArray objectForKey:[contct_name substringToIndex:1]] addObject:contct_name];
-        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[contct_name substringToIndex:1]]] addObject:@"0"];
+        [[self.alphabetsArray objectForKey:[person.firstName substringToIndex:1]] addObject:person];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[person.firstName substringToIndex:1]]] addObject:@"0"];
     }
     
     
@@ -108,7 +108,7 @@ static int k=0;
     [mainbg_img addSubview:nav_img];
     
 #pragma mark back button.
-    UIButton *back_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+   back_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [back_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"back-button" ofType:@"png"]] forState:UIControlStateNormal];
     [back_btn addTarget:self action:@selector(back_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:back_btn];
@@ -188,7 +188,7 @@ static int k=0;
     if (IS_IPHONE_5) {
         nav_img.frame=CGRectMake(0, 0, 320, 90);
         mainbg_img.frame=CGRectMake(0,0, 320, 568);
-        setting_btn.frame=CGRectMake(280,35, 22,22);
+        setting_btn.frame=CGRectMake(230,0, 90,90);
         back_btn.frame=CGRectMake(15, 14, 33, 54);
         navbartitle.frame=CGRectMake(0,20,320,50);
       
@@ -206,7 +206,7 @@ static int k=0;
         
             nav_img.frame=CGRectMake(0, 0, 320, 80);
             mainbg_img.frame=CGRectMake(0,0, 320, 480);
-            setting_btn.frame=CGRectMake(280,29+5, 22,22);
+            setting_btn.frame=CGRectMake(230,0, 90,90);
             back_btn.frame=CGRectMake(15, 13, 33, 54);
             navbartitle.frame=CGRectMake(0,20,320,50);
             
@@ -224,16 +224,23 @@ static int k=0;
 
 	
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    {
+      [back_btn setHidden:NO];
+    }
+    else
+    {
+        [back_btn setHidden:YES];
+    }
+}
 -(void)Setting_btnAction
 {
     NSLog(@"BtnAction");
 }
 
--(void)back_btnAction
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -281,7 +288,7 @@ static int k=0;
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
-    NSLog(@"sssssss----\n%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
+    NSLog(@"sssssss----\n%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] firstName]);
     
 
     
@@ -290,7 +297,8 @@ static int k=0;
         name_lbl.frame=CGRectMake(60, 10, 150, 30);
         name_lbl.textAlignment=0;
         [name_lbl setTag:1];
-        name_lbl.text=[NSString stringWithFormat:@"%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
+    Person *p=[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        name_lbl.text=[NSString stringWithFormat:@"%@",p.firstName];
         name_lbl.textColor= [UIColor blackColor];
         name_lbl.backgroundColor=[UIColor clearColor];
         name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
@@ -382,7 +390,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.firstNameArr count]) {
+    if (k==[obj.contactDetails count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -449,7 +457,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.firstNameArr count]) {
+    if (k==[obj.contactDetails count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -474,11 +482,16 @@ static int k=0;
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    
-    ContactEditDetailsViewController *edit_cls=[[ContactEditDetailsViewController alloc] init];
+    Person *person = [[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+   
+   
+    ContactEditDetailsViewController *edit_cls=[[ContactEditDetailsViewController alloc] initWithPerson:person];
     [self.navigationController pushViewController:edit_cls animated:YES];
 }
-
+-(void)back_btnAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void)done_btnAction
 {
     
@@ -493,17 +506,28 @@ static int k=0;
         [obj setContactsToBeShared_selected:[NSString stringWithFormat:@"%d",k]];
         if (isBulkContacts==NO)
         {
-//            if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
-//            {
+            if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+            {
                 SelectRecipientsViewController *recipients=[[SelectRecipientsViewController alloc]init];
                 [self.navigationController pushViewController:recipients animated:YES];
-//            }
-//            else  if ([obj.from_ShareMethodViewController isEqualToString:@"1"])
-//            {
-//                SelectShareMethodViewController *shareMethod_cls=[[SelectShareMethodViewController alloc]init];
-//                [self.navigationController pushViewController:shareMethod_cls animated:YES];
-//                
-//            }
+                
+            }
+            else  if ([obj.from_ShareMethodViewController isEqualToString:@"1"])
+            {
+               
+                for (UIViewController *controller in obj.vcs)
+                {
+                    if ([controller isKindOfClass:[SelectShareMethodViewController class]]) {
+                        
+                        
+                        [self.navigationController pushViewController:controller
+                                                              animated:YES];
+                        
+                        break;
+                    }
+                }
+                
+            }
             
             
         }
@@ -552,8 +576,8 @@ static int k=0;
             }
             
         }
-        k=(int)[obj.firstNameArr count];
-        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.firstNameArr count]];
+        k=(int)[obj.contactDetails count];
+        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
     }
     
     

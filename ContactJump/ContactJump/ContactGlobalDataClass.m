@@ -11,7 +11,8 @@
 @implementation ContactGlobalDataClass
 
 @synthesize contactDetails,contactsToBeShared_selected,recipients_selected,from_ShareMethodViewController;
-@synthesize firstNameArr;
+@synthesize vcs;
+
 
 static ContactGlobalDataClass *instance =nil;
 +(ContactGlobalDataClass *)getInstance

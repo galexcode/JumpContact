@@ -15,7 +15,6 @@
 		9D05B2631881FC7C00FD497D /* inbox-ixon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D05B2621881FC7C00FD497D /* inbox-ixon.png */; };
 		9D05B2651881FE0200FD497D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D05B2641881FE0200FD497D /* arrow.png */; };
 		9D05B26818820BF500FD497D /* ContactDetailesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D05B26718820BF500FD497D /* ContactDetailesViewController.m */; };
-		9D05B26B18820CEF00FD497D /* logount-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D05B26A18820CEF00FD497D /* logount-icon.png */; };
 		9D05B26D188213B000FD497D /* text=area.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D05B26C188213B000FD497D /* text=area.png */; };
 		9D0742641877DAD80046DA0B /* Header-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0742631877DAD80046DA0B /* Header-logo.png */; };
 		9D0EFF29187884A9002A22CB /* SendContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0EFF28187884A9002A22CB /* SendContactsViewController.m */; };
@@ -66,7 +65,8 @@
 		DF4CDCB5188E7234000B0075 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB3188E7234000B0075 /* AddressBook.framework */; };
 		DF4CDCB6188E7234000B0075 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */; };
 		DF4CDCB9188E779B000B0075 /* ContactGlobalDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */; };
-		DFABF5F01890E8FA00466CC7 /* done1.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5EE1890E8FA00466CC7 /* done1.png */; };
+		DF6487D718979BB00007E98F /* logount-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6487D618979BB00007E98F /* logount-icon.png */; };
+		DF6487D918979BD70007E98F /* done1.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6487D818979BD70007E98F /* done1.png */; };
 		DFABF5F21890EC5200466CC7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F11890EC5200466CC7 /* back-button.png */; };
 		DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */; };
 		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
@@ -96,7 +96,6 @@
 		9D05B2641881FE0200FD497D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		9D05B26618820BF500FD497D /* ContactDetailesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetailesViewController.h; sourceTree = "<group>"; };
 		9D05B26718820BF500FD497D /* ContactDetailesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetailesViewController.m; sourceTree = "<group>"; };
-		9D05B26A18820CEF00FD497D /* logount-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logount-icon.png"; sourceTree = "<group>"; };
 		9D05B26C188213B000FD497D /* text=area.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text=area.png"; sourceTree = "<group>"; };
 		9D0742631877DAD80046DA0B /* Header-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Header-logo.png"; sourceTree = "<group>"; };
 		9D0EFF27187884A9002A22CB /* SendContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendContactsViewController.h; sourceTree = "<group>"; };
@@ -163,7 +162,8 @@
 		DF4CDCB4188E7234000B0075 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		DF4CDCB7188E779B000B0075 /* ContactGlobalDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGlobalDataClass.h; sourceTree = "<group>"; };
 		DF4CDCB8188E779B000B0075 /* ContactGlobalDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGlobalDataClass.m; sourceTree = "<group>"; };
-		DFABF5EE1890E8FA00466CC7 /* done1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done1.png; sourceTree = "<group>"; };
+		DF6487D618979BB00007E98F /* logount-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logount-icon.png"; sourceTree = "<group>"; };
+		DF6487D818979BD70007E98F /* done1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done1.png; sourceTree = "<group>"; };
 		DFABF5F11890EC5200466CC7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
 		DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sectionheaderbackground.png; sourceTree = "<group>"; };
 		DFABF5F61891000800466CC7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -375,11 +375,11 @@
 		9DF749B31875E98500CBB110 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DF6487D818979BD70007E98F /* done1.png */,
+				DF6487D618979BB00007E98F /* logount-icon.png */,
 				DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */,
 				DFABF5F11890EC5200466CC7 /* back-button.png */,
-				DFABF5EE1890E8FA00466CC7 /* done1.png */,
 				9D05B26C188213B000FD497D /* text=area.png */,
-				9D05B26A18820CEF00FD497D /* logount-icon.png */,
 				9D05B2641881FE0200FD497D /* arrow.png */,
 				9D05B2621881FC7C00FD497D /* inbox-ixon.png */,
 				9D00C0D918813C44002A6E3E /* text-box.png */,
@@ -534,17 +534,17 @@
 				9DEDEE04187C531300C809F9 /* cehck-box-active.png in Resources */,
 				9D9152D61877329600890E70 /* get-contacts.png in Resources */,
 				9D05B2631881FC7C00FD497D /* inbox-ixon.png in Resources */,
+				DF6487D918979BD70007E98F /* done1.png in Resources */,
 				9D8F7A4F1885BF310094BE0F /* popbtn.png in Resources */,
 				9D7C8BCC1877DDE90053BE91 /* setting-icon.png in Resources */,
 				9D477ACA187A64030012EBB0 /* search-box-1.png in Resources */,
-				9D05B26B18820CEF00FD497D /* logount-icon.png in Resources */,
 				9D3A396B187E6D21002ABE81 /* add-note-box.png in Resources */,
 				9D3A3967187E6D15002ABE81 /* send-to-icon.png in Resources */,
-				DFABF5F01890E8FA00466CC7 /* done1.png in Resources */,
 				9D00C0D818813AF4002A6E3E /* check-box.png in Resources */,
 				9DF5DDBD187FB14B008B8AB7 /* shareimg.png in Resources */,
 				DF01469918926B0E00EDBE14 /* Default-568h.png in Resources */,
 				9D05B2651881FE0200FD497D /* arrow.png in Resources */,
+				DF6487D718979BB00007E98F /* logount-icon.png in Resources */,
 				9D00C0D618813AED002A6E3E /* check-box-disable.png in Resources */,
 				9DEDEE08187C5ACC00C809F9 /* edit-icon.png in Resources */,
 				9D3A3969187E6D1A002ABE81 /* header-bg.png in Resources */,

@@ -64,12 +64,15 @@
     [first_Name setBackgroundColor:[UIColor clearColor]];
     first_Name.textColor=[UIColor whiteColor];
     first_Name.placeholder=@"First name";
+    first_Name.text=fname;
     first_Name.delegate = self;
     [mainbg_img addSubview:first_Name];
     
     last_Name=[[UITextField alloc] init];
     [last_Name setBackgroundColor:[UIColor clearColor]];
     last_Name.placeholder=@"last name";
+    last_Name.textColor=[UIColor whiteColor];
+    last_Name.text=lname;
     last_Name.delegate = self;
     [mainbg_img addSubview:last_Name];
     
@@ -77,6 +80,8 @@
     company_Name=[[UITextField alloc] init];
     [company_Name setBackgroundColor:[UIColor clearColor]];
     company_Name.placeholder=@"Company name";
+    company_Name.textColor=[UIColor whiteColor];
+    company_Name.text=cname;
     company_Name.delegate = self;
     [mainbg_img addSubview:company_Name];
     
@@ -85,7 +90,7 @@
     tblVw.backgroundColor=[UIColor whiteColor];
     tblVw.delegate=self;
     tblVw.dataSource=self;
-    [tblVw setSeparatorColor:[UIColor blueColor]];
+    [tblVw setSeparatorColor:[UIColor clearColor]];
     [mainbg_img addSubview:tblVw];
     
     
@@ -98,7 +103,7 @@
         first_Name.frame=CGRectMake(130,100,180,30);
         last_Name.frame=CGRectMake(130,135,180,30);
         company_Name.frame=CGRectMake(130,170,180,30);
-        tblVw.frame=CGRectMake(0,170,320,290);
+        tblVw.frame=CGRectMake(0,210,320,358);
         
     }
     else
@@ -115,7 +120,43 @@
         tblVw.frame=CGRectMake(0,200,320,280);
     }
 }
-
+- (id)initWithPerson:(Person *)person
+{
+    //self = [super initWithNibName:@"ContactViewController" bundle:nil];
+    phoneNumber_home=[[NSMutableArray alloc] init];
+    if (self) {
+        fname = person.firstName ;
+        lname = person.lastName ;
+        cname = person.homeEmail ;
+        NSLog(@"person.phoneNumber_hom %@",person.phoneNumber_home);
+        for (int i=0; i<[person.phoneNumber_home count]; i++) {
+            if ([person.phoneNumber_home objectAtIndex:i] !=Nil) {
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"Home     : %@",[person.phoneNumber_home objectAtIndex:i]] ];
+            }
+            
+        }
+        if (person.phoneNumber_Work !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Work      : %@",person.phoneNumber_Work]];
+        
+        if (person.phoneNumber_iPhone !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"iPhone   : %@",person.phoneNumber_iPhone]];
+        if (person.phoneNumber_mobile !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Mobile   : %@",person.phoneNumber_mobile]];
+        if (person.phoneNumber_main !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Main      : %@",person.phoneNumber_main]];
+        if (person.phoneNumber_HomeFax !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Home Fax : %@",person.phoneNumber_HomeFax]];
+        if (person.phoneNumber_WorkFax !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Work Fax  : %@",person.phoneNumber_WorkFax]];
+        if (person.phoneNumber_Pager !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Pager     : %@",person.phoneNumber_Pager]];
+        if (person.phoneNumber_other !=Nil)
+        [phoneNumber_home addObject:[NSString stringWithFormat:@"Other     : %@",person.phoneNumber_other]];
+       
+      
+    }
+    return self;
+}
 -(void)back_btnAction
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -154,8 +195,16 @@
     return title_Header;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return  5;
+    int rows;
+    if (section==0) {
+        rows=(int)[phoneNumber_home count];
+    }
+    else
+    {
+        rows=5;
+        
+    }
+    return  rows;
     
 }
 
@@ -167,10 +216,16 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:nil];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Nil];
-        
+        cell.textLabel.font=[UIFont systemFontOfSize:13];
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
-    
+    if (indexPath.section==0)
+    {
+       
+            cell.textLabel.text=[phoneNumber_home objectAtIndex:indexPath.row];
+        
+        
+    }
     
     
     return cell;
@@ -178,7 +233,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60.0f;
+    return 20.0f;
 }
 
 

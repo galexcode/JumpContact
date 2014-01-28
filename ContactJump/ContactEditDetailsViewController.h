@@ -17,6 +17,15 @@
     UITableView *tblVw;
     UILabel *navbartitle;
     
+    NSString *fname;
+    NSString *lname;
+    NSString*cname;
+    
+    NSMutableArray *phoneNumber_home;
+
+    
 }
 
+
+- (id)initWithPerson:(Person *)person;
 @end

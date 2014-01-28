@@ -322,71 +322,68 @@
                 
                
                 NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-                if (j == 0)
-                {
-                    [person.phoneNumber_home addObject:phone];
-                    
-                }
-                else if (j==1)
+                NSLog(@"phone %@\n",phone);
+                 if (j==0)
                 {
                     person.phoneNumber_Work = phone;
                 }
-                else if (j==2)
+                else if (j==1)
                 {
                     person.phoneNumber_iPhone=phone;
                 }
-                else if (j==3)
+                else if (j==2)
                 {
                     person.phoneNumber_mobile=phone;
                 }
-                else if (j==4)
+                else if (j==3)
                 {
                     person.phoneNumber_main=phone;
                 }
-                else if (j==5)
+                else if (j==4)
                 {
                     person.phoneNumber_HomeFax=phone;
                 }
-                else if (j==6)
+                else if (j==5)
                 {
                     person.phoneNumber_WorkFax=phone;
                 }
-                else if (j==7)
+                else if (j==6)
                 {
                     person.phoneNumber_Pager=phone;
                 }
-                else if (j==8)
+                else if (j==7)
                 {
                     person.phoneNumber_other=phone;
                 }
-                else if (j==9)
+                else if (j>=8)
                 {
                     [person.phoneNumber_home addObject:phone];
                 }
-
+                
+               
               
             }
             [contacts addObject:person];
-            
+            NSLog(@"========\n\nperson.phoneNumber_home %@\n=======",person.phoneNumber_home);
         }
         CFRelease(addressBook);
         
         obj.contactDetails=[[NSMutableArray alloc] init];
-        obj.firstNameArr=[[NSMutableArray alloc] init];
+        
         [obj setContactDetails:contacts];
         NSLog(@"%@",obj.contactDetails);
         
         
         
-        for (int p=0; p<[obj.contactDetails count]; p++) {
-            Person *per=[obj.contactDetails objectAtIndex:p];
-            if ([per.firstName length]==0) {
-                [obj.firstNameArr addObject:@"#"];
-            } else {
-                [obj.firstNameArr addObject:per.firstName];
-            }
-            
-        }
+//        for (int p=0; p<[obj.contactDetails count]; p++) {
+//            Person *person=[obj.contactDetails objectAtIndex:p];
+//            if ([person.firstName length]==0) {
+//                [obj.firstNameArr addObject:@"#"];
+//            } else {
+//                [obj.firstNameArr addObject:person.firstName];
+//            }
+//            
+//        }
     }
 
    

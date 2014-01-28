@@ -20,6 +20,7 @@
     UITextView *addNote_txtview;
     UIScrollView* scrollview;
     ContactGlobalDataClass *obj;
+    UIView *bg;
 }
 
 @end

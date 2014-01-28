@@ -25,7 +25,7 @@
     
    
     
-   
+    UIButton *back_btn;
     NSArray *sectionIndex;
     UIButton   * checkBox_all;
    

@@ -49,9 +49,9 @@ static int k=0;
     BOOL found;
     
     // Loop through the books and create our keys
-    for (NSString *chr in obj.firstNameArr)
+    for (Person *chr in obj.contactDetails)
     {
-        NSString *c = [chr substringToIndex:1];
+        NSString *c = [chr.firstName substringToIndex:1];
         
         found = NO;
         
@@ -72,12 +72,12 @@ static int k=0;
     }
     
     
-    for (NSString *contct_name in obj.firstNameArr)
+    for (Person *contct_name in obj.contactDetails)
     {
         
         
-        [[self.alphabetsArray objectForKey:[contct_name substringToIndex:1]] addObject:contct_name];
-        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[contct_name substringToIndex:1]]] addObject:@"1"];
+        [[self.alphabetsArray objectForKey:[contct_name.firstName substringToIndex:1]] addObject:contct_name];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[contct_name.firstName substringToIndex:1]]] addObject:@"1"];
     }
     
     
@@ -136,7 +136,7 @@ static int k=0;
     
 #pragma mark number of selected contacts label.
     noofselected=[[UILabel alloc] init];
-    noofselected.text=@" ";
+    noofselected.text=[NSString stringWithFormat:@"%d contacts selected",(int)[obj.contactDetails count]];
     noofselected.textAlignment=1;
     noofselected.textColor= [UIColor blackColor];
     noofselected.backgroundColor=[UIColor clearColor];
@@ -275,7 +275,7 @@ static int k=0;
     name_lbl.frame=CGRectMake(60, 10, 150, 30);
     name_lbl.textAlignment=0;
     [name_lbl setTag:1];
-    name_lbl.text=[NSString stringWithFormat:@"%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
+    name_lbl.text=[NSString stringWithFormat:@"%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] firstName]];
     name_lbl.textColor= [UIColor blackColor];
     name_lbl.backgroundColor=[UIColor clearColor];
     name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
@@ -367,7 +367,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.firstNameArr count]) {
+    if (k==[obj.contactDetails count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -434,7 +434,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.firstNameArr count]) {
+    if (k==[obj.contactDetails count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -496,8 +496,8 @@ static int k=0;
             }
             
         }
-        k=(int)[obj.firstNameArr count];
-        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.firstNameArr count]];
+        k=(int)[obj.contactDetails count];
+        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
     }
     
     
