@@ -320,7 +320,7 @@
              {
                  if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
                      
-                     if(controller !=nil)
+                     if([self.navigationController.viewControllers containsObject:controller])
                      {
                          [self.navigationController popToViewController:controller
                                                                animated:YES];
@@ -350,8 +350,8 @@
             {
                 if([self.navigationController.viewControllers containsObject:controller])
                 {
-                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
-                                                         animated:NO];
+                    [self.navigationController popToViewController:controller
+                                                         animated:YES];
                 }
                 else
                 {
@@ -387,14 +387,24 @@
         for (UIViewController *controller in obj.vcs)
         {
             if ([controller isKindOfClass:[SelectRecipientsViewController class]]) {
-                
-                CATransition *transition = [CATransition animation];
-                transition.duration =0;
-                transition.type = kCATransitionPush;
-                transition.subtype= kCATransitionFromLeft;
-                [self.navigationController.view.layer addAnimation:transition forKey:nil];
-                [self.navigationController pushViewController:controller
-                                                     animated:NO];
+                if([self.navigationController.viewControllers containsObject:controller])
+                {
+                    [self.navigationController popToViewController:controller
+                                                          animated:YES];
+                }
+                else
+                {
+                    CATransition *transition = [CATransition animation];
+                    transition.duration =0;
+                    transition.type = kCATransitionPush;
+                    transition.subtype= kCATransitionFromLeft;
+                    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                    
+                    [self.navigationController pushViewController:controller
+                                                         animated:NO];
+                    
+                }
+              
                  break;
             }
             

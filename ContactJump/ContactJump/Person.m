@@ -10,6 +10,10 @@
 
 @implementation Person
 @synthesize phoneNumber_home,address_home,email_iCloud,email_home,email_other,email_work;
+@synthesize socialProfile_Facebook,socialProfile_Flickr,socialProfile_LinkedIn,socialProfile_Twitter,socialProfile_SinaWeibo,socialProfile_MySpace;
+
+@synthesize IM_AIM,IM_FBMsg,IM_GTalk,IM_ICQ,IM_MSNMsg,IM_QQ,IM_Skype,IM_YahooMsg,IM_GaduGadu,IM_Jabber;
+
 - (id) init {
     self = [super init];
     
@@ -21,6 +25,25 @@
         email_work=[[NSMutableArray alloc] init];
         email_iCloud=[[NSMutableArray alloc] init];
         email_other=[[NSMutableArray alloc] init];
+        
+        socialProfile_Twitter=[[NSMutableArray alloc] init];
+        socialProfile_Facebook=[[NSMutableArray alloc] init];
+        socialProfile_Flickr=[[NSMutableArray alloc] init];
+        socialProfile_LinkedIn=[[NSMutableArray alloc] init];
+        socialProfile_MySpace=[[NSMutableArray alloc] init];
+        socialProfile_SinaWeibo=[[NSMutableArray alloc] init];
+        
+        
+        IM_Skype=[[NSMutableArray alloc] init];
+        IM_MSNMsg=[[NSMutableArray alloc] init];
+        IM_GTalk=[[NSMutableArray alloc] init];
+        IM_FBMsg=[[NSMutableArray alloc] init];
+        IM_AIM=[[NSMutableArray alloc] init];
+        IM_YahooMsg=[[NSMutableArray alloc] init];
+        IM_ICQ=[[NSMutableArray alloc] init];
+        IM_QQ=[[NSMutableArray alloc] init];
+        IM_Jabber=[[NSMutableArray alloc] init];
+        IM_GaduGadu=[[NSMutableArray alloc] init];
       
     }
     

@@ -249,7 +249,7 @@
 - (void)getPersonOutOfAddressBook
 {
     
-    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
+    
     
     
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
@@ -301,9 +301,114 @@
             ABMultiValueRef phones = ABRecordCopyValue(ref, kABPersonPhoneProperty);
             ABMultiValueRef emails = ABRecordCopyValue(ref, kABPersonEmailProperty);
             ABMultiValueRef address = ABRecordCopyValue(ref, kABPersonAddressProperty);
-            //ABMultiValueRef socialProfile = ABRecordCopyValue(ref, kABPersonSocialProfileProperty);
+            ABMultiValueRef socialProfile = ABRecordCopyValue(ref, kABPersonSocialProfileProperty);
+            ABMultiValueRef instantMessageProfile = ABRecordCopyValue(ref, kABPersonInstantMessageProperty);
             NSUInteger j = 0;
             
+            if(instantMessageProfile)
+            {
+                NSArray *IMProfiles = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(instantMessageProfile);
+                
+                for (int i = 0; i < [IMProfiles count]; i++)
+                {
+                    
+                    
+                    CFDictionaryRef IMValue = ABMultiValueCopyValueAtIndex(instantMessageProfile, i);
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceFacebook, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_FBMsg addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceMSN, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_MSNMsg addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceQQ, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_QQ addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceSkype, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_Skype addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceYahoo, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_YahooMsg addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceJabber, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_Jabber addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceAIM, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_AIM addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceGaduGadu, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_GaduGadu addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceGoogleTalk, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_GTalk addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceICQ, 0)==kCFCompareEqualTo) {
+                        
+                        [person.IM_ICQ addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                    }
+                    
+                    NSLog(@"%@",person.IM_ICQ);
+                    
+                }
+                
+            }
+
+            
+            if(socialProfile)
+            {
+                NSArray *socialProfiles = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(socialProfile);
+                
+                for (int i = 0; i < [socialProfiles count]; i++)
+                {
+                    
+
+                    CFDictionaryRef socialValue = ABMultiValueCopyValueAtIndex(socialProfile, i);
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFacebook, 0)==kCFCompareEqualTo) {
+                        
+                        [person.socialProfile_Facebook addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                    }
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFlickr, 0)==kCFCompareEqualTo) {
+                        
+                        [person.socialProfile_Flickr addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                    }
+
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceLinkedIn, 0)==kCFCompareEqualTo) {
+                        
+                        [person.socialProfile_LinkedIn addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                    }
+
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceMyspace, 0)==kCFCompareEqualTo) {
+                        
+                        [person.socialProfile_MySpace addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                    }
+
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceSinaWeibo, 0)==kCFCompareEqualTo) {
+                        
+                        [person.socialProfile_SinaWeibo addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                    }
+
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceTwitter, 0)==kCFCompareEqualTo) {
+                        
+                        [person.socialProfile_Twitter addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                    }
+
+                    
+                    
+                }
+                
+            }
             
             for(j = 0; j < ABMultiValueGetCount(emails); j++)
             {

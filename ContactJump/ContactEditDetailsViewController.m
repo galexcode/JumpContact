@@ -126,6 +126,7 @@
     phoneNumber_home=[[NSMutableArray alloc] init];
     address=[[NSMutableArray alloc] init];
     emailIDs=[[NSMutableArray alloc] init];
+    socialProfiles=[[NSMutableArray alloc] init];
     
     if (self) {
         
@@ -220,6 +221,64 @@
             }
         }
        
+        //=================================================SOCIAL PROFILES===================================================
+        
+        for (int i=0; i<[person.socialProfile_Facebook count]; i++) {
+            if ([person.socialProfile_Facebook objectAtIndex:i] !=Nil)
+            {
+                [socialProfiles addObject:@"Facebook ID"];
+                [socialProfiles addObject:[NSString stringWithFormat:@"%@",[person.socialProfile_Facebook objectAtIndex:i]]];
+            }
+        }
+        
+        for (int i=0; i<[person.socialProfile_Flickr count]; i++) {
+            if ([person.socialProfile_Flickr objectAtIndex:i] !=Nil)
+            {
+                [socialProfiles addObject:@"Flickr ID"];
+                [socialProfiles addObject:[NSString stringWithFormat:@"%@",[person.socialProfile_Flickr objectAtIndex:i]]];
+            }
+        }
+        
+        for (int i=0; i<[person.socialProfile_LinkedIn count]; i++) {
+            if ([person.socialProfile_LinkedIn objectAtIndex:i] !=Nil)
+            {
+                [socialProfiles addObject:@"LinkedIn ID"];
+                [socialProfiles addObject:[NSString stringWithFormat:@"%@",[person.socialProfile_LinkedIn objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.socialProfile_MySpace count]; i++) {
+            if ([person.socialProfile_MySpace objectAtIndex:i] !=Nil)
+            {
+                [socialProfiles addObject:@"MySpace ID"];
+                [socialProfiles addObject:[NSString stringWithFormat:@"%@",[person.socialProfile_MySpace objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.socialProfile_SinaWeibo count]; i++) {
+            if ([person.socialProfile_SinaWeibo objectAtIndex:i] !=Nil)
+            {
+                [socialProfiles addObject:@"SinaWeibo ID"];
+                [socialProfiles addObject:[NSString stringWithFormat:@"%@",[person.socialProfile_SinaWeibo objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.socialProfile_Twitter count]; i++) {
+            if ([person.socialProfile_Twitter objectAtIndex:i] !=Nil)
+            {
+                [socialProfiles addObject:@"Twitter ID"];
+                [socialProfiles addObject:[NSString stringWithFormat:@"%@",[person.socialProfile_Twitter objectAtIndex:i]]];
+            }
+        }
+        
+        
+        //=================================================IM PROFILES===================================================
+        
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"AIM ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_AIM objectAtIndex:i]]];
+            }
+        }
+        
         
     }
     return self;
@@ -275,9 +334,13 @@
     {
         rows=(int)[emailIDs count];
     }
+    else if(section==3)
+    {
+        rows=(int)[socialProfiles count];
+    }
     else
     {
-        rows=5;
+        rows=(int)[IMProfiles count];
     }
     return  rows;
     
@@ -316,6 +379,25 @@
        
         cell.textLabel.text=[emailIDs objectAtIndex:indexPath.row];
         if ([cell.textLabel.text isEqualToString:@"Home"] ||[cell.textLabel.text isEqualToString:@"Work"]||[cell.textLabel.text isEqualToString:@"Other"] || [cell.textLabel.text isEqualToString:@"iCloud"]) {
+            cell.textLabel.textColor=[UIColor blueColor];
+        }
+        
+    }
+    
+    else if (indexPath.section==3)
+    {
+        
+        cell.textLabel.text=[socialProfiles objectAtIndex:indexPath.row];
+        if ([cell.textLabel.text isEqualToString:@"Facebook ID"] ||[cell.textLabel.text isEqualToString:@"Flickr ID"]||[cell.textLabel.text isEqualToString:@"MySpace ID"] || [cell.textLabel.text isEqualToString:@"SinaWeibo ID"] || [cell.textLabel.text isEqualToString:@"Twitter ID"] || [cell.textLabel.text isEqualToString:@"LinkedIn ID"]) {
+            cell.textLabel.textColor=[UIColor blueColor];
+        }
+        
+    }
+    else if (indexPath.section==4)
+    {
+        
+        cell.textLabel.text=[IMProfiles objectAtIndex:indexPath.row];
+        if ([cell.textLabel.text isEqualToString:@"Facebook ID"] ||[cell.textLabel.text isEqualToString:@"Flickr ID"]||[cell.textLabel.text isEqualToString:@"MySpace ID"] || [cell.textLabel.text isEqualToString:@"SinaWeibo ID"] || [cell.textLabel.text isEqualToString:@"Twitter ID"] || [cell.textLabel.text isEqualToString:@"LinkedIn ID"]) {
             cell.textLabel.textColor=[UIColor blueColor];
         }
         

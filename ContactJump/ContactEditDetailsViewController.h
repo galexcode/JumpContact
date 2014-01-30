@@ -23,7 +23,9 @@
     
     NSMutableArray *phoneNumber_home;
     NSMutableArray *address;
-     NSMutableArray *emailIDs;
+    NSMutableArray *emailIDs;
+    NSMutableArray *socialProfiles;
+    NSMutableArray *IMProfiles;
     
 }
 

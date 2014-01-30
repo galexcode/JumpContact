@@ -16,7 +16,7 @@
 @end
 
 @implementation SelectRecipientsViewController
-static int k=0;
+static int k1=0;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,7 +41,7 @@ static int k=0;
     [super viewDidLoad];
 
     
-  
+  k1=0;
     obj=[ContactGlobalDataClass getInstance];
     
     
@@ -346,8 +346,12 @@ static int k=0;
         [tappedButton setSelected:NO];
         
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
-        if (k>0) {
-            k--;
+        if (k1>0) {
+            k1--;
+        }
+        else
+        {
+            k1=0;
         }
         
     }
@@ -356,17 +360,17 @@ static int k=0;
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
         
-        k++;
+        k1++;
     }
     
-    if (k==0) {
-        k=0;
+    if (k1==0) {
+        
         noofselected.text=@" ";
     } else {
-        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
+        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k1];
     }
     
-    if (k==[obj.contactDetails count]) {
+    if (k1==[obj.contactDetails count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -411,8 +415,12 @@ static int k=0;
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"0"];
         //[editButton setHidden:YES];
         [cell.accessoryView setHidden:YES];
-        if (k>0) {
-            k--;
+        if (k1>0) {
+            k1--;
+        }
+        else
+        {
+          k1=0;
         }
         
     }
@@ -423,17 +431,17 @@ static int k=0;
         //[editButton setHidden:NO];
         
         [cell.accessoryView setHidden:NO];
-        k++;
+        k1++;
         
     }
-    if (k==0) {
-        k=0;
+    if (k1==0) {
+        
         noofselected.text=@" ";
     } else {
-        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
+        noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k1];
     }
     
-    if (k==[obj.contactDetails count]) {
+    if (k1==[obj.contactDetails count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -460,7 +468,7 @@ static int k=0;
         {
             if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
                 
-                
+                [obj setFrom_ShareMethodViewController:@"0"];
                 [self.navigationController popToViewController:controller
                                                      animated:YES];
                 break;
@@ -474,7 +482,7 @@ static int k=0;
 -(void)done_btnAction
 {
     
-    if (k==0 || [noofselected.text isEqualToString:@" "])
+    if (k1==0 || [noofselected.text isEqualToString:@" "])
     {
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please select atleast one Recipient" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
@@ -482,7 +490,7 @@ static int k=0;
     }
     else
     {
-        [obj setRecipients_selected:[NSString stringWithFormat:@"%d",k]];
+        [obj setRecipients_selected:[NSString stringWithFormat:@"%d",k1]];
 
         if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
         {
@@ -495,11 +503,33 @@ static int k=0;
             
             for (UIViewController *controller in obj.vcs)
             {
+                
                 if ([controller isKindOfClass:[SelectShareMethodViewController class]]) {
+                    if([self.navigationController.viewControllers containsObject:controller])
+                    {
+                        CATransition *transition = [CATransition animation];
+                        transition.duration =0;
+                        transition.type = kCATransitionPush;
+                        transition.subtype= kCATransitionFromRight;
+                        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                        [self.navigationController popToViewController:controller
+                                                              animated:NO];
+                    }
+                    else
+                    {
+                        CATransition *transition = [CATransition animation];
+                        transition.duration =0;
+                        transition.type = kCATransitionPush;
+                        transition.subtype= kCATransitionFromRight;
+                        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                        
+                        [self.navigationController pushViewController:controller
+                                                             animated:NO];
+                        
+                    }
+
                     
-                    
-                    [self.navigationController popToViewController:controller
-                                                         animated:YES];
+                  
                     
                     break;
                 }
@@ -530,7 +560,7 @@ static int k=0;
             }
             
         }
-        k=0;
+        k1=0;
         noofselected.text=@" ";
         
     }
@@ -545,7 +575,7 @@ static int k=0;
             }
             
         }
-        k=(int)[obj.contactDetails count];
+        k1=(int)[obj.contactDetails count];
         noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
     }
     
