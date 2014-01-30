@@ -27,7 +27,7 @@ static int k=0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    if ([obj.backBtnActivate isEqualToString:@"0"] )
     {
         [back_btn setHidden:NO];
     }
@@ -447,7 +447,29 @@ static int k=0;
 -(void)back_btnAction
 {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
+    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        
+        for (UIViewController *controller in obj.vcs)
+        {
+            if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
+                
+                
+                [self.navigationController popToViewController:controller
+                                                     animated:YES];
+                break;
+            }
+            
+        }
+        
+    }
+
 }
 -(void)done_btnAction
 {

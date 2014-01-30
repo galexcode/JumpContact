@@ -238,8 +238,8 @@
         ContactBackup_btn.frame=CGRectMake(46.75,417.25, 226.5,39.5);
     }
     
-    
-    
+    obj=[ContactGlobalDataClass getInstance];
+    [obj setBackBtnActivate:@"0"];
     [self getPersonOutOfAddressBook];
     
 
@@ -290,31 +290,50 @@
             NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
             NSLog(@"Name %@", firstName);
 
-            person.firstName = firstName;
+            if (firstName.length==0) {
+                person.firstName =@"#";
+            } else {
+                person.firstName = firstName;
+            }
+            
             person.lastName = lastName;
             
             ABMultiValueRef phones = ABRecordCopyValue(ref, kABPersonPhoneProperty);
             ABMultiValueRef emails = ABRecordCopyValue(ref, kABPersonEmailProperty);
-            
+            ABMultiValueRef address = ABRecordCopyValue(ref, kABPersonAddressProperty);
+            //ABMultiValueRef socialProfile = ABRecordCopyValue(ref, kABPersonSocialProfileProperty);
             NSUInteger j = 0;
+            
+            
             for(j = 0; j < ABMultiValueGetCount(emails); j++)
             {
                 
-        
-               
-                NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-                if (j == 0)
-                {
-                    person.homeEmail = email;
-                    NSLog(@"person.homeEmail = %@ ", person.homeEmail);
-                }
-                else if (j==1)
-                {
-                    person.workEmail = email;
-                }
-               
+       
+                CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(emails, j);
+                NSString* emailType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+               NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
                 
+                if ([emailType isEqualToString:@"work"])
+                {
+                    
+                    [person.email_work addObject:email];
+                }
+                else if ([emailType isEqualToString:@"other"])
+                {
+                    [person.email_other addObject:email];
+                }
+                else if ([emailType isEqualToString:@"home"])
+                {
+                    [person.email_home addObject:email];
+                }
+                else if ([emailType isEqualToString:@"iCloud"])
+                {
+                    [person.email_iCloud addObject:email];
+                }
+               
+               
             }
+            
             NSLog(@"PHONE NUMBERS COUNT %ld",ABMultiValueGetCount(phones));
             for(j = 0; j < ABMultiValueGetCount(phones); j++)
             {
@@ -363,8 +382,49 @@
                
               
             }
+            
+            if(address)
+            {
+                NSArray *addresses = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(address);
+               
+                for (int i = 0; i < [addresses count]; i++)
+                {
+                   
+                        
+                        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, i);
+                        NSString* labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+                        NSDictionary *addressDict=[addresses objectAtIndex:i];
+                        NSString *country =[NSString stringWithFormat:
+                                        @" Street : %@ \n City : %@ \n Zip : %@ \n Country : %@ \n",
+                                        [addressDict objectForKey:(NSString *)kABPersonAddressStreetKey],
+                                        [addressDict objectForKey:(NSString *)kABPersonAddressCityKey],
+                                        [addressDict objectForKey:(NSString *)kABPersonAddressZIPKey],
+                                        [addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]];
+                    
+                    NSLog(@"country %@",country);
+                        if ([labeltype isEqualToString:@"work"])
+                        {
+                            
+                            person.address_work= country;
+                        }
+                        else if ([labeltype isEqualToString:@"other"])
+                        {
+                            person.address_other= country;
+                        }
+                        else if ([labeltype isEqualToString:@"home"])
+                        {
+                            [person.address_home addObject: country];
+                        }
+                        NSLog(@"labeltype %@",(__bridge NSString*) ABAddressBookCopyLocalizedLabel(typeTmp));
+                    
+                }
+                
+            }
             [contacts addObject:person];
-            NSLog(@"========\n\nperson.phoneNumber_home %@\n=======",person.phoneNumber_home);
+           
+            
+            
+            
         }
         CFRelease(addressBook);
         
@@ -375,15 +435,7 @@
         
         
         
-//        for (int p=0; p<[obj.contactDetails count]; p++) {
-//            Person *person=[obj.contactDetails objectAtIndex:p];
-//            if ([person.firstName length]==0) {
-//                [obj.firstNameArr addObject:@"#"];
-//            } else {
-//                [obj.firstNameArr addObject:person.firstName];
-//            }
-//            
-//        }
+
     }
 
    

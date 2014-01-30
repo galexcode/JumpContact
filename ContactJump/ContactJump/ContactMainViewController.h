@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ContactGlobalDataClass.h"
 @interface ContactMainViewController : UIViewController
-
+{
+    ContactGlobalDataClass *obj;
+}
 @end

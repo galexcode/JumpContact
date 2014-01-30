@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactJump/SelectContact toShareViewController.m"
-            timestampString = "412594230.221773"
+            timestampString = "412751165.603967"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-checkBoxClicked:"
             landmarkType = "5">
          </BreakpointContent>

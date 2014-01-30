@@ -22,7 +22,8 @@
     NSString*cname;
     
     NSMutableArray *phoneNumber_home;
-
+    NSMutableArray *address;
+     NSMutableArray *emailIDs;
     
 }
 

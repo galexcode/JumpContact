@@ -226,7 +226,7 @@ static int k=0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    if ([obj.backBtnActivate isEqualToString:@"0"] )
     {
       [back_btn setHidden:NO];
     }
@@ -290,43 +290,48 @@ static int k=0;
     
     NSLog(@"sssssss----\n%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] firstName]);
     
-
     
-        name_lbl=[[UILabel alloc] init];
-        
-        name_lbl.frame=CGRectMake(60, 10, 150, 30);
-        name_lbl.textAlignment=0;
-        [name_lbl setTag:1];
+    
+    name_lbl=[[UILabel alloc] init];
+    
+    name_lbl.frame=CGRectMake(60, 10, 150, 30);
+    name_lbl.textAlignment=0;
+    [name_lbl setTag:1];
     Person *p=[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    if ([p.firstName isEqualToString:@"#"]) {
+        name_lbl.text=[NSString stringWithFormat:@"No Name"];
+    } else {
         name_lbl.text=[NSString stringWithFormat:@"%@",p.firstName];
-        name_lbl.textColor= [UIColor blackColor];
-        name_lbl.backgroundColor=[UIColor clearColor];
-        name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
-        name_lbl.shadowColor = [UIColor whiteColor];
-        name_lbl.shadowOffset = CGSizeMake(0,0);
-        [cell.contentView addSubview:name_lbl];
+    }
+    
+    name_lbl.textColor= [UIColor blackColor];
+    name_lbl.backgroundColor=[UIColor clearColor];
+    name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
+    name_lbl.shadowColor = [UIColor whiteColor];
+    name_lbl.shadowOffset = CGSizeMake(0,0);
+    [cell.contentView addSubview:name_lbl];
     
     
-        checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
-        checkBox.tag=indexPath.row;
-        checkBox.frame=CGRectMake(20,15+3, 15, 15);
-        [cell.contentView addSubview:checkBox];
-        [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
-        [checkBox setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
-        [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
+    checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
+    checkBox.tag=indexPath.row;
+    checkBox.frame=CGRectMake(20,15+3, 15, 15);
+    [cell.contentView addSubview:checkBox];
+    [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
+    [checkBox setImage:[UIImage imageNamed:@"cehck-box-active.png"] forState:UIControlStateSelected];
+    [checkBox addTarget:self action:@selector(checkBoxClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
-       
-        
-        editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        editbtn.tag=indexPath.row;
     
-        editbtn.frame=CGRectMake(270,15, 20, 20);
-        editbtn.backgroundColor=[UIColor clearColor];
-        //[cell.contentView addSubview:editbtn];
-        [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
-        [editbtn addTarget:self action:@selector(editbtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
-        cell.accessoryView=editbtn;
+    
+    editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    editbtn.tag=indexPath.row;
+    
+    editbtn.frame=CGRectMake(270,15, 20, 20);
+    editbtn.backgroundColor=[UIColor clearColor];
+    //[cell.contentView addSubview:editbtn];
+    [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
+    [editbtn addTarget:self action:@selector(editbtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
+    cell.accessoryView=editbtn;
     
     
     
@@ -340,7 +345,7 @@ static int k=0;
         //[editbtn setHidden:NO];
     }
     
-   
+    
     
     return cell;
     

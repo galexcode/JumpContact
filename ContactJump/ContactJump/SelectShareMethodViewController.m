@@ -30,6 +30,7 @@
 {
     
     obj=[ContactGlobalDataClass getInstance];
+    [obj setBackBtnActivate:@"0"];
      //[obj setFrom_ShareMethodViewController:@"0"];
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
@@ -303,12 +304,14 @@
 }
 -(void)Setting_btnAction:(id)sender
 {
-    if ([obj.from_ShareMethodViewController isEqualToString:@"0"]) {
+    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    {
         obj.vcs =  [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
         [self.navigationController setViewControllers:obj.vcs animated:NO];
     }
+    
     [obj setFrom_ShareMethodViewController:@"1"];
-   
+    [obj setBackBtnActivate:@"1"];
     if([sender tag]==1)
     {
        
@@ -317,9 +320,22 @@
              {
                  if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
                      
-                     
-                     [self.navigationController popToViewController:controller
-                                                           animated:YES];
+                     if(controller !=nil)
+                     {
+                         [self.navigationController popToViewController:controller
+                                                               animated:YES];
+
+                     }
+                     else
+                     {
+                         CATransition *transition = [CATransition animation];
+                         transition.duration =0;
+                         transition.type = kCATransitionPush;
+                         transition.subtype= kCATransitionFromLeft;
+                         [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                         [self.navigationController pushViewController:controller
+                                                               animated:YES];
+                     }
                      break;
                  }
              }
@@ -330,11 +346,25 @@
         
         for (UIViewController *controller in obj.vcs)
         {
-            if ([controller isKindOfClass:[SelectRecipientsViewController class]]) {
-                
-                
-                [self.navigationController pushViewController:controller
-                                                      animated:YES];
+            if ([controller isKindOfClass:[SelectRecipientsViewController class]])
+            {
+                if([self.navigationController.viewControllers containsObject:controller])
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
+                                                         animated:NO];
+                }
+                else
+                {
+                    CATransition *transition = [CATransition animation];
+                    transition.duration =0;
+                    transition.type = kCATransitionPush;
+                    transition.subtype= kCATransitionFromLeft;
+                    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                    
+                    [self.navigationController pushViewController:controller
+                                                         animated:NO];
+
+                }
                 break;
             }
            
@@ -345,8 +375,34 @@
 
 -(void)back_btnAction
 {
+    [obj setBackBtnActivate:@"0"];
+    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        
+        for (UIViewController *controller in obj.vcs)
+        {
+            if ([controller isKindOfClass:[SelectRecipientsViewController class]]) {
+                
+                CATransition *transition = [CATransition animation];
+                transition.duration =0;
+                transition.type = kCATransitionPush;
+                transition.subtype= kCATransitionFromLeft;
+                [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                [self.navigationController pushViewController:controller
+                                                     animated:NO];
+                 break;
+            }
+            
+        }
+        
+    }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 

@@ -122,13 +122,22 @@
 }
 - (id)initWithPerson:(Person *)person
 {
-    //self = [super initWithNibName:@"ContactViewController" bundle:nil];
+    
     phoneNumber_home=[[NSMutableArray alloc] init];
+    address=[[NSMutableArray alloc] init];
+    emailIDs=[[NSMutableArray alloc] init];
+    
     if (self) {
+        
+        
+    //=================================================BASIC INFO===================================================
         fname = person.firstName ;
         lname = person.lastName ;
-        cname = person.homeEmail ;
-        NSLog(@"person.phoneNumber_hom %@",person.phoneNumber_home);
+        
+        
+        
+    //=================================================PHONE NUMBERS===================================================
+        
         for (int i=0; i<[person.phoneNumber_home count]; i++) {
             if ([person.phoneNumber_home objectAtIndex:i] !=Nil) {
                 [phoneNumber_home addObject:[NSString stringWithFormat:@"Home     : %@",[person.phoneNumber_home objectAtIndex:i]] ];
@@ -136,24 +145,82 @@
             
         }
         if (person.phoneNumber_Work !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Work      : %@",person.phoneNumber_Work]];
-        
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Work      : %@",person.phoneNumber_Work]];
         if (person.phoneNumber_iPhone !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"iPhone   : %@",person.phoneNumber_iPhone]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"iPhone   : %@",person.phoneNumber_iPhone]];
         if (person.phoneNumber_mobile !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Mobile   : %@",person.phoneNumber_mobile]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Mobile   : %@",person.phoneNumber_mobile]];
         if (person.phoneNumber_main !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Main      : %@",person.phoneNumber_main]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Main      : %@",person.phoneNumber_main]];
         if (person.phoneNumber_HomeFax !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Home Fax : %@",person.phoneNumber_HomeFax]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Home Fax : %@",person.phoneNumber_HomeFax]];
         if (person.phoneNumber_WorkFax !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Work Fax  : %@",person.phoneNumber_WorkFax]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Work Fax  : %@",person.phoneNumber_WorkFax]];
         if (person.phoneNumber_Pager !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Pager     : %@",person.phoneNumber_Pager]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Pager     : %@",person.phoneNumber_Pager]];
         if (person.phoneNumber_other !=Nil)
-        [phoneNumber_home addObject:[NSString stringWithFormat:@"Other     : %@",person.phoneNumber_other]];
+            [phoneNumber_home addObject:[NSString stringWithFormat:@"Other     : %@",person.phoneNumber_other]];
+        
+        
+    //=================================================ADDRESS===================================================
+        for (int i=0; i<[person.address_home count]; i++)
+        {
+            if ([person.address_home objectAtIndex:i] !=Nil)
+            {
+                [address addObject:@"Home"];
+                [address addObject:[NSString stringWithFormat:@"%@",[person.address_home objectAtIndex:i]]];
+            }
+        }
+        
+        if (person.address_work !=Nil)
+        {
+            [address addObject:@"Work"];
+            [address addObject:[NSString stringWithFormat:@"%@",person.address_work]];
+        }
+        
+        
+        if (person.address_other !=Nil)
+        {
+            [address addObject:@"Other"];
+            [address addObject:[NSString stringWithFormat:@"%@",person.address_other]];
+        }
+        
+    //=================================================EMAIL IDs===================================================
+        
+        for (int i=0; i<[person.email_home count]; i++)
+        {
+            if ([person.email_home objectAtIndex:i] !=Nil)
+            {
+                [emailIDs addObject:@"Home"];
+                [emailIDs addObject:[NSString stringWithFormat:@"%@",[person.email_home objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.email_other count]; i++)
+        {
+            if ([person.email_other objectAtIndex:i] !=Nil)
+            {
+                [emailIDs addObject:@"Other"];
+                [emailIDs addObject:[NSString stringWithFormat:@"%@",[person.email_other objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.email_iCloud count]; i++)
+        {
+            if ([person.email_iCloud objectAtIndex:i] !=Nil)
+            {
+                [emailIDs addObject:@"iCloud"];
+                [emailIDs addObject:[NSString stringWithFormat:@"%@",[person.email_iCloud objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.email_work count]; i++)
+        {
+            if ([person.email_work objectAtIndex:i] !=Nil)
+            {
+                [emailIDs addObject:@"Work"];
+                [emailIDs addObject:[NSString stringWithFormat:@"%@",[person.email_work objectAtIndex:i]]];
+            }
+        }
        
-      
+        
     }
     return self;
 }
@@ -175,21 +242,21 @@
 {
     NSString *title_Header=nil;
     if (section==0) {
-        title_Header=@"Phone";
+        title_Header=@"                          Phone";
     }
     else if (section==1){
-        title_Header=@"Address";
+        title_Header=@"                         Address";
     }
     else if (section==2){
-        title_Header=@"Email";
+        title_Header=@"                          Email";
     }
 
     else if (section==3){
-        title_Header=@"Social Profile";
+        title_Header=@"                    Social Profile";
     }
 
     else if (section==4){
-        title_Header=@"Instant Messaging";
+        title_Header=@"                   Instant Messaging";
     }
 
     return title_Header;
@@ -199,10 +266,18 @@
     if (section==0) {
         rows=(int)[phoneNumber_home count];
     }
+    else if (section==1)
+    {
+        rows=(int)[address count];
+        
+    }
+    else if(section==2)
+    {
+        rows=(int)[emailIDs count];
+    }
     else
     {
         rows=5;
-        
     }
     return  rows;
     
@@ -213,9 +288,9 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:nil];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Nil];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.textLabel.font=[UIFont systemFontOfSize:13];
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
@@ -226,14 +301,40 @@
         
         
     }
-    
-    
+    else if (indexPath.section==1)
+    {
+        cell.textLabel.numberOfLines=8;
+        
+        cell.textLabel.text=[address objectAtIndex:indexPath.row];
+        if ([cell.textLabel.text isEqualToString:@"Home"] ||[cell.textLabel.text isEqualToString:@"Work"]||[cell.textLabel.text isEqualToString:@"Other"]) {
+            cell.textLabel.textColor=[UIColor blueColor];
+        }
+
+    }
+    else if (indexPath.section==2)
+    {
+       
+        cell.textLabel.text=[emailIDs objectAtIndex:indexPath.row];
+        if ([cell.textLabel.text isEqualToString:@"Home"] ||[cell.textLabel.text isEqualToString:@"Work"]||[cell.textLabel.text isEqualToString:@"Other"] || [cell.textLabel.text isEqualToString:@"iCloud"]) {
+            cell.textLabel.textColor=[UIColor blueColor];
+        }
+        
+    }
     return cell;
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 20.0f;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int height;
+    if (indexPath.section==0)
+    {
+        height=23.0f;
+    }
+    else {
+        height=50.0f;
+    }
+    return height;
 }
 
 

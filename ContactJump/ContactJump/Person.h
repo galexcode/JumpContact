@@ -13,8 +13,7 @@
 @property (nonatomic, strong) NSString *firstName;
 @property (nonatomic, strong) NSString *lastName;
 @property (nonatomic, strong) NSString *fullName;
-@property (nonatomic, strong) NSString *homeEmail;
-@property (nonatomic, strong) NSString *workEmail;
+
 
 @property (nonatomic, strong) NSMutableArray *phoneNumber_home;
 @property (nonatomic, strong) NSString *phoneNumber_Work;
@@ -27,6 +26,13 @@
 @property (nonatomic, strong) NSString *phoneNumber_other;
 
 
+@property (nonatomic, strong) NSMutableArray *address_home;
+@property (nonatomic, strong) NSString *address_work;
+@property (nonatomic, strong) NSString *address_other;
 
+@property (nonatomic, strong) NSMutableArray *email_home;
+@property (nonatomic, strong) NSMutableArray *email_work;
+@property (nonatomic, strong) NSMutableArray *email_iCloud;
+@property (nonatomic, strong) NSMutableArray *email_other;
 
 @end
