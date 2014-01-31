@@ -26,6 +26,8 @@
     NSMutableArray *emailIDs;
     NSMutableArray *socialProfiles;
     NSMutableArray *IMProfiles;
+    NSMutableArray *URLs;
+    NSMutableArray *dates;
     
 }
 

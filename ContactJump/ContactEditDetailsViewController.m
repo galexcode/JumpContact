@@ -127,6 +127,9 @@
     address=[[NSMutableArray alloc] init];
     emailIDs=[[NSMutableArray alloc] init];
     socialProfiles=[[NSMutableArray alloc] init];
+    IMProfiles=[[NSMutableArray alloc] init];
+    URLs=[[NSMutableArray alloc] init];
+    dates=[[NSMutableArray alloc] init];
     
     if (self) {
         
@@ -140,28 +143,81 @@
     //=================================================PHONE NUMBERS===================================================
         
         for (int i=0; i<[person.phoneNumber_home count]; i++) {
-            if ([person.phoneNumber_home objectAtIndex:i] !=Nil) {
-                [phoneNumber_home addObject:[NSString stringWithFormat:@"Home     : %@",[person.phoneNumber_home objectAtIndex:i]] ];
+            if ([person.phoneNumber_home objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"Home"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_home objectAtIndex:i]] ];
             }
             
         }
-        if (person.phoneNumber_Work !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Work      : %@",person.phoneNumber_Work]];
-        if (person.phoneNumber_iPhone !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"iPhone   : %@",person.phoneNumber_iPhone]];
-        if (person.phoneNumber_mobile !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Mobile   : %@",person.phoneNumber_mobile]];
-        if (person.phoneNumber_main !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Main      : %@",person.phoneNumber_main]];
-        if (person.phoneNumber_HomeFax !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Home Fax : %@",person.phoneNumber_HomeFax]];
-        if (person.phoneNumber_WorkFax !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Work Fax  : %@",person.phoneNumber_WorkFax]];
-        if (person.phoneNumber_Pager !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Pager     : %@",person.phoneNumber_Pager]];
-        if (person.phoneNumber_other !=Nil)
-            [phoneNumber_home addObject:[NSString stringWithFormat:@"Other     : %@",person.phoneNumber_other]];
-        
+        for (int i=0; i<[person.phoneNumber_HomeFax count]; i++)
+        {
+            if ([person.phoneNumber_HomeFax objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"Home Fax"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_HomeFax objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_iPhone count]; i++)
+        {
+            if ([person.phoneNumber_iPhone objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"iPhone"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_iPhone objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_main count]; i++)
+        {
+            if ([person.phoneNumber_main objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"Main"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_main objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_mobile count]; i++)
+        {
+            if ([person.phoneNumber_mobile objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"Mobile"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_mobile objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_other count]; i++)
+        {
+            if ([person.phoneNumber_other objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"Other"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_other objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_Pager count]; i++) {
+            if ([person.phoneNumber_Pager objectAtIndex:i] !=Nil)
+            {
+                [phoneNumber_home addObject:@"Pager"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_Pager objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_Work count]; i++) {
+            if ([person.phoneNumber_Work objectAtIndex:i] !=Nil) {
+                [phoneNumber_home addObject:@"Work"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_Work objectAtIndex:i]] ];
+            }
+            
+        }
+        for (int i=0; i<[person.phoneNumber_WorkFax count]; i++) {
+            if ([person.phoneNumber_WorkFax objectAtIndex:i] !=Nil) {
+                [phoneNumber_home addObject:@"Work Fax"];
+                [phoneNumber_home addObject:[NSString stringWithFormat:@"%@",[person.phoneNumber_WorkFax objectAtIndex:i]] ];
+            }
+            
+        }
+       
         
     //=================================================ADDRESS===================================================
         for (int i=0; i<[person.address_home count]; i++)
@@ -172,18 +228,22 @@
                 [address addObject:[NSString stringWithFormat:@"%@",[person.address_home objectAtIndex:i]]];
             }
         }
-        
-        if (person.address_work !=Nil)
+        for (int i=0; i<[person.address_work count]; i++)
         {
-            [address addObject:@"Work"];
-            [address addObject:[NSString stringWithFormat:@"%@",person.address_work]];
+            if ([person.address_work objectAtIndex:i] !=Nil)
+            {
+                [address addObject:@"Work"];
+                [address addObject:[NSString stringWithFormat:@"%@",[person.address_work objectAtIndex:i]]];
+            }
         }
         
-        
-        if (person.address_other !=Nil)
+        for (int i=0; i<[person.address_other count]; i++)
         {
-            [address addObject:@"Other"];
-            [address addObject:[NSString stringWithFormat:@"%@",person.address_other]];
+            if ([person.address_other objectAtIndex:i] !=Nil)
+            {
+                [address addObject:@"Other"];
+                [address addObject:[NSString stringWithFormat:@"%@",[person.address_other objectAtIndex:i]]];
+            }
         }
         
     //=================================================EMAIL IDs===================================================
@@ -278,7 +338,127 @@
                 [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_AIM objectAtIndex:i]]];
             }
         }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"FACEBOOK ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_FBMsg objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"GADU-GADU ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_GaduGadu objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"GTALK ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_GTalk objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"ICQ ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_ICQ objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"JABBER ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_Jabber objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"MSN ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_MSNMsg objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_AIM count]; i++) {
+            if ([person.IM_AIM objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"QQ ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_QQ objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_YahooMsg count]; i++) {
+            if ([person.IM_YahooMsg objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"YAHOO ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_YahooMsg objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.IM_Skype count]; i++) {
+            if ([person.IM_Skype objectAtIndex:i] !=Nil)
+            {
+                [IMProfiles addObject:@"SKYPE ID"];
+                [IMProfiles addObject:[NSString stringWithFormat:@"%@",[person.IM_Skype objectAtIndex:i]]];
+            }
+        }
         
+        //=================================================URLs===================================================
+        
+        for (int i=0; i<[person.url_home count]; i++)
+        {
+            if ([person.url_home objectAtIndex:i] !=Nil)
+            {
+                [URLs addObject:@"Home"];
+                [URLs addObject:[NSString stringWithFormat:@"%@",[person.url_home objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.url_homePage count]; i++)
+        {
+            if ([person.url_homePage objectAtIndex:i] !=Nil)
+            {
+                [URLs addObject:@"Home Page"];
+                [URLs addObject:[NSString stringWithFormat:@"%@",[person.url_homePage objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.url_other count]; i++)
+        {
+            if ([person.url_other objectAtIndex:i] !=Nil)
+            {
+                [URLs addObject:@"Other"];
+                [URLs addObject:[NSString stringWithFormat:@"%@",[person.url_other objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.url_work count]; i++)
+        {
+            if ([person.url_work objectAtIndex:i] !=Nil)
+            {
+                [URLs addObject:@"Work"];
+                [URLs addObject:[NSString stringWithFormat:@"%@",[person.url_work objectAtIndex:i]]];
+            }
+        }
+        
+        //=================================================DATES===================================================
+        
+        for (int i=0; i<[person.date_other count]; i++)
+        {
+            if ([person.date_other objectAtIndex:i] !=Nil)
+            {
+                [dates addObject:@"Other"];
+                [dates addObject:[NSString stringWithFormat:@"%@",[person.date_other objectAtIndex:i]]];
+            }
+        }
+        for (int i=0; i<[person.date_Anniversary count]; i++)
+        {
+            if ([person.date_Anniversary objectAtIndex:i] !=Nil)
+            {
+                [dates addObject:@"Anniversary"];
+                [dates addObject:[NSString stringWithFormat:@"%@",[person.date_Anniversary objectAtIndex:i]]];
+            }
+        }
+        if (person.date_bday !=Nil) {
+            [dates addObject:@"Birthday"];
+            [dates addObject:person.date_bday];
+        }
         
     }
     return self;
@@ -295,7 +475,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 7;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -311,15 +491,22 @@
     }
 
     else if (section==3){
-        title_Header=@"                    Social Profile";
+        title_Header=@"                     Social Profile";
     }
 
     else if (section==4){
         title_Header=@"                   Instant Messaging";
     }
-
+    else if (section==5){
+        title_Header=@"                            URL";
+    }
+    else if (section==6){
+        title_Header=@"                           Dates";
+    }
+    
     return title_Header;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     int rows;
     if (section==0) {
@@ -338,9 +525,16 @@
     {
         rows=(int)[socialProfiles count];
     }
-    else
+    else if(section==4)
     {
         rows=(int)[IMProfiles count];
+    }
+    else if(section==5)
+    {
+        rows=(int)[URLs count];
+    }
+    else {
+        rows=(int)[dates count];
     }
     return  rows;
     
@@ -397,11 +591,32 @@
     {
         
         cell.textLabel.text=[IMProfiles objectAtIndex:indexPath.row];
-        if ([cell.textLabel.text isEqualToString:@"Facebook ID"] ||[cell.textLabel.text isEqualToString:@"Flickr ID"]||[cell.textLabel.text isEqualToString:@"MySpace ID"] || [cell.textLabel.text isEqualToString:@"SinaWeibo ID"] || [cell.textLabel.text isEqualToString:@"Twitter ID"] || [cell.textLabel.text isEqualToString:@"LinkedIn ID"]) {
+        if ([cell.textLabel.text isEqualToString:@"FACEBOOK ID"] ||[cell.textLabel.text isEqualToString:@"GTALK ID"]||[cell.textLabel.text isEqualToString:@"ICQ ID"] || [cell.textLabel.text isEqualToString:@"JABBER ID"] || [cell.textLabel.text isEqualToString:@"MSN ID"] || [cell.textLabel.text isEqualToString:@"QQ ID"] ||[cell.textLabel.text isEqualToString:@"AIM ID"]||[cell.textLabel.text isEqualToString:@"GADU-GADU ID"] ||[cell.textLabel.text isEqualToString:@"YAHOO ID"]||[cell.textLabel.text isEqualToString:@"SKYPE ID"]) {
             cell.textLabel.textColor=[UIColor blueColor];
         }
         
     }
+    else if (indexPath.section==5)
+    {
+        
+        cell.textLabel.text=[URLs objectAtIndex:indexPath.row];
+        if ([cell.textLabel.text isEqualToString:@"Home"] ||[cell.textLabel.text isEqualToString:@"Home Page"]||[cell.textLabel.text isEqualToString:@"Other"] || [cell.textLabel.text isEqualToString:@"Work"] )
+        {
+            cell.textLabel.textColor=[UIColor blueColor];
+        }
+        
+    }
+
+    else if (indexPath.section==6)
+    {
+        
+        cell.textLabel.text=[dates objectAtIndex:indexPath.row];
+        if ([cell.textLabel.text isEqualToString:@"Anniversary"] ||[cell.textLabel.text isEqualToString:@"Other"]) {
+            cell.textLabel.textColor=[UIColor blueColor];
+        }
+        
+    }
+
     return cell;
     
 }

@@ -288,6 +288,7 @@
             
             NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
             NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
+            
             NSLog(@"Name %@", firstName);
 
             if (firstName.length==0) {
@@ -303,8 +304,15 @@
             ABMultiValueRef address = ABRecordCopyValue(ref, kABPersonAddressProperty);
             ABMultiValueRef socialProfile = ABRecordCopyValue(ref, kABPersonSocialProfileProperty);
             ABMultiValueRef instantMessageProfile = ABRecordCopyValue(ref, kABPersonInstantMessageProperty);
+            ABMultiValueRef url = ABRecordCopyValue(ref, kABPersonURLProperty);
+            ABMultiValueRef date = ABRecordCopyValue(ref, kABPersonDateProperty);
+            
+            
+            
             NSUInteger j = 0;
             
+            
+             //********************************* IM PROFILES *********************************
             if(instantMessageProfile)
             {
                 NSArray *IMProfiles = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(instantMessageProfile);
@@ -365,7 +373,7 @@
                 
             }
 
-            
+             //********************************* SOCIAL PROFILES *********************************
             if(socialProfile)
             {
                 NSArray *socialProfiles = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(socialProfile);
@@ -410,13 +418,14 @@
                 
             }
             
+             //********************************* EMAIL IDs *********************************
             for(j = 0; j < ABMultiValueGetCount(emails); j++)
             {
                 
        
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(emails, j);
                 NSString* emailType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
-               NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
+                NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
                 
                 if ([emailType isEqualToString:@"work"])
                 {
@@ -436,58 +445,60 @@
                     [person.email_iCloud addObject:email];
                 }
                
-               
+               CFRelease(typeTmp);
             }
             
-            NSLog(@"PHONE NUMBERS COUNT %ld",ABMultiValueGetCount(phones));
+            //*********************************PHONE NUMBERS *********************************
             for(j = 0; j < ABMultiValueGetCount(phones); j++)
             {
                 
                 
-               
+                CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(phones, j);
+                NSString* phone_labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-                NSLog(@"phone %@\n",phone);
-                 if (j==0)
+                
+
+                if ([phone_labeltype isEqualToString:@"work"])
                 {
-                    person.phoneNumber_Work = phone;
+                    [person.phoneNumber_Work addObject: phone];
                 }
-                else if (j==1)
+                else if ([phone_labeltype isEqualToString:@"iPhone"])
                 {
-                    person.phoneNumber_iPhone=phone;
+                    [person.phoneNumber_iPhone addObject:phone];
                 }
-                else if (j==2)
+                else if ([phone_labeltype isEqualToString:@"mobile"])
                 {
-                    person.phoneNumber_mobile=phone;
+                    [person.phoneNumber_mobile addObject:phone];
                 }
-                else if (j==3)
+                else if ([phone_labeltype isEqualToString:@"main"])
                 {
-                    person.phoneNumber_main=phone;
+                    [person.phoneNumber_main addObject:phone];
                 }
-                else if (j==4)
+                else if ([phone_labeltype isEqualToString:@"home fax"])
                 {
-                    person.phoneNumber_HomeFax=phone;
+                    [person.phoneNumber_HomeFax addObject:phone];
                 }
-                else if (j==5)
+                else if ([phone_labeltype isEqualToString:@"work fax"])
                 {
-                    person.phoneNumber_WorkFax=phone;
+                    [person.phoneNumber_WorkFax addObject:phone];
                 }
-                else if (j==6)
+                else if ([phone_labeltype isEqualToString:@"pager"])
                 {
-                    person.phoneNumber_Pager=phone;
+                    [person.phoneNumber_Pager addObject:phone];
                 }
-                else if (j==7)
+                else if ([phone_labeltype isEqualToString:@"other"])
                 {
-                    person.phoneNumber_other=phone;
+                    [person.phoneNumber_other addObject:phone];
                 }
-                else if (j>=8)
+                else if ([phone_labeltype isEqualToString:@"home"])
                 {
                     [person.phoneNumber_home addObject:phone];
                 }
                 
-               
+               CFRelease(typeTmp);
               
             }
-            
+             //********************************* ADDRESS *********************************
             if(address)
             {
                 NSArray *addresses = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(address);
@@ -501,33 +512,110 @@
                         NSDictionary *addressDict=[addresses objectAtIndex:i];
                         NSString *country =[NSString stringWithFormat:
                                         @" Street : %@ \n City : %@ \n Zip : %@ \n Country : %@ \n",
-                                        [addressDict objectForKey:(NSString *)kABPersonAddressStreetKey],
-                                        [addressDict objectForKey:(NSString *)kABPersonAddressCityKey],
-                                        [addressDict objectForKey:(NSString *)kABPersonAddressZIPKey],
-                                        [addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]];
+                                        ([addressDict objectForKey:(NSString *)kABPersonAddressStreetKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey],
+                                        ([addressDict objectForKey:(NSString *)kABPersonAddressCityKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressCityKey],
+                                        ([addressDict objectForKey:(NSString *)kABPersonAddressZIPKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressZIPKey],
+                                        ([addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey]];
                     
-                    NSLog(@"country %@",country);
+                   
                         if ([labeltype isEqualToString:@"work"])
                         {
                             
-                            person.address_work= country;
+                            [person.address_work addObject:country];
                         }
                         else if ([labeltype isEqualToString:@"other"])
                         {
-                            person.address_other= country;
+                            [person.address_other addObject:country];
                         }
                         else if ([labeltype isEqualToString:@"home"])
                         {
                             [person.address_home addObject: country];
                         }
-                        NSLog(@"labeltype %@",(__bridge NSString*) ABAddressBookCopyLocalizedLabel(typeTmp));
+                    
+                    CFRelease(typeTmp);
+                }
+                 //********************************* URLs *********************************
+                if(url)
+                {
+                    for(j = 0; j < ABMultiValueGetCount(url); j++)
+                    {
+                        
+                        
+                        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(url, j);
+                        NSString* urlType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+                        NSString *urlValue = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(url, j);
+                        
+                        NSLog(@"urlValuetype %@",urlType);
+                        if ([urlType isEqualToString:@"home"])
+                        {
+                            
+                            [person.url_home addObject:urlValue];
+                        }
+                        else if ([urlType isEqualToString:@"home page"])
+                        {
+                            [person.url_homePage addObject:urlValue];
+                        }
+                        else if ([urlType isEqualToString:@"other"])
+                        {
+                            [person.url_other addObject:urlValue];
+                        }
+                        else if ([urlType isEqualToString:@"work"])
+                        {
+                            [person.url_work addObject:urlValue];
+                        }
+                        
+                        CFRelease(typeTmp);
+                    }
+
+
+                }
+                
+                //********************************* Dates *********************************
+                if(date)
+                {
+                    for(j = 0; j < ABMultiValueGetCount(date); j++)
+                    {
+                        
+                        
+                        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
+                        NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+                        NSString *dateValue = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(date, j);
+                        
+                        NSLog(@"urlValuetype %@",dateType);
+                        
+                        if ([dateType isEqualToString:@"anniversary"])
+                        {
+                            
+                            [person.date_Anniversary addObject:dateValue];
+                        }
+                        else if ([dateType isEqualToString:@"other"])
+                        {
+                            [person.date_other addObject:dateValue];
+                        }
+                       
+                       
+                        
+                        CFRelease(typeTmp);
+                    }
+                    
                     
                 }
                 
+                
+                
+                
+                       NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+                        //[dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+                       [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+                    
+                     NSString *date_BirthdayValue = [dateFormatter stringFromDate:(__bridge NSDate*)ABRecordCopyValue(ref, kABPersonBirthdayProperty) ];
+//                NSString *date_BirthdayValue = [dateFormatter stringFromDate:[(__bridge NSDate*)ABRecordCopyValue(ref, kABPersonBirthdayProperty) description]];
+                [person setDate_bday:date_BirthdayValue];
+
             }
             [contacts addObject:person];
            
-            
+            CFRelease(phones);
             
             
         }
