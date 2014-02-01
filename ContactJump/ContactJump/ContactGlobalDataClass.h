@@ -14,8 +14,10 @@
 }
 
 @property (nonatomic, retain) NSMutableArray      *contactDetails;
-
+@property (nonatomic, retain) NSMutableArray      *contactsArray;
 @property (nonatomic, retain) NSMutableArray      *vcs;
+
+
 @property (nonatomic, retain) NSString      *contactsToBeShared_selected;
 @property (nonatomic, retain) NSString      *recipients_selected;
 @property (nonatomic, retain) NSString      *backBtnActivate;

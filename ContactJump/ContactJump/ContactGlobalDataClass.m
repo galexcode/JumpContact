@@ -11,7 +11,7 @@
 @implementation ContactGlobalDataClass
 
 @synthesize contactDetails,contactsToBeShared_selected,recipients_selected,from_ShareMethodViewController;
-@synthesize vcs,backBtnActivate;
+@synthesize vcs,backBtnActivate,contactsArray;
 
 
 static ContactGlobalDataClass *instance =nil;
@@ -28,4 +28,15 @@ static ContactGlobalDataClass *instance =nil;
     return instance;
 }
 
+-(id)init
+{
+    if(self = [super init]){
+        
+        NSLog(@"creating array");
+        contactsArray = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+    
+}
 @end
