@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *firstName;
 @property (nonatomic, strong) NSString *lastName;
 @property (nonatomic, strong) NSString *fullName;
+@property (nonatomic, strong) NSString *companyName;
 
 
 @property (nonatomic, strong) NSMutableArray *phoneNumber_home;
@@ -64,4 +65,7 @@
 @property (nonatomic, strong) NSMutableArray *date_other;
 
 @property (nonatomic, strong) NSString       *date_bday;
+
+@property (nonatomic, strong) UIImage *pic;
+
 @end

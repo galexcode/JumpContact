@@ -29,6 +29,17 @@
     NSMutableArray *URLs;
     NSMutableArray *dates;
     
+    NSMutableArray *phoneNumber_LabelType;
+    NSMutableArray *address_LabelType;
+    NSMutableArray *emailIDs_LabelType;
+    NSMutableArray *socialProfiles_LabelType;
+    NSMutableArray *IMProfiles_LabelType;
+    NSMutableArray *URLs_LabelType;
+    NSMutableArray *dates_LabelType;
+    
+    NSMutableDictionary *section_Names;
+    NSMutableDictionary *section_LabelType;
+    
 }
 
 

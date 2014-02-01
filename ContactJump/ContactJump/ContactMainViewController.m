@@ -282,22 +282,53 @@
         
         for (int i = 0; i < nPeople; i++)
         {
-             Person *person = [[Person alloc] init];
-             ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
+            Person *person = [[Person alloc] init];
+            ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
             
             
             NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
             NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
-            
-            NSLog(@"Name %@", firstName);
+            NSString *prefix = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonPrefixProperty);
+            NSString *suffix = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonSuffixProperty);
+            NSString *middleName = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonMiddleNameProperty);
+            NSString *organization = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonOrganizationProperty);
+            NSString *jobTtitle = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonJobTitleProperty);
+            NSString *department = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonDepartmentProperty);
 
-            if (firstName.length==0) {
+            
+//            ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, i);
+//            
+//            
+//            if (personRef != nil && ABPersonHasImageData(personRef)) {
+//                if ( &ABPersonCopyImageDataWithFormat != nil ) {
+//                    person.pic=[[UIImage alloc] init];
+//                     person.pic=[UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
+//                    CFDataRef imageData = ABPersonCopyImageData(personRef);
+//                    person.pic = [UIImage imageWithData:(__bridge NSData *)imageData];
+//                   // CFRelease(imageData);
+//                }
+//            } 
+//            NSLog(@"Name %@", person.pic);
+            person.firstName =[NSString stringWithFormat:@"%@ %@",(firstName==NULL)?@"":firstName,(lastName==NULL)?@"":lastName];
+
+            if ( [firstName length]==0 ) {
                 person.firstName =@"#";
-            } else {
-                person.firstName = firstName;
+            }
+            else
+            {
+                person.firstName =[NSString stringWithFormat:@"%@ %@",(firstName==NULL)?@"":firstName,(lastName==NULL)?@"":lastName];
             }
             
-            person.lastName = lastName;
+            person.fullName =[NSString stringWithFormat:
+                              @"%@%@%@%@%@",
+                              (prefix==NULL)? @"":[NSString stringWithFormat:@" %@",prefix],
+                              (firstName==NULL)? @"":[NSString stringWithFormat:@" %@",firstName],
+                              (middleName==NULL)? @"":[NSString stringWithFormat:@" %@",middleName],
+                              (lastName==NULL)? @"":[NSString stringWithFormat:@" %@",lastName],
+                              (suffix==NULL)? @"":[NSString stringWithFormat:@" %@",suffix]] ;
+
+            person.lastName = [NSString stringWithFormat:@"%@%@",(jobTtitle==NULL)?@"":jobTtitle,(department==NULL)?@"":[NSString stringWithFormat:@"- %@",department]];
+            person.companyName=[NSString stringWithFormat:@"%@",(organization==NULL)?@"":organization];
             
             ABMultiValueRef phones = ABRecordCopyValue(ref, kABPersonPhoneProperty);
             ABMultiValueRef emails = ABRecordCopyValue(ref, kABPersonEmailProperty);
@@ -312,7 +343,7 @@
             NSUInteger j = 0;
             
             
-             //********************************* IM PROFILES *********************************
+            //********************************* IM PROFILES *********************************
             if(instantMessageProfile)
             {
                 NSArray *IMProfiles = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(instantMessageProfile);
@@ -372,8 +403,8 @@
                 }
                 
             }
-
-             //********************************* SOCIAL PROFILES *********************************
+            
+            //********************************* SOCIAL PROFILES *********************************
             if(socialProfile)
             {
                 NSArray *socialProfiles = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(socialProfile);
@@ -381,7 +412,7 @@
                 for (int i = 0; i < [socialProfiles count]; i++)
                 {
                     
-
+                    
                     CFDictionaryRef socialValue = ABMultiValueCopyValueAtIndex(socialProfile, i);
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFacebook, 0)==kCFCompareEqualTo) {
                         
@@ -391,38 +422,38 @@
                         
                         [person.socialProfile_Flickr addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
-
+                    
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceLinkedIn, 0)==kCFCompareEqualTo) {
                         
                         [person.socialProfile_LinkedIn addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
-
+                    
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceMyspace, 0)==kCFCompareEqualTo) {
                         
                         [person.socialProfile_MySpace addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
-
+                    
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceSinaWeibo, 0)==kCFCompareEqualTo) {
                         
                         [person.socialProfile_SinaWeibo addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
-
+                    
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceTwitter, 0)==kCFCompareEqualTo) {
                         
                         [person.socialProfile_Twitter addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
-
+                    
                     
                     
                 }
                 
             }
             
-             //********************************* EMAIL IDs *********************************
+            //********************************* EMAIL IDs *********************************
             for(j = 0; j < ABMultiValueGetCount(emails); j++)
             {
                 
-       
+                
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(emails, j);
                 NSString* emailType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
@@ -444,8 +475,8 @@
                 {
                     [person.email_iCloud addObject:email];
                 }
-               
-               CFRelease(typeTmp);
+                
+                CFRelease(typeTmp);
             }
             
             //*********************************PHONE NUMBERS *********************************
@@ -457,7 +488,7 @@
                 NSString* phone_labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
                 
-
+                
                 if ([phone_labeltype isEqualToString:@"work"])
                 {
                     [person.phoneNumber_Work addObject: phone];
@@ -495,46 +526,46 @@
                     [person.phoneNumber_home addObject:phone];
                 }
                 
-               CFRelease(typeTmp);
-              
+                CFRelease(typeTmp);
+                
             }
-             //********************************* ADDRESS *********************************
+            //********************************* ADDRESS *********************************
             if(address)
             {
                 NSArray *addresses = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(address);
-               
+                
                 for (int i = 0; i < [addresses count]; i++)
                 {
-                   
-                        
-                        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, i);
-                        NSString* labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
-                        NSDictionary *addressDict=[addresses objectAtIndex:i];
-                        NSString *country =[NSString stringWithFormat:
-                                        @" Street : %@ \n City : %@ \n Zip : %@ \n Country : %@ \n",
-                                        ([addressDict objectForKey:(NSString *)kABPersonAddressStreetKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey],
+                    
+                    
+                    CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, i);
+                    NSString* labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+                    NSDictionary *addressDict=[addresses objectAtIndex:i];
+                    NSString *country =[NSString stringWithFormat:
+                                        @"%@\n%@ \n%@\n%@ \n",
+                                        ([addressDict objectForKey:(NSString *)kABPersonAddressStreetKey]==NULL)? @"":[[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey] stringByReplacingOccurrencesOfString:@"\n" withString:@" "],
                                         ([addressDict objectForKey:(NSString *)kABPersonAddressCityKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressCityKey],
                                         ([addressDict objectForKey:(NSString *)kABPersonAddressZIPKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressZIPKey],
-                                        ([addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey]];
+                                        ([addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]];
                     
-                   
-                        if ([labeltype isEqualToString:@"work"])
-                        {
-                            
-                            [person.address_work addObject:country];
-                        }
-                        else if ([labeltype isEqualToString:@"other"])
-                        {
-                            [person.address_other addObject:country];
-                        }
-                        else if ([labeltype isEqualToString:@"home"])
-                        {
-                            [person.address_home addObject: country];
-                        }
+                    NSLog(@"STREET---------------*---%@",[[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey] stringByReplacingOccurrencesOfString:@"\n" withString:@" "]);
+                    if ([labeltype isEqualToString:@"work"])
+                    {
+                        
+                        [person.address_work addObject:country];
+                    }
+                    else if ([labeltype isEqualToString:@"other"])
+                    {
+                        [person.address_other addObject:country];
+                    }
+                    else if ([labeltype isEqualToString:@"home"])
+                    {
+                        [person.address_home addObject: country];
+                    }
                     
                     CFRelease(typeTmp);
                 }
-                 //********************************* URLs *********************************
+                //********************************* URLs *********************************
                 if(url)
                 {
                     for(j = 0; j < ABMultiValueGetCount(url); j++)
@@ -566,11 +597,16 @@
                         
                         CFRelease(typeTmp);
                     }
-
-
+                    
+                    
                 }
                 
                 //********************************* Dates *********************************
+                
+                
+                NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+                
                 if(date)
                 {
                     for(j = 0; j < ABMultiValueGetCount(date); j++)
@@ -579,7 +615,8 @@
                         
                         CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
                         NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
-                        NSString *dateValue = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(date, j);
+
+                        NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
                         
                         NSLog(@"urlValuetype %@",dateType);
                         
@@ -592,8 +629,8 @@
                         {
                             [person.date_other addObject:dateValue];
                         }
-                       
-                       
+                        
+                        
                         
                         CFRelease(typeTmp);
                     }
@@ -602,24 +639,19 @@
                 }
                 
                 
+                NSString *date_BirthdayValue = [dateFormatter stringFromDate:(__bridge NSDate*)ABRecordCopyValue(ref, kABPersonBirthdayProperty) ];
                 
-                
-                       NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-                        //[dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-                       [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-                    
-                     NSString *date_BirthdayValue = [dateFormatter stringFromDate:(__bridge NSDate*)ABRecordCopyValue(ref, kABPersonBirthdayProperty) ];
-//                NSString *date_BirthdayValue = [dateFormatter stringFromDate:[(__bridge NSDate*)ABRecordCopyValue(ref, kABPersonBirthdayProperty) description]];
                 [person setDate_bday:date_BirthdayValue];
-
+                
             }
             [contacts addObject:person];
-           
+            
             CFRelease(phones);
             
             
         }
         CFRelease(addressBook);
+        CFRelease(allPeople);
         
         obj.contactDetails=[[NSMutableArray alloc] init];
         

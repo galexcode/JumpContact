@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ContactJump/SelectContact toShareViewController.m"
-            timestampString = "412751165.603967"
+            filePath = "ContactJump/ContactMainViewController.m"
+            timestampString = "412951057.619946"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
-            landmarkName = "-checkBoxClicked:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ContactEditDetailsViewController.m"
-            timestampString = "412864205.497301"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458"
-            landmarkName = "-initWithPerson:"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "-getPersonOutOfAddressBook"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
