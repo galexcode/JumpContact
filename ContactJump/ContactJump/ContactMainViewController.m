@@ -362,55 +362,64 @@
                     
                     
                     CFDictionaryRef IMValue = ABMultiValueCopyValueAtIndex(instantMessageProfile, i);
+                  
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceFacebook, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_FBMsg addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceFacebook];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceMSN, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_MSNMsg addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
-                    }
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceMSN];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];                    }
                     
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceQQ, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_QQ addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceQQ];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceSkype, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_Skype addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceSkype];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceYahoo, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_YahooMsg addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceYahoo];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceJabber, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_Jabber addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceJabber];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceAIM, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_AIM addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceAIM];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceGaduGadu, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_GaduGadu addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceGaduGadu];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceGoogleTalk, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_GTalk addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceGoogleTalk];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     if(CFStringCompare( CFDictionaryGetValue(IMValue, kABPersonInstantMessageServiceKey), kABPersonInstantMessageServiceICQ, 0)==kCFCompareEqualTo) {
                         
-                        [person.IM_ICQ addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
+                        [person.IM_Type addObject:(NSString*)kABPersonInstantMessageServiceICQ];
+                        [person.IM_Value addObject:(NSString*) CFDictionaryGetValue(IMValue, kABPersonInstantMessageUsernameKey)];
                     }
                     
-                    NSLog(@"%@",person.IM_ICQ);
-                    
+                    CFRelease(IMValue);
                 }
-                
+
             }
             
             //********************************* SOCIAL PROFILES *********************************
@@ -425,37 +434,44 @@
                     CFDictionaryRef socialValue = ABMultiValueCopyValueAtIndex(socialProfile, i);
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFacebook, 0)==kCFCompareEqualTo) {
                         
-                        [person.socialProfile_Facebook addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                        [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceFacebook];
+                        [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFlickr, 0)==kCFCompareEqualTo) {
                         
-                        [person.socialProfile_Flickr addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                        [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceFlickr];
+                        [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceLinkedIn, 0)==kCFCompareEqualTo) {
                         
-                        [person.socialProfile_LinkedIn addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                        [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceLinkedIn];
+                        [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceMyspace, 0)==kCFCompareEqualTo) {
                         
-                        [person.socialProfile_MySpace addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                        [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceMyspace];
+                        [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceSinaWeibo, 0)==kCFCompareEqualTo) {
                         
-                        [person.socialProfile_SinaWeibo addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                        [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceSinaWeibo];
+                        [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     
                     if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceTwitter, 0)==kCFCompareEqualTo) {
                         
-                        [person.socialProfile_Twitter addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
+                        [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceTwitter];
+                        [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     
-                    
+                    CFRelease(socialValue);
                     
                 }
                 
+                NSLog(@"%@ ---- %@\n",person.socialProfile_Type,person.socialProfile_Value);
             }
             
             //********************************* EMAIL IDs *********************************
@@ -466,29 +482,18 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(emails, j);
                 NSString* emailType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-                
-                if ([emailType isEqualToString:@"work"])
-                {
-                    
-                    [person.email_work addObject:email];
-                }
-                else if ([emailType isEqualToString:@"other"])
-                {
-                    [person.email_other addObject:email];
-                }
-                else if ([emailType isEqualToString:@"home"])
-                {
-                    [person.email_home addObject:email];
-                }
-                else if ([emailType isEqualToString:@"iCloud"])
-                {
-                    [person.email_iCloud addObject:email];
-                }
+                [person.email_Type addObject:emailType];
+                [person.email_Value addObject:email];
                 
                 CFRelease(typeTmp);
             }
             
+            NSLog(@"%@ \n %@",person.email_Type,person.email_Value);
+            
+            
             //*********************************PHONE NUMBERS *********************************
+            
+            
             for(j = 0; j < ABMultiValueGetCount(phones); j++)
             {
                 
@@ -496,91 +501,8 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(phones, j);
                 NSString* phone_labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-//                [person.phoneNumber_home addObject:phone_labeltype];
-//                [person.phoneNumber_Work addObject: phone];
-                [person.phone setObject:phone forKey:phone_labeltype];
-                
-//                if ([phone_labeltype isEqualToString:@"work"])
-//                {
-//                    [person.phoneNumber_Work addObject: phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"iPhone"])
-//                {
-//                    [person.phoneNumber_iPhone addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"mobile"])
-//                {
-//                    [person.phoneNumber_mobile addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"main"])
-//                {
-//                    [person.phoneNumber_main addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"home fax"])
-//                {
-//                    [person.phoneNumber_HomeFax addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"work fax"])
-//                {
-//                    [person.phoneNumber_WorkFax addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"pager"])
-//                {
-//                    [person.phoneNumber_Pager addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"other"])
-//                {
-//                    [person.phoneNumber_other addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"home"])
-//                {
-//                    [person.phoneNumber_home addObject:phone];
-//                }
-//                if ([phone_labeltype isEqualToString:@"work"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject: phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"iPhone"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"mobile"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"main"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"home fax"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"work fax"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"pager"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"other"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
-//                else if ([phone_labeltype isEqualToString:@"home"])
-//                {
-//                    [person.phoneNumber_home addObject:phone_labeltype];
-//                    [person.phoneNumber_Work addObject:phone];
-//                }
+                [person.phoneNumber_Type addObject:phone_labeltype];
+                [person.phoneNumber_Value addObject: phone];
 
                 CFRelease(typeTmp);
                 
@@ -605,22 +527,17 @@
                                         ([addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]];
                     
                    
-                    if ([labeltype isEqualToString:@"work"])
-                    {
-                        
-                        [person.address_work addObject:country];
-                    }
-                    else if ([labeltype isEqualToString:@"other"])
-                    {
-                        [person.address_other addObject:country];
-                    }
-                    else if ([labeltype isEqualToString:@"home"])
-                    {
-                        [person.address_home addObject: country];
-                    }
-                    
+                   
+                    [person.address_Type addObject:[labeltype stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                      withString:[[labeltype substringToIndex:1] capitalizedString]]];
+                    [person.address_Value addObject:country];
+                  
                     CFRelease(typeTmp);
+                    
                 }
+                
+                NSLog(@"%@ \n %@",person.address_Type,person.address_Value);
+            }
                 //********************************* URLs *********************************
                 if(url)
                 {
@@ -631,25 +548,10 @@
                         CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(url, j);
                         NSString* urlType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                         NSString *urlValue = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(url, j);
+                       
+                        [person.url_Type addObject:urlType];
+                        [person.url_Value addObject:urlValue];
                         
-                        NSLog(@"urlValuetype %@",urlType);
-                        if ([urlType isEqualToString:@"home"])
-                        {
-                            
-                            [person.url_home addObject:urlValue];
-                        }
-                        else if ([urlType isEqualToString:@"home page"])
-                        {
-                            [person.url_homePage addObject:urlValue];
-                        }
-                        else if ([urlType isEqualToString:@"other"])
-                        {
-                            [person.url_other addObject:urlValue];
-                        }
-                        else if ([urlType isEqualToString:@"work"])
-                        {
-                            [person.url_work addObject:urlValue];
-                        }
                         
                         CFRelease(typeTmp);
                     }
@@ -675,17 +577,9 @@
                         NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
                         
                         NSLog(@"urlValuetype %@",dateType);
+                        [person.date_Value addObject:dateValue];
                         
-                        if ([dateType isEqualToString:@"anniversary"])
-                        {
-                            
-                            [person.date_Anniversary addObject:dateValue];
-                        }
-                        else if ([dateType isEqualToString:@"other"])
-                        {
-                            [person.date_other addObject:dateValue];
-                        }
-                        
+                        [person.date_Type addObject:dateType];
                         
                         
                         CFRelease(typeTmp);
@@ -697,13 +591,23 @@
                 
                 NSString *date_BirthdayValue = [dateFormatter stringFromDate:(__bridge NSDate*)ABRecordCopyValue(ref, kABPersonBirthdayProperty) ];
                 
+            
+            if (date_BirthdayValue !=NULL) {
                 [person setDate_bday:date_BirthdayValue];
-                
+                [person.date_Value addObject:person.date_bday];
+                [person.date_Type addObject:@"Birthday"];
             }
+            
+            NSLog(@"%@ \n %@",person.date_Type,person.date_Value);
             [contacts addObject:person];
             
             CFRelease(phones);
-            
+            CFRelease(emails);
+            CFRelease(address);
+            CFRelease(socialProfile);
+            CFRelease(instantMessageProfile);
+            CFRelease(url);
+            CFRelease(date);
             
         }
         CFRelease(addressBook);

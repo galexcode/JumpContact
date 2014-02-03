@@ -535,21 +535,22 @@ static int k=0;
             
             NSMutableArray *personDataArr=[[NSMutableArray alloc] init];
             
+            [dic_PhoneTypes setObject:[[[obj.contactsArray objectAtIndex:k] phoneNumber_Value] objectAtIndex:k] forKey:[[[obj.contactsArray objectAtIndex:k] phoneNumber_Type] objectAtIndex:k]];
+            NSLog(@"%@",dic_PhoneTypes);
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_home]    forKey:@"phone_Home"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_HomeFax] forKey:@"phone_HomeFax"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_iPhone]  forKey:@"phone_iPhone"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_main]    forKey:@"phone_Main"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_mobile]  forKey:@"phone_Mobile"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_other]   forKey:@"phone_Other"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_Pager]   forKey:@"phone_Pager"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_Work]    forKey:@"phone_Work"];
+//            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_WorkFax] forKey:@"phone_WorkFax"];
             
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_home]    forKey:@"phone_Home"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_HomeFax] forKey:@"phone_HomeFax"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_iPhone]  forKey:@"phone_iPhone"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_main]    forKey:@"phone_Main"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_mobile]  forKey:@"phone_Mobile"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_other]   forKey:@"phone_Other"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_Pager]   forKey:@"phone_Pager"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_Work]    forKey:@"phone_Work"];
-            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_WorkFax] forKey:@"phone_WorkFax"];
-            
-            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_home]   forKey:@"Email_Home"];
-            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_iCloud] forKey:@"Email_iCloud"];
-            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_other]  forKey:@"Email_Other"];
-            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_work]   forKey:@"Email_Work"];
+//            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_home]   forKey:@"Email_Home"];
+//            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_iCloud] forKey:@"Email_iCloud"];
+//            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_other]  forKey:@"Email_Other"];
+//            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_work]   forKey:@"Email_Work"];
             
             
             [dic_PersonPhone setObject:dic_PhoneTypes   forKey:@"person_Phone"];
