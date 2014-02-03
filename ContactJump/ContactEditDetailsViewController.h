@@ -39,6 +39,7 @@
     
     NSMutableDictionary *section_Names;
     NSMutableDictionary *section_LabelType;
+    Person *per;
     
 }
 

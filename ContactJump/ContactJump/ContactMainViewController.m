@@ -238,13 +238,16 @@
         ContactBackup_btn.frame=CGRectMake(46.75,417.25, 226.5,39.5);
     }
     
-    obj=[ContactGlobalDataClass getInstance];
-    [obj setBackBtnActivate:@"0"];
-    [self getPersonOutOfAddressBook];
+    
     
 
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    obj=[ContactGlobalDataClass getInstance];
+    [obj setBackBtnActivate:@"0"];
+    [self getPersonOutOfAddressBook];
+}
 
 - (void)getPersonOutOfAddressBook
 {
@@ -311,22 +314,28 @@
 //            NSLog(@"Name %@", person.pic);
             person.firstName =[NSString stringWithFormat:@"%@ %@",(firstName==NULL)?@"":firstName,(lastName==NULL)?@"":lastName];
 
-            if ( [firstName length]==0 ) {
-                person.firstName =@"#";
-            }
-            else
-            {
-                person.firstName =[NSString stringWithFormat:@"%@ %@",(firstName==NULL)?@"":firstName,(lastName==NULL)?@"":lastName];
-            }
+           
             
             person.fullName =[NSString stringWithFormat:
                               @"%@%@%@%@%@",
-                              (prefix==NULL)? @"":[NSString stringWithFormat:@" %@",prefix],
-                              (firstName==NULL)? @"":[NSString stringWithFormat:@" %@",firstName],
-                              (middleName==NULL)? @"":[NSString stringWithFormat:@" %@",middleName],
-                              (lastName==NULL)? @"":[NSString stringWithFormat:@" %@",lastName],
-                              (suffix==NULL)? @"":[NSString stringWithFormat:@" %@",suffix]] ;
-
+                              (prefix==NULL)? @"":[NSString stringWithFormat:@"%@ ",prefix],
+                              (firstName==NULL)? @"":[NSString stringWithFormat:@"%@ ",firstName],
+                              (middleName==NULL)? @"":[NSString stringWithFormat:@"%@ ",middleName],
+                              (lastName==NULL)? @"":[NSString stringWithFormat:@"%@ ",lastName],
+                              (suffix==NULL)? @"":[NSString stringWithFormat:@"%@",suffix]] ;
+            if ( [person.fullName length]==0 ) {
+                person.fullName =@"#";
+            }
+            else
+            {
+                person.fullName =[NSString stringWithFormat:
+                                  @"%@%@%@%@%@",
+                                  (prefix==NULL)? @"":[NSString stringWithFormat:@"%@ ",prefix],
+                                  (firstName==NULL)? @"":[NSString stringWithFormat:@"%@ ",firstName],
+                                  (middleName==NULL)? @"":[NSString stringWithFormat:@"%@ ",middleName],
+                                  (lastName==NULL)? @"":[NSString stringWithFormat:@"%@ ",lastName],
+                                  (suffix==NULL)? @"":[NSString stringWithFormat:@"%@",suffix]] ;
+            }
             person.lastName = [NSString stringWithFormat:@"%@%@",(jobTtitle==NULL)?@"":jobTtitle,(department==NULL)?@"":[NSString stringWithFormat:@"- %@",department]];
             person.companyName=[NSString stringWithFormat:@"%@",(organization==NULL)?@"":organization];
             
@@ -487,45 +496,92 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(phones, j);
                 NSString* phone_labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
+//                [person.phoneNumber_home addObject:phone_labeltype];
+//                [person.phoneNumber_Work addObject: phone];
+                [person.phone setObject:phone forKey:phone_labeltype];
                 
-                
-                if ([phone_labeltype isEqualToString:@"work"])
-                {
-                    [person.phoneNumber_Work addObject: phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"iPhone"])
-                {
-                    [person.phoneNumber_iPhone addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"mobile"])
-                {
-                    [person.phoneNumber_mobile addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"main"])
-                {
-                    [person.phoneNumber_main addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"home fax"])
-                {
-                    [person.phoneNumber_HomeFax addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"work fax"])
-                {
-                    [person.phoneNumber_WorkFax addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"pager"])
-                {
-                    [person.phoneNumber_Pager addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"other"])
-                {
-                    [person.phoneNumber_other addObject:phone];
-                }
-                else if ([phone_labeltype isEqualToString:@"home"])
-                {
-                    [person.phoneNumber_home addObject:phone];
-                }
-                
+//                if ([phone_labeltype isEqualToString:@"work"])
+//                {
+//                    [person.phoneNumber_Work addObject: phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"iPhone"])
+//                {
+//                    [person.phoneNumber_iPhone addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"mobile"])
+//                {
+//                    [person.phoneNumber_mobile addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"main"])
+//                {
+//                    [person.phoneNumber_main addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"home fax"])
+//                {
+//                    [person.phoneNumber_HomeFax addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"work fax"])
+//                {
+//                    [person.phoneNumber_WorkFax addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"pager"])
+//                {
+//                    [person.phoneNumber_Pager addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"other"])
+//                {
+//                    [person.phoneNumber_other addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"home"])
+//                {
+//                    [person.phoneNumber_home addObject:phone];
+//                }
+//                if ([phone_labeltype isEqualToString:@"work"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject: phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"iPhone"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"mobile"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"main"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"home fax"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"work fax"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"pager"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"other"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+//                else if ([phone_labeltype isEqualToString:@"home"])
+//                {
+//                    [person.phoneNumber_home addObject:phone_labeltype];
+//                    [person.phoneNumber_Work addObject:phone];
+//                }
+
                 CFRelease(typeTmp);
                 
             }
@@ -548,7 +604,7 @@
                                         ([addressDict objectForKey:(NSString *)kABPersonAddressZIPKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressZIPKey],
                                         ([addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]==NULL)? @"":[addressDict objectForKey:(NSString *)kABPersonAddressCountryKey]];
                     
-                    NSLog(@"STREET---------------*---%@",[[addressDict objectForKey:(NSString *)kABPersonAddressStreetKey] stringByReplacingOccurrencesOfString:@"\n" withString:@" "]);
+                   
                     if ([labeltype isEqualToString:@"work"])
                     {
                         

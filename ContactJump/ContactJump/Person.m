@@ -9,7 +9,7 @@
 #import "Person.h"
 
 @implementation Person
-@synthesize address_home,address_other,address_work,email_iCloud,email_home,email_other,email_work;
+@synthesize address_home,address_other,address_work,email_iCloud,email_home,email_other,email_work,phone;
 @synthesize socialProfile_Facebook,socialProfile_Flickr,socialProfile_LinkedIn,
             socialProfile_Twitter,socialProfile_SinaWeibo,socialProfile_MySpace;
 
@@ -23,6 +23,9 @@
     self = [super init];
     
     if (self) {
+        
+        
+        phone=[[NSMutableDictionary alloc] init];
         phoneNumber_home= [[NSMutableArray alloc] init];
         phoneNumber_Work= [[NSMutableArray alloc] init];
         phoneNumber_iPhone= [[NSMutableArray alloc] init];

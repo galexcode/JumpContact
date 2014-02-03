@@ -70,7 +70,7 @@
     
     last_Name=[[UITextField alloc] init];
     [last_Name setBackgroundColor:[UIColor clearColor]];
-    last_Name.placeholder=@"Last name";
+    last_Name.placeholder=@"Job Title - Department";
     last_Name.textColor=[UIColor blackColor];
     last_Name.text=lname;
     last_Name.delegate = self;
@@ -123,6 +123,7 @@
 - (id)initWithPerson:(Person *)person
 {
     
+    per=person;
     phoneNumber_home=[[NSMutableArray alloc] init];
     address=[[NSMutableArray alloc] init];
     emailIDs=[[NSMutableArray alloc] init];
@@ -468,17 +469,18 @@
                 [dates addObject:[NSString stringWithFormat:@"%@",[person.date_Anniversary objectAtIndex:i]]];
             }
         }
-        if (person.date_bday !=Nil) {
+        if (person.date_bday !=Nil)
+        {
             [dates_LabelType addObject:@"Birthday"];
             [dates addObject:person.date_bday];
         }
         
         //===========================================================================================================
-        
+        NSLog(@"%@",[person.phone objectForKey:[[[person.phone allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:0]]) ;
         if ([phoneNumber_home count] !=0)
         {
-            [section_LabelType setObject:phoneNumber_LabelType forKey:@"1"];
-            [section_Names setObject:phoneNumber_home forKey:@"1"];
+            [section_LabelType setObject:person.phoneNumber_home forKey:@"1"];
+            [section_Names setObject:person.phoneNumber_Work forKey:@"1"];
         }
         if ([address count] !=0)
         {
@@ -519,6 +521,7 @@
 }
 -(void)back_btnAction
 {
+     per.fullName=first_Name.text;
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning
@@ -646,11 +649,12 @@
         
         
         
-        
-        lblType.text=[[section_LabelType objectForKey:[[[section_LabelType allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        
-
-        lblMainLabel.text=[[section_Names objectForKey:[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        lblType.text= [[[per.phone allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.row];
+        lblMainLabel.text=[per.phone objectForKey:[[[per.phone allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.row]];
+//        lblType.text=[[section_LabelType objectForKey:[[[section_LabelType allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+//        
+//
+//        lblMainLabel.text=[[section_Names objectForKey:[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
         first_Cell.accessoryType=UITableViewCellAccessoryCheckmark;
         [first_Cell.contentView addSubview:lblMainLabel];
@@ -693,12 +697,20 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryCheckmark){
+   
+    NSLog(@"*******  %@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] );
+    if([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryCheckmark)
+    {
         [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-    }else{
-        [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        
     }
+    else
+    {
+        [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma TextField Delegate Method
@@ -726,7 +738,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     [textField resignFirstResponder];
-   
+    per.fullName=textField.text;
     
     return YES;
 }

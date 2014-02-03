@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *fullName;
 @property (nonatomic, strong) NSString *companyName;
 
+@property (nonatomic, strong) NSMutableDictionary *phone;
 
 @property (nonatomic, strong) NSMutableArray *phoneNumber_home;
 @property (nonatomic, strong) NSMutableArray *phoneNumber_Work;

@@ -283,13 +283,17 @@ static int k1=0;
     NSLog(@"sssssss----\n%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
     
     
-    
+   
     name_lbl=[[UILabel alloc] init];
     
     name_lbl.frame=CGRectMake(60, 10, 150, 30);
     name_lbl.textAlignment=0;
     [name_lbl setTag:1];
-    name_lbl.text=[NSString stringWithFormat:@"%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] firstName]];
+    name_lbl.text=[NSString stringWithFormat:@"%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] fullName]];
+    if ([name_lbl.text isEqualToString:@"#"]) {
+        name_lbl.text=[NSString stringWithFormat:@"No Name"];
+    }
+    
     name_lbl.textColor= [UIColor blackColor];
     name_lbl.backgroundColor=[UIColor clearColor];
     name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];

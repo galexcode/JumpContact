@@ -66,7 +66,7 @@ static int k=0;
     
     for (Person *chr in obj.contactDetails)
     {
-        NSString *c = [chr.firstName substringToIndex:1];
+        NSString *c = [chr.fullName substringToIndex:1];
         
         found = NO;
         
@@ -91,8 +91,8 @@ static int k=0;
     {
         
         
-        [[self.alphabetsArray objectForKey:[person.firstName substringToIndex:1]] addObject:person];
-        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[person.firstName substringToIndex:1]]] addObject:@"0"];
+        [[self.alphabetsArray objectForKey:[person.fullName substringToIndex:1]] addObject:person];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[person.fullName substringToIndex:1]]] addObject:@"0"];
     }
     
     
@@ -229,6 +229,7 @@ static int k=0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [tableview reloadData];
     if ([obj.backBtnActivate isEqualToString:@"0"] )
     {
         [back_btn setHidden:NO];
@@ -291,7 +292,7 @@ static int k=0;
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
-    NSLog(@"sssssss----\n%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] firstName]);
+    NSLog(@"sssssss----\n%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] fullName]);
     
     
     
@@ -301,10 +302,10 @@ static int k=0;
     name_lbl.textAlignment=0;
     [name_lbl setTag:1];
     Person *p=[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    if ([p.firstName isEqualToString:@"#"]) {
+    if ([p.fullName isEqualToString:@"#"]) {
         name_lbl.text=[NSString stringWithFormat:@"No Name"];
     } else {
-        name_lbl.text=[NSString stringWithFormat:@"%@",p.firstName];
+        name_lbl.text=[NSString stringWithFormat:@"%@",p.fullName];
     }
     
     name_lbl.textColor= [UIColor blackColor];
@@ -371,10 +372,10 @@ static int k=0;
     NSLog(@"%@", cell.contentView.subviews);
     UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:1];
     Person *p = [[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    //UIButton *editButton = (UIButton*)[cell.contentView.subviews objectAtIndex:2];
+    
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        //[editButton setHidden:YES];
+        
         [cell.accessoryView setHidden:YES];
         
         [obj.contactsArray removeObject:p];
@@ -388,7 +389,7 @@ static int k=0;
         
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
-        //[editButton setHidden:NO];
+        
         [obj.contactsArray addObject:p];
         [cell.accessoryView setHidden:NO];
         k++;
@@ -517,7 +518,73 @@ static int k=0;
     }
     else
     {
-        NSLog(@"%@",obj.contactsArray);
+        //NSLog(@"%@",obj.contactsArray);
+        
+        
+        NSMutableDictionary *person=[[NSMutableDictionary alloc] init];
+        NSMutableArray *personArr=[[NSMutableArray alloc] init];
+
+        for (int k=0; k<[obj.contactsArray count]; k++)
+        {
+            NSMutableDictionary *dic_PhoneTypes=[[NSMutableDictionary alloc] init];
+            NSMutableDictionary *dic_EmailTypes=[[NSMutableDictionary alloc] init];
+            
+            
+            NSMutableDictionary *dic_PersonPhone=[[NSMutableDictionary alloc] init];
+            NSMutableDictionary *dic_PersonEmail=[[NSMutableDictionary alloc] init];
+            
+            NSMutableArray *personDataArr=[[NSMutableArray alloc] init];
+            
+            
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_home]    forKey:@"phone_Home"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_HomeFax] forKey:@"phone_HomeFax"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_iPhone]  forKey:@"phone_iPhone"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_main]    forKey:@"phone_Main"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_mobile]  forKey:@"phone_Mobile"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_other]   forKey:@"phone_Other"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_Pager]   forKey:@"phone_Pager"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_Work]    forKey:@"phone_Work"];
+            [dic_PhoneTypes setObject:[[obj.contactsArray objectAtIndex:k] phoneNumber_WorkFax] forKey:@"phone_WorkFax"];
+            
+            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_home]   forKey:@"Email_Home"];
+            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_iCloud] forKey:@"Email_iCloud"];
+            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_other]  forKey:@"Email_Other"];
+            [dic_EmailTypes setObject:[[obj.contactsArray objectAtIndex:k] email_work]   forKey:@"Email_Work"];
+            
+            
+            [dic_PersonPhone setObject:dic_PhoneTypes   forKey:@"person_Phone"];
+            [dic_PersonEmail setObject:dic_EmailTypes   forKey:@"person_Email"];
+            
+            
+            [personDataArr addObject:dic_PersonPhone];
+            [personDataArr addObject:dic_PersonEmail];
+            
+            [person setObject:personDataArr forKey:[NSString stringWithFormat:@"Person-%d",k]];
+           
+        }
+         [personArr addObject:person];
+        NSDictionary *dataDic=[NSDictionary dictionaryWithObject:personArr forKey:@"Data"];
+        NSLog(@"%@",person);
+         NSError* error;
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDic
+                                                           options:NSJSONWritingPrettyPrinted error:&error];
+        
+        
+        
+        NSString* newStr = [NSString stringWithUTF8String:[jsonData bytes]];
+        
+        NSLog(@"JSON %@",newStr);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         [obj setContactsToBeShared_selected:[NSString stringWithFormat:@"%d",k]];
         if (isBulkContacts==NO)
         {
