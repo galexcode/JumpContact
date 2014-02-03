@@ -34,9 +34,12 @@ static int k=0;
 {
     [super viewDidLoad];
     
-    if ([string1 isEqualToString:@"SHARE"]) {
+    if ([string1 isEqualToString:@"SHARE"])
+    {
         isBulkContacts=NO;
-    }else{
+    }
+    else
+    {
         isBulkContacts=YES;
     }
     
