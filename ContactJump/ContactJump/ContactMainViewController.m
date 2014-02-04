@@ -599,7 +599,34 @@
             }
             
             NSLog(@"%@ \n %@",person.date_Type,person.date_Value);
+            
+            
+            
+            person.editableAddress_Type =[[NSMutableArray alloc] initWithArray:person.address_Type copyItems:YES];
+            person.editableAddress_Value =[[NSMutableArray alloc] initWithArray:person.address_Value copyItems:YES];
+            
+            person.editableEmail_Type =[[NSMutableArray alloc] initWithArray:person.email_Type copyItems:YES];
+            person.editableEmail_Value =[[NSMutableArray alloc] initWithArray:person.email_Value copyItems:YES];
+            
+            person.editableIM_Type =[[NSMutableArray alloc] initWithArray:person.IM_Type copyItems:YES];
+            person.editableIM_Value =[[NSMutableArray alloc] initWithArray:person.IM_Value copyItems:YES];
+            
+            person.editablePhoneNumber_Type =[[NSMutableArray alloc] initWithArray:person.phoneNumber_Type copyItems:YES];
+            person.editablePhoneNumber_Value =[[NSMutableArray alloc] initWithArray:person.phoneNumber_Value copyItems:YES];
+            
+            person.editableSocialProfile_Type =[[NSMutableArray alloc] initWithArray:person.socialProfile_Type copyItems:YES];
+            person.editableSocialProfile_Value =[[NSMutableArray alloc] initWithArray:person.socialProfile_Value copyItems:YES];
+            
+            person.editableUrl_Type =[[NSMutableArray alloc] initWithArray:person.url_Type copyItems:YES];
+            person.editableUrl_Value =[[NSMutableArray alloc] initWithArray:person.url_Value copyItems:YES];
+            
+            person.editableDate_Type =[[NSMutableArray alloc] initWithArray:person.date_Type copyItems:YES];
+            person.editableDate_Value =[[NSMutableArray alloc] initWithArray:person.date_Value copyItems:YES];
+            
             [contacts addObject:person];
+            
+            
+            
             
             CFRelease(phones);
             CFRelease(emails);

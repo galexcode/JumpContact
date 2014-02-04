@@ -72,6 +72,7 @@
 		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
 		DFB94A1018963994005F768B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A0F18963994005F768B /* Person.m */; };
 		DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */; };
+		DFC02D2218A1063D0098A82A /* ContactSendContactDetailDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC02D2118A1063D0098A82A /* ContactSendContactDetailDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,8 @@
 		DFB94A0F18963994005F768B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		DFB94A1218966A28005F768B /* ContactEditDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditDetailsViewController.h; sourceTree = "<group>"; };
 		DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactEditDetailsViewController.m; sourceTree = "<group>"; };
+		DFC02D2018A1063D0098A82A /* ContactSendContactDetailDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSendContactDetailDelegate.h; sourceTree = "<group>"; };
+		DFC02D2118A1063D0098A82A /* ContactSendContactDetailDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSendContactDetailDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +250,8 @@
 			children = (
 				9DEDEE12187C8C7E00C809F9 /* SelectShareMethodViewController.h */,
 				9DEDEE13187C8C7E00C809F9 /* SelectShareMethodViewController.m */,
+				DFC02D2018A1063D0098A82A /* ContactSendContactDetailDelegate.h */,
+				DFC02D2118A1063D0098A82A /* ContactSendContactDetailDelegate.m */,
 			);
 			name = "Select Share Method Class";
 			sourceTree = "<group>";
@@ -594,6 +599,7 @@
 				9DF749921875E70100CBB110 /* ContactAppDelegate.m in Sources */,
 				9D0EFF29187884A9002A22CB /* SendContactsViewController.m in Sources */,
 				9D3F4CA41886DBD60078257D /* KxMenu.m in Sources */,
+				DFC02D2218A1063D0098A82A /* ContactSendContactDetailDelegate.m in Sources */,
 				DF4CDCAF188E58A3000B0075 /* ContactsSentViewController.m in Sources */,
 				9DEDEE17187C8CAE00C809F9 /* ContactShareViaIDViewController.m in Sources */,
 				DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */,

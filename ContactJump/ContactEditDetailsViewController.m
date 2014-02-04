@@ -146,39 +146,51 @@
         {
             [section_LabelType setObject:person.phoneNumber_Type forKey:@"1"];
             [section_Names setObject:person.phoneNumber_Value forKey:@"1"];
+           
         }
         if ([person.address_Value count] !=0)
         {
             [section_LabelType setObject:person.address_Type forKey:@"2"];
             [section_Names setObject:person.address_Value forKey:@"2"];
             
+            
         }
         if ([person.email_Value count] !=0) {
             
             [section_LabelType setObject:person.email_Type forKey:@"3"];
             [section_Names setObject:person.email_Value forKey:@"3"];
+            
+            
         }
         if ([person.socialProfile_Value count] !=0)
         {
             [section_LabelType setObject:person.socialProfile_Type forKey:@"4"];
             [section_Names setObject:person.socialProfile_Value forKey:@"4"];
             
+            
         }
         if ([person.IM_Value count] !=0)
         {
             [section_LabelType setObject:person.IM_Type forKey:@"5"];
             [section_Names setObject:person.IM_Value forKey:@"5"];
+            
+            
         }
         if ([person.url_Value count] !=0)
         {
             [section_LabelType setObject:person.url_Type forKey:@"6"];
             [section_Names setObject:person.url_Value forKey:@"6"];
+            
+            
         }
         if ([person.date_Value count] !=0)
         {
             [section_LabelType setObject:person.date_Type forKey:@"7"];
             [section_Names setObject:person.date_Value forKey:@"7"];
+            
+            
         }
+        
         
        
     }
@@ -253,12 +265,16 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle=UITableViewCellSelectionStyleGray;
         cell.textLabel.textColor=[UIColor blackColor];
+        
+      
+        
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+       
         
         UILabel *lblType = [[UILabel alloc]init];
        
         lblType.numberOfLines=2;
-        lblType.frame=CGRectMake(20, 0, 100, 25);
+        lblType.frame=CGRectMake(40, 0, 100, 25);
         lblType.tag = 41;
         lblType.font = [UIFont systemFontOfSize:12];
         lblType.backgroundColor = [UIColor clearColor];
@@ -266,7 +282,7 @@
         [cell.contentView addSubview:lblType];
         
         UILabel *line = [[UILabel alloc]init];
-        line.frame=CGRectMake(110, 3, 1, 19);
+        line.frame=CGRectMake(130, 3, 1, 19);
         line.tag = 43;
         line.backgroundColor = [UIColor lightGrayColor];
         [cell.contentView addSubview:line];
@@ -275,7 +291,7 @@
         UILabel *lblMainLabel = [[UILabel alloc]init];
         lblMainLabel.tag = 42;
         lblMainLabel.numberOfLines=2;
-        lblMainLabel.frame=CGRectMake(125, 0, 170, 25);
+        lblMainLabel.frame=CGRectMake(145, 0, 170, 25);
         lblMainLabel.font = [UIFont systemFontOfSize:12];
         lblMainLabel.backgroundColor = [UIColor clearColor];
         lblMainLabel.textColor = [UIColor blackColor];
@@ -289,7 +305,7 @@
         UITableViewCell *first_Cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] ;
         
         UILabel *lblType = [[UILabel alloc]init];
-        lblType.frame=CGRectMake(20, 0, 100, 100);
+        lblType.frame=CGRectMake(40, 0, 100, 100);
         lblType.numberOfLines=1;
         lblType.tag = 41;
         lblType.font = [UIFont systemFontOfSize:12];
@@ -361,19 +377,91 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
-    NSLog(@"*******  %@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] );
+   
     if([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryCheckmark)
     {
         [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-        if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"1"]) {
-            NSLog(@"xxxx");
-            
+       
+        if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"1"])
+        {
+            [per.editablePhoneNumber_Value replaceObjectAtIndex:indexPath.row withObject:@""];
+            [per.editablePhoneNumber_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+            NSLog(@"----------%@",[per.phoneNumber_Value objectAtIndex:indexPath.row]);
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"2"])
+        {
+             [per.editableAddress_Value replaceObjectAtIndex:indexPath.row withObject:@""];
+             [per.editableAddress_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"3"])
+        {
+            [per.editableEmail_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+            [per.editableEmail_Value replaceObjectAtIndex:indexPath.row withObject:@""];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"4"])
+        {
+            [per.editableSocialProfile_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+            [per.editableSocialProfile_Value replaceObjectAtIndex:indexPath.row withObject:@""];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"5"])
+        {
+            [per.editableIM_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+            [per.editableIM_Value replaceObjectAtIndex:indexPath.row withObject:@""];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"6"])
+        {
+            [per.editableUrl_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+            [per.editableUrl_Value replaceObjectAtIndex:indexPath.row withObject:@""];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"7"])
+        {
+            [per.editableDate_Type replaceObjectAtIndex:indexPath.row withObject:@""];
+            [per.editableDate_Value replaceObjectAtIndex:indexPath.row withObject:@""];
         }
         
     }
     else
     {
         [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        NSLog(@"%@",[per.phoneNumber_Value objectAtIndex:indexPath.row]);
+        if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"1"])
+        {
+            [per.editablePhoneNumber_Value replaceObjectAtIndex:indexPath.row withObject:[per.phoneNumber_Value objectAtIndex:indexPath.row]];
+            [per.editablePhoneNumber_Type replaceObjectAtIndex:indexPath.row withObject:[per.phoneNumber_Type objectAtIndex:indexPath.row]];
+            
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"2"])
+        {
+            [per.editableAddress_Value replaceObjectAtIndex:indexPath.row withObject:[per.address_Value objectAtIndex:indexPath.row]];
+            [per.editableAddress_Type replaceObjectAtIndex:indexPath.row withObject:[per.address_Type objectAtIndex:indexPath.row]];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"3"])
+        {
+            [per.editableEmail_Type replaceObjectAtIndex:indexPath.row withObject:[per.email_Type objectAtIndex:indexPath.row]];
+            [per.editableEmail_Value replaceObjectAtIndex:indexPath.row withObject:[per.email_Value objectAtIndex:indexPath.row]];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"4"])
+        {
+            [per.editableSocialProfile_Type replaceObjectAtIndex:indexPath.row withObject:[per.socialProfile_Type objectAtIndex:indexPath.row]];
+            [per.editableSocialProfile_Value replaceObjectAtIndex:indexPath.row withObject:[per.socialProfile_Value objectAtIndex:indexPath.row]];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"5"])
+        {
+            [per.editableIM_Type replaceObjectAtIndex:indexPath.row withObject:[per.IM_Type objectAtIndex:indexPath.row]];
+            [per.editableIM_Value replaceObjectAtIndex:indexPath.row withObject:[per.IM_Value objectAtIndex:indexPath.row]];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"6"])
+        {
+            [per.editableUrl_Type replaceObjectAtIndex:indexPath.row withObject:[per.url_Type objectAtIndex:indexPath.row]];
+            [per.editableUrl_Value replaceObjectAtIndex:indexPath.row withObject:[per.url_Value objectAtIndex:indexPath.row]];
+        }
+        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"7"])
+        {
+            [per.editableDate_Type replaceObjectAtIndex:indexPath.row withObject:[per.date_Type objectAtIndex:indexPath.row]];
+            [per.editableDate_Value replaceObjectAtIndex:indexPath.row withObject:[per.date_Value objectAtIndex:indexPath.row]];
+        }
+
         
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

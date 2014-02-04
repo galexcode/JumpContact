@@ -11,7 +11,7 @@
 @implementation ContactGlobalDataClass
 
 @synthesize contactDetails,contactsToBeShared_selected,recipients_selected,from_ShareMethodViewController;
-@synthesize vcs,backBtnActivate,contactsArray;
+@synthesize vcs,backBtnActivate,contactsArray,jsonString;
 
 
 static ContactGlobalDataClass *instance =nil;

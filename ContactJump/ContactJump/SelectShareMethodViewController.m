@@ -486,10 +486,48 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)SendwithImage_btnAction{
+-(void)SendwithImage_btnAction
+{
+    ContactSendContactDetailDelegate * sendContacts_cls=[[ContactSendContactDetailDelegate alloc]init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    [sendContacts_cls callWebService:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl=%7B%20%22deviceid%22:%221%22,%20%22phone%22:%221234566%22%7D"];
     
 }
+-(void)getcontentLists:(NSString *)sendContactStatus status:(BOOL)value
+{
+    [activityIndicator stopAnimating];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                    message: sendContactStatus
+                                                   delegate:Nil
+                                          cancelButtonTitle:@"ok"
+                                          otherButtonTitles:Nil,Nil];
+   
+    [alert show];
+    if ([sendContactStatus isEqualToString:@"device is registerd now "]) {
+        ContactSendContactDetailDelegate * sendContacts_cls=[[ContactSendContactDetailDelegate alloc] init];
+        sendContacts_cls.delegate=self;
+        activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+        activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+        activityIndicator.center = self.view.center;
+        [self.view addSubview: activityIndicator];
+        [activityIndicator startAnimating];
+        
+       
+       NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"111\"}",obj.jsonString];
+       
+        
+        
+        NSLog(@"%@",url);
+        [sendContacts_cls callWebService:url];
+    }
+   
 
+}
 -(void)sendwithoutImage_btnAction{
     
 

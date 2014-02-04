@@ -16,9 +16,16 @@
             url_Type,url_Value,
             socialProfile_Type,socialProfile_Value,
             IM_Type,IM_Value,
-            phoneNumber_Type,
-            phoneNumber_Value,
+            phoneNumber_Type,phoneNumber_Value,
             date_Type,date_Value,date_bday;
+
+@synthesize editableAddress_Type,editableAddress_Value,
+            editableDate_Type,editableDate_Value,
+            editableEmail_Type,editableEmail_Value,
+            editableIM_Type,editableIM_Value,
+            editablePhoneNumber_Type,editablePhoneNumber_Value,
+            editableSocialProfile_Type,editableSocialProfile_Value,
+            editableUrl_Type,editableUrl_Value;
 
 - (id) init {
     self = [super init];
@@ -48,6 +55,32 @@
         
         date_Value= [[NSMutableArray alloc] init];
         date_Type= [[NSMutableArray alloc] init];
+        
+        
+//        
+//        editablePhoneNumber_Type= [[NSMutableArray alloc] init];
+//        editablePhoneNumber_Value= [[NSMutableArray alloc] init];
+//        
+//        editableEmail_Type= [[NSMutableArray alloc] init];
+//        editableEmail_Value= [[NSMutableArray alloc] init];
+//        
+//        editableUrl_Type= [[NSMutableArray alloc] init];
+//        editableUrl_Value= [[NSMutableArray alloc] init];
+//        
+//        
+//        editableIM_Type= [[NSMutableArray alloc] init];
+//        editableIM_Value= [[NSMutableArray alloc] init];
+//        
+//        editableSocialProfile_Type= [[NSMutableArray alloc] init];
+//        editableSocialProfile_Value= [[NSMutableArray alloc] init];
+//        
+//        editableAddress_Type= [[NSMutableArray alloc] init];
+//        editableAddress_Value= [[NSMutableArray alloc] init];
+//        
+//        
+//        editableDate_Type= [[NSMutableArray alloc] init];
+//        editableDate_Value= [[NSMutableArray alloc] init];
+
         
         
 

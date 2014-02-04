@@ -29,6 +29,6 @@
     
 }
 
-
+//@property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 - (id)initWithPerson:(Person *)person;
 @end

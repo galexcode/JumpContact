@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SelectContact toShareViewController.h"
 #import "SelectRecipientsViewController.h"
-@interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate>{
+#import "ContactSendContactDetailDelegate.h"
+
+@interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,SendContactDetailDelegate>{
     
     UILabel *navbartitle;
     
@@ -21,6 +23,7 @@
     UIScrollView* scrollview;
     ContactGlobalDataClass *obj;
     UIView *bg;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 @end
