@@ -10,8 +10,8 @@
 #import "SelectContact toShareViewController.h"
 #import "SelectRecipientsViewController.h"
 #import "ContactSendContactDetailDelegate.h"
-
-@interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,SendContactDetailDelegate>{
+#import "ContactSignUpDataService.h"
+@interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,SendContactDetailDelegate,UIAlertViewDelegate,ContactSignUpDelegate>{
     
     UILabel *navbartitle;
     

@@ -70,6 +70,7 @@
 		DFABF5F21890EC5200466CC7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F11890EC5200466CC7 /* back-button.png */; };
 		DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */; };
 		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
+		DFB1CCD818A2001300D87783 /* ContactSignUpDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */; };
 		DFB94A1018963994005F768B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A0F18963994005F768B /* Person.m */; };
 		DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */; };
 		DFC02D2218A1063D0098A82A /* ContactSendContactDetailDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC02D2118A1063D0098A82A /* ContactSendContactDetailDelegate.m */; };
@@ -171,6 +172,8 @@
 		DFABF5F71891008700466CC7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		DFABF5F91891073A00466CC7 /* SelectContactsForBackupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactsForBackupViewController.h; sourceTree = "<group>"; };
 		DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactsForBackupViewController.m; sourceTree = "<group>"; };
+		DFB1CCD618A2001300D87783 /* ContactSignUpDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSignUpDataService.h; sourceTree = "<group>"; };
+		DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSignUpDataService.m; sourceTree = "<group>"; };
 		DFB94A0E18963994005F768B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		DFB94A0F18963994005F768B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		DFB94A1218966A28005F768B /* ContactEditDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditDetailsViewController.h; sourceTree = "<group>"; };
@@ -252,6 +255,8 @@
 				9DEDEE13187C8C7E00C809F9 /* SelectShareMethodViewController.m */,
 				DFC02D2018A1063D0098A82A /* ContactSendContactDetailDelegate.h */,
 				DFC02D2118A1063D0098A82A /* ContactSendContactDetailDelegate.m */,
+				DFB1CCD618A2001300D87783 /* ContactSignUpDataService.h */,
+				DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */,
 			);
 			name = "Select Share Method Class";
 			sourceTree = "<group>";
@@ -602,6 +607,7 @@
 				DFC02D2218A1063D0098A82A /* ContactSendContactDetailDelegate.m in Sources */,
 				DF4CDCAF188E58A3000B0075 /* ContactsSentViewController.m in Sources */,
 				9DEDEE17187C8CAE00C809F9 /* ContactShareViaIDViewController.m in Sources */,
+				DFB1CCD818A2001300D87783 /* ContactSignUpDataService.m in Sources */,
 				DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */,
 				9DEDEE14187C8C7E00C809F9 /* SelectShareMethodViewController.m in Sources */,
 				9DEDEE0B187C782A00C809F9 /* SelectContact toShareViewController.m in Sources */,

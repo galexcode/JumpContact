@@ -1,20 +1,23 @@
 //
-//  ContactSendContactDetailDelegate.m
+//  ContactSignUpDataService.m
 //  ContactJump
 //
-//  Created by Dex on 04/02/14.
+//  Created by Dex on 05/02/14.
 //  Copyright (c) 2014 iyasoft. All rights reserved.
 //
 
-#import "ContactSendContactDetailDelegate.h"
+#import "ContactSignUpDataService.h"
 
-@implementation ContactSendContactDetailDelegate
+@implementation ContactSignUpDataService
 @synthesize delegate;
 -(void)callWebService:(NSString *)Listtype{
     
+     
+    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
+    NSString* webStringURL = [Listtype stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSURL *url = [NSURL URLWithString:Listtype];
-    
+    NSURL *url = [NSURL URLWithString:webStringURL];
+    NSLog(@"%@",url);
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -22,6 +25,7 @@
     [request addValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPMethod:@"POST"];
+    //[request setHTTPBody:obj.jsonString];
     
     NSURLConnection *connection =[[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connection start];
@@ -40,7 +44,7 @@
 	
 	webData = nil;
     
-    [delegate getcontentLists:nil status:FALSE];
+    [delegate getresponse:nil :nil status:FALSE];
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
@@ -55,6 +59,7 @@
     } else {
         
         result=[json objectForKey:@"message"];
+        data1=[json objectForKey:@"data"];
     }
     
     
@@ -63,7 +68,6 @@
 	
     
     
-    [delegate getcontentLists:result status:YES];
-    
+    [delegate getresponse:result :data1 status:TRUE];
 }
 @end

@@ -86,7 +86,7 @@ static int k=0;
         }
     }
     
-    NSLog(@"---------------\n%@\n---------------",self.alphabetsArray);
+   
     for (Person *person in obj.contactDetails)
     {
         
@@ -292,7 +292,6 @@ static int k=0;
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
-    NSLog(@"sssssss----\n%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] fullName]);
     
     
     
@@ -412,8 +411,8 @@ static int k=0;
         [checkBox_all setSelected:NO];
     }
     NSLog(@"CHECK BOX -----%@",self.checkboxClicked_Dict);
-   
-
+    
+    
     
 }
 
@@ -461,7 +460,7 @@ static int k=0;
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"1"];
         [tappedButton setSelected:YES];
         
-         [obj.contactsArray addObject:p];
+        [obj.contactsArray addObject:p];
         [cell.accessoryView setHidden:NO];
         k++;
         
@@ -523,10 +522,10 @@ static int k=0;
         
         
         
-       
-       
+        
+        
         NSMutableArray *allPersonArr=[[NSMutableArray alloc] init];
-      
+        
         
         NSLog(@"%lu",(unsigned long)[obj.contactsArray count]);
         for (int k=0; k<[obj.contactsArray count]; k++)
@@ -537,12 +536,12 @@ static int k=0;
             
             NSMutableDictionary *dic_PersonName=[[NSMutableDictionary alloc] init];
             NSMutableArray *personName_DataArr=[[NSMutableArray alloc] init];
-          
-                NSMutableDictionary *dic_NameData=[[NSMutableDictionary alloc] init];
-                [dic_NameData setObject:@"Name"  forKey:@"name"];
-                [dic_NameData setObject:[[obj.contactsArray objectAtIndex:k] fullName]  forKey:@"value"];
- 
-                [personName_DataArr addObject:dic_NameData];
+            
+            NSMutableDictionary *dic_NameData=[[NSMutableDictionary alloc] init];
+            [dic_NameData setObject:@"Name"  forKey:@"name"];
+            [dic_NameData setObject:[[obj.contactsArray objectAtIndex:k] fullName]  forKey:@"value"];
+            
+            [personName_DataArr addObject:dic_NameData];
             
             NSMutableDictionary *dic_JobTitleData=[[NSMutableDictionary alloc] init];
             [dic_JobTitleData setObject:@"JobTitle"  forKey:@"name"];
@@ -557,7 +556,7 @@ static int k=0;
             [personName_DataArr addObject:dic_OrganizationData];
             
             
-           
+            
             [dic_PersonName setObject:@"General" forKey:@"category"];
             [dic_PersonName setObject:personName_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonName];
@@ -578,7 +577,7 @@ static int k=0;
             
             NSMutableDictionary *dic_PersonEmail=[[NSMutableDictionary alloc] init];
             NSMutableArray *personEmail_DataArr=[[NSMutableArray alloc] init];
-
+            
             for (int i=0; i<[[[obj.contactsArray objectAtIndex:k] editableEmail_Value] count]; i++)
             {
                 NSMutableDictionary *dic_EmailData=[[NSMutableDictionary alloc] init];
@@ -623,7 +622,7 @@ static int k=0;
             NSMutableArray *personIM_DataArr=[[NSMutableArray alloc] init];
             for (int i=0; i<[[[obj.contactsArray objectAtIndex:k] editableIM_Value] count]; i++)
             {
-            
+                
                 NSMutableDictionary *dic_IMData=[[NSMutableDictionary alloc] init];
                 [dic_IMData setObject:[[[obj.contactsArray objectAtIndex:k] editableIM_Type] objectAtIndex:i] forKey:@"name"];
                 [dic_IMData setObject:[[[obj.contactsArray objectAtIndex:k] editableIM_Value] objectAtIndex:i] forKey:@"value"];
@@ -659,16 +658,16 @@ static int k=0;
             [dic_PersonDate setObject:@"Date" forKey:@"category"];
             [dic_PersonDate setObject:personDate_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonDate];
-
             
             
             
             
-
             
-           
-           [person setObject:personArr forKey:@"Person"];
-           [allPersonArr addObject:person];
+            
+            
+            
+            [person setObject:personArr forKey:@"Person"];
+            [allPersonArr addObject:person];
         }
         
         NSDictionary *allPersonDic=[NSDictionary dictionaryWithObject:allPersonArr forKey:@"Data"];
@@ -681,12 +680,13 @@ static int k=0;
         
         
         
-        //NSString* newStr = [NSString stringWithUTF8String:[jsonData bytes]];
         NSString* newStr = [[NSString alloc] initWithData:jsonData
-                                                  encoding:NSUTF8StringEncoding] ;
+                                                 encoding:NSUTF8StringEncoding] ;
         NSLog(@"JSON %@",newStr);
-        obj.jsonString=newStr;
-// obj.jsonString=@"{"Data":[{"Person":[{"category":"General","data":[{"name":"Name","value":"#"},{"name":"JobTitle","value":""},{"name":"Name","value":""}]},{"category":"Phone","data":[{"name":"home","value":"223-5455"}]},{"category":"Email_ID","data":[]},{"category":"Address","data":[]},{"category":"Social Profile","data":[]},{"category":"Instant Message ID","data":[]},{"category":"URL","data":[]},{"category":"Date","data":[]}]}]}";
+        
+        
+        obj.jsonString=  [newStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
         
         [obj setContactsToBeShared_selected:[NSString stringWithFormat:@"%d",k]];
         if (isBulkContacts==NO)
