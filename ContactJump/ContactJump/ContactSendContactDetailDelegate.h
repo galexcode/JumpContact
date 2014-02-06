@@ -12,7 +12,7 @@
 {
     id <SendContactDetailDelegate> delegate;
     NSMutableData * webData;
-    NSString *result;
+    
 }
 
 @property(nonatomic, retain)id <SendContactDetailDelegate> delegate;
@@ -20,5 +20,5 @@
 @end
 
 @protocol SendContactDetailDelegate
--(void)getcontentLists:(NSString *)sendContactStatus status:(BOOL)value;
+-(void)getcontentLists:(NSData *)sendContactStatus status:(BOOL)value;
 @end

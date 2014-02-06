@@ -345,10 +345,10 @@ static int k1=0;
     NSLog(@"%@", cell.contentView.subviews);
     UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:1];
     
-    
+       Person *p = [[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        
+         [obj.recipientsArray removeObject:p];
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
         if (k1>0) {
             k1--;
@@ -363,7 +363,7 @@ static int k1=0;
         
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
-        
+        [obj.recipientsArray addObject:p];
         k1++;
     }
     
@@ -395,6 +395,7 @@ static int k1=0;
     UITableViewCell* cell;
     UITableView *tv;
     
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
     {
         //UIView *contentView = (UIView *)[tappedButton superview];
@@ -412,12 +413,12 @@ static int k1=0;
     NSIndexPath *indexPath = [(UITableView *)tv indexPathForCell:(UITableViewCell *)cell];
     
     
-    
+    Person *p = [[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"0"];
-        //[editButton setHidden:YES];
+         [obj.recipientsArray removeObject:p];
         [cell.accessoryView setHidden:YES];
         if (k1>0) {
             k1--;
@@ -432,7 +433,7 @@ static int k1=0;
         
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"1"];
         [tappedButton setSelected:YES];
-        //[editButton setHidden:NO];
+        [obj.recipientsArray addObject:p];
         
         [cell.accessoryView setHidden:NO];
         k1++;
@@ -483,9 +484,54 @@ static int k1=0;
     }
 
 }
+-(void) createRecipientJson
+{
+    NSMutableArray *allPersonArr=[[NSMutableArray alloc] init];
+    
+    
+    NSLog(@"%lu",(unsigned long)[obj.recipientsArray count]);
+    for (int k=0; k<[obj.recipientsArray count]; k++)
+    {
+        
+        
+        
+        NSMutableDictionary *dic_PhoneData=[[NSMutableDictionary alloc] init];
+        
+        [dic_PhoneData setObject:[[obj.recipientsArray objectAtIndex:k] phoneNumber_Value]  forKey:@"Number"];
+        
+        
+        [allPersonArr addObject:dic_PhoneData];
+    }
+    
+    NSDictionary *allPersonDic=[NSDictionary dictionaryWithObject:allPersonArr forKey:@"Recipient_number"];
+    
+    NSLog(@"allPersonDic \n %@",allPersonDic);
+    
+    NSError* error;
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:allPersonDic
+                                                       options:kNilOptions error:&error];
+    
+    
+    
+    NSString* newStr = [[NSString alloc] initWithData:jsonData
+                                             encoding:NSUTF8StringEncoding] ;
+    NSLog(@"JSON %@",newStr);
+    
+    
+    obj.jsonString_recipients=  [newStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+ 
+}
 -(void)done_btnAction
 {
     
+    
+    
+    
+    [self createRecipientJson];
+    
+
+   
     if (k1==0 || [noofselected.text isEqualToString:@" "])
     {
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please select atleast one Recipient" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -564,6 +610,7 @@ static int k1=0;
             }
             
         }
+        [obj.recipientsArray removeAllObjects];
         k1=0;
         noofselected.text=@" ";
         
@@ -579,6 +626,7 @@ static int k1=0;
             }
             
         }
+         [obj.recipientsArray addObjectsFromArray:obj.contactDetails];
         k1=(int)[obj.contactDetails count];
         noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
     }

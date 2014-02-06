@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "ContactGlobalDataClass.h"
-@interface ContactMainViewController : UIViewController
+#import "CustomUIASView.h"
+#import "ContactSendContactDetailDelegate.h"
+
+@interface ContactMainViewController : UIViewController<UITextFieldDelegate,SendContactDetailDelegate,UIAlertViewDelegate>
 {
     ContactGlobalDataClass *obj;
+    int popUp;
+    UIView* bg;
+    UIActivityIndicatorView *activityIndicator;
+    NSString *result;
+    NSString* verficationCode;
+    NSString* userID;
 }
+@property (nonatomic, retain) CustomUIASView *uiasView;
 @end

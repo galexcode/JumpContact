@@ -13,9 +13,9 @@
 -(void)callWebService:(NSString *)Listtype{
     
     
-    NSURL *url = [NSURL URLWithString:Listtype];
+    NSURL *url = [NSURL URLWithString:[Listtype stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
-    
+    NSLog(@"URL %@",url);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     
@@ -45,25 +45,14 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     
-    NSError *jsonParsingError = nil;
+ 
     
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:webData options:kNilOptions error:&jsonParsingError];
-    
-    
-    if (jsonParsingError) {
-        NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
-    } else {
-        
-        result=[json objectForKey:@"message"];
-    }
-    
-    
-    
-	webData = nil;
+    [delegate getcontentLists:webData status:YES];
 	
+	NSLog(@"webData %@",webData);
     
     
-    [delegate getcontentLists:result status:YES];
+    
     
 }
 @end

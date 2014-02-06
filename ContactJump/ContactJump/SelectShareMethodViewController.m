@@ -45,7 +45,7 @@
     [mainbg_img addSubview:nav_img];
     
 #pragma mark back button.
-    UIButton *back_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    back_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [back_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"back-button" ofType:@"png"]] forState:UIControlStateNormal];
     [back_btn addTarget:self action:@selector(back_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:back_btn];
@@ -499,7 +499,7 @@
         [activityIndicator startAnimating];
         
         
-        NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"111\"}",obj.jsonString];
+        NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
         
         
         
@@ -509,14 +509,7 @@
 }
 -(void)SendwithImage_btnAction
 {
-    ContactSendContactDetailDelegate * sendContacts_cls=[[ContactSendContactDetailDelegate alloc]init];
-    sendContacts_cls.delegate=self;
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
-    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
-    activityIndicator.center = self.view.center;
-    [self.view addSubview: activityIndicator];
-    [activityIndicator startAnimating];
-    [sendContacts_cls callWebService:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl=%7B%20%22deviceid%22:%221%22,%20%22phone%22:%221234566%22%7D"];
+    
     
 }
 -(void)getresponse:(NSString *)message :(id)data status:(BOOL)value
@@ -531,8 +524,45 @@
    
     [alert show];
     
-    NSLog(@"%@",[data stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+    NSLog(@"\n\n\n%@",[data stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+    //*****************************PARSING THE JSON**********************************************************
+    NSData* data1 = [[data stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]  dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *localError = nil;
+    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data1 options:0 error:&localError];
+   
+   
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:parsedObject
+                                                       options:kNilOptions error:&localError];
     
+    NSString* newStr = [[NSString alloc] initWithData:jsonData
+                                             encoding:NSUTF8StringEncoding] ;
+    
+    NSLog(@"\n\n\njsonData %@", [parsedObject objectForKey:@"Data"]);
+    
+    NSArray *totalPerson=[parsedObject objectForKey:@"Data"];
+    
+    NSLog(@"NUMBER:/n/n/n/n%ld\n\n\n",[totalPerson count]);
+    NSDictionary *dic=[totalPerson objectAtIndex:0];
+    NSLog(@"DIC:/n/n/n/n%@\n\n\n",dic);
+    
+    NSArray* a=[dic objectForKey:@"Person"];
+    NSDictionary *imgDic=[a objectAtIndex:0];
+    
+    
+    NSArray* a1=[imgDic objectForKey:@"data"];
+    NSDictionary *imgDic1=[a1 objectAtIndex:3];
+    NSLog(@"\n\n\nIMAGE VALUE %@", [imgDic1 objectForKey:@"value"]);
+    
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:[imgDic1 objectForKey:@"value"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+    NSLog(@"\ndecodedString\n %@", decodedString);
+    UIImage *img=[UIImage imageWithData:decodedData];
+    
+    UIImageView *i=[[UIImageView alloc] initWithFrame:CGRectMake(30, 30, 100, 100)];
+    i.image=img;
+    [self.view addSubview:i];
+    
+
 
 }
 -(void)getcontentLists:(NSString *)sendContactStatus status:(BOOL)value

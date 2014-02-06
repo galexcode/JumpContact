@@ -46,7 +46,8 @@
     [mainbg_img addSubview:back_btn];
     
     img=[[UIImageView alloc] init];
-    [img setBackgroundColor:[UIColor whiteColor]];
+    img.image=per.pic;
+    [img setBackgroundColor:[UIColor clearColor]];
     [mainbg_img addSubview:img];
     
     navbartitle=[[UILabel alloc] init];
@@ -139,7 +140,8 @@
         lname = person.lastName ;
         cname=person.companyName;
         
-        //img.image=person.pic;
+//        img.image=person.pic;
+//        NSLog(@"IMAGE :::%@",img.image);
    
        
         if ([person.phoneNumber_Value count] !=0)

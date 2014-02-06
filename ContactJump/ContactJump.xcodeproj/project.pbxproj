@@ -71,6 +71,7 @@
 		DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */; };
 		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
 		DFB1CCD818A2001300D87783 /* ContactSignUpDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */; };
+		DFB607EE18A3A36900138A9A /* CustomUIASView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB607ED18A3A36900138A9A /* CustomUIASView.m */; };
 		DFB94A1018963994005F768B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A0F18963994005F768B /* Person.m */; };
 		DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */; };
 		DFC02D2218A1063D0098A82A /* ContactSendContactDetailDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC02D2118A1063D0098A82A /* ContactSendContactDetailDelegate.m */; };
@@ -174,6 +175,8 @@
 		DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactsForBackupViewController.m; sourceTree = "<group>"; };
 		DFB1CCD618A2001300D87783 /* ContactSignUpDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSignUpDataService.h; sourceTree = "<group>"; };
 		DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSignUpDataService.m; sourceTree = "<group>"; };
+		DFB607EC18A3A36900138A9A /* CustomUIASView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUIASView.h; sourceTree = "<group>"; };
+		DFB607ED18A3A36900138A9A /* CustomUIASView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUIASView.m; sourceTree = "<group>"; };
 		DFB94A0E18963994005F768B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		DFB94A0F18963994005F768B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		DFB94A1218966A28005F768B /* ContactEditDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditDetailsViewController.h; sourceTree = "<group>"; };
@@ -335,6 +338,8 @@
 			children = (
 				9D3F4CA21886DBD60078257D /* KxMenu.h */,
 				9D3F4CA31886DBD60078257D /* KxMenu.m */,
+				DFB607EC18A3A36900138A9A /* CustomUIASView.h */,
+				DFB607ED18A3A36900138A9A /* CustomUIASView.m */,
 				9D8F7A4E1885BF310094BE0F /* popbtn.png */,
 				9D05B25B1881EAB700FD497D /* App Delegate Class */,
 				9D05B2591881DC4D00FD497D /* Main Class */,
@@ -598,6 +603,7 @@
 				9DF749B21875E73A00CBB110 /* ContactMainViewController.m in Sources */,
 				9DF7498E1875E70100CBB110 /* main.m in Sources */,
 				DFB94A1018963994005F768B /* Person.m in Sources */,
+				DFB607EE18A3A36900138A9A /* CustomUIASView.m in Sources */,
 				9D00C0DD18815316002A6E3E /* ContactGetSelectMethodViewController.m in Sources */,
 				DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */,
 				9D05B2601881F82300FD497D /* ContactReceivedViewController.m in Sources */,

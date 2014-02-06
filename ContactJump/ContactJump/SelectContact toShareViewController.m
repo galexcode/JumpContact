@@ -546,16 +546,23 @@ static int k=0;
             NSMutableDictionary *dic_JobTitleData=[[NSMutableDictionary alloc] init];
             [dic_JobTitleData setObject:@"JobTitle"  forKey:@"name"];
             [dic_JobTitleData setObject:[[obj.contactsArray objectAtIndex:k] lastName]  forKey:@"value"];
-            
             [personName_DataArr addObject:dic_JobTitleData];
             
             NSMutableDictionary *dic_OrganizationData=[[NSMutableDictionary alloc] init];
-            [dic_OrganizationData setObject:@"Name"  forKey:@"name"];
+            [dic_OrganizationData setObject:@"Organization"  forKey:@"name"];
             [dic_OrganizationData setObject:[[obj.contactsArray objectAtIndex:k] companyName]  forKey:@"value"];
-            
             [personName_DataArr addObject:dic_OrganizationData];
             
             
+            NSData *imageData = UIImagePNGRepresentation([[obj.contactsArray objectAtIndex:k] pic]);
+           
+            NSString *base64String = [imageData base64EncodedStringWithOptions:0];
+            NSLog(@"%@", base64String);
+            NSMutableDictionary *dic_ImageData=[[NSMutableDictionary alloc] init];
+            [dic_ImageData setObject:@"Image"  forKey:@"name"];
+            [dic_ImageData setObject:base64String  forKey:@"value"];
+            
+            [personName_DataArr addObject:dic_ImageData];
             
             [dic_PersonName setObject:@"General" forKey:@"category"];
             [dic_PersonName setObject:personName_DataArr forKey:@"data"];

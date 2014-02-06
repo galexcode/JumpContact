@@ -62,6 +62,9 @@
     [setting_btn addTarget:self action:@selector(Setting_btnAction22:) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:setting_btn];
     
+    
+    
+    
 #pragma mark separator image.
     UIImageView  *seprator_image =[[UIImageView alloc] init];
     seprator_image.image=[UIImage imageNamed:@"seprator.png"];
@@ -249,6 +252,130 @@
     [self getPersonOutOfAddressBook];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"xxxxxx");
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    //    [defaults setObject:@"" forKey:@"UserID"];
+    //    [defaults synchronize];
+    popUp=0;
+    NSString* val = [defaults objectForKey:@"UserID"];
+    
+     if (val==Nil)
+     {
+         
+         bg=[[UIView alloc] init];
+         
+         if (IS_IPHONE_5) {
+             bg.frame=CGRectMake(0, 90, 320, 568-90);
+         } else {
+             bg.frame=CGRectMake(0, 80, 320, 400);
+         }
+         bg.backgroundColor=[UIColor clearColor];
+         
+         [bg setHidden:NO];
+         [self.view addSubview:bg];
+         self.uiasView = [[CustomUIASView alloc] initWithFrame:CGRectMake(10, (self.view.frame.size.height ), 300, 250)];
+         
+         [self.uiasView.doneBtn addTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
+         [self.uiasView.phntxtfld setDelegate:self];
+         [self.view addSubview:self.uiasView];
+         [self signupScreenShow];
+         
+     }
+    
+    
+}
+-(void)signUp
+{
+    
+    ContactSendContactDetailDelegate * sendContacts_cls=[[ContactSendContactDetailDelegate alloc]init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    CFStringRef uuidStr = CFUUIDCreateString(NULL, uuid);
+   
+    NSLog(@"(__bridge NSString *) uuidStr : %@",(__bridge NSString *) uuidStr);
+    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl={\"deviceid\":\"%@\",\"phone\":\"%@\"}", (__bridge NSString *) uuidStr, self.uiasView.phntxtfld.text]];
+     CFRelease(uuid);
+}
+
+-(void)getcontentLists:(NSData *)sendContactStatus status:(BOOL)value
+{
+    [activityIndicator stopAnimating];
+    
+    NSError *jsonParsingError = nil;
+    NSLog(@"xxx %@",sendContactStatus);
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:sendContactStatus options:kNilOptions error:&jsonParsingError];
+    
+    
+    if (jsonParsingError) {
+        NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
+    } else {
+        
+        result=[json objectForKey:@"message"];
+        verficationCode=[json objectForKey:@"verification_code"];
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                    message: result
+                                                   delegate:self
+                                          cancelButtonTitle:@"Ok"
+                                          otherButtonTitles:Nil,Nil];
+    
+    [alert setTag:1];
+    [alert show];
+    
+    
+    
+}
+-(void)verify
+{
+    NSLog(@"sdfdfssd");
+    
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        
+         self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
+         self.uiasView.phntxtfld.text=verficationCode;
+        [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
+        [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+-(void)signupScreenShow
+{
+    if (popUp==0) {
+        popUp=1;
+        [UIView animateWithDuration:0.60f animations:^{
+            
+            
+            CGRect uiasViewFrame   = self.uiasView.frame;
+            if (IS_IPHONE_5) {
+                 uiasViewFrame.origin.y = (self.view.frame.size.height - 409);
+            } else {
+                 uiasViewFrame.origin.y = (self.view.frame.size.height - 365);
+            }
+           
+            
+            self.uiasView.frame = uiasViewFrame;
+        }];
+    } else {
+        popUp=0;
+        [UIView animateWithDuration:0.75f animations:^{
+            
+            CGRect uiasViewFrame   = self.uiasView.frame;
+            uiasViewFrame.origin.y = (self.view.frame.size.height + 230);
+            
+            self.uiasView.frame = uiasViewFrame;
+        }];
+        
+    }
+}
 - (void)getPersonOutOfAddressBook
 {
     
@@ -282,7 +409,7 @@
         
         NSMutableArray *contacts = [[NSMutableArray alloc] init];
         
-        
+        UIImage* image;
         for (int i = 0; i < nPeople; i++)
         {
             Person *person = [[Person alloc] init];
@@ -298,20 +425,21 @@
             NSString *jobTtitle = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonJobTitleProperty);
             NSString *department = (__bridge_transfer NSString *)ABRecordCopyValue(ref, kABPersonDepartmentProperty);
 
+           // *****************************************Image*****************************************************
             
-//            ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, i);
-//            
-//            
-//            if (personRef != nil && ABPersonHasImageData(personRef)) {
-//                if ( &ABPersonCopyImageDataWithFormat != nil ) {
-//                    person.pic=[[UIImage alloc] init];
-//                     person.pic=[UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
-//                    CFDataRef imageData = ABPersonCopyImageData(personRef);
-//                    person.pic = [UIImage imageWithData:(__bridge NSData *)imageData];
-//                   // CFRelease(imageData);
-//                }
-//            } 
-//            NSLog(@"Name %@", person.pic);
+            if (ABPersonHasImageData(ref))
+            {
+                image = [UIImage imageWithData:(__bridge NSData *)(ABPersonCopyImageDataWithFormat(ref, kABPersonImageFormatThumbnail))];
+            }
+            else
+            {
+                image = [UIImage imageNamed:@"done1.png"];
+            }
+            
+            person.pic=image;
+            NSLog(@"pic %@",[person.pic description]);
+            
+            //*************************************BAsic data**************************************************
             person.firstName =[NSString stringWithFormat:@"%@ %@",(firstName==NULL)?@"":firstName,(lastName==NULL)?@"":lastName];
 
            
@@ -757,5 +885,8 @@
     
     NSLog(@"FOURTH Item Clicked");
 }
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.uiasView.phntxtfld resignFirstResponder];
+}
 @end

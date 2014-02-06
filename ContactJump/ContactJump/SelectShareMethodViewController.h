@@ -14,6 +14,7 @@
 @interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,SendContactDetailDelegate,UIAlertViewDelegate,ContactSignUpDelegate>{
     
     UILabel *navbartitle;
+    UIButton *back_btn;
     
     UILabel *selectContact_lbl;
     UILabel *noofselected;
