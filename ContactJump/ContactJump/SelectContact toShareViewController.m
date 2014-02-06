@@ -555,9 +555,12 @@ static int k=0;
             
             
             NSData *imageData = UIImagePNGRepresentation([[obj.contactsArray objectAtIndex:k] pic]);
-           
+            
             NSString *base64String = [imageData base64EncodedStringWithOptions:0];
             NSLog(@"%@", base64String);
+            UIImageView *im=[[UIImageView alloc] initWithImage:[UIImage imageWithData:[base64String dataUsingEncoding:NSUTF8StringEncoding] ]];
+            im.frame=CGRectMake(100, 100, 100, 100);
+            [self.view addSubview:im];
             NSMutableDictionary *dic_ImageData=[[NSMutableDictionary alloc] init];
             [dic_ImageData setObject:@"Image"  forKey:@"name"];
             [dic_ImageData setObject:base64String  forKey:@"value"];

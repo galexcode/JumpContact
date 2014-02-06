@@ -20,6 +20,7 @@
     NSString *result;
     NSString* verficationCode;
     NSString* userID;
+    NSString *response;
 }
 @property (nonatomic, retain) CustomUIASView *uiasView;
 @end

@@ -490,27 +490,27 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag==1 && buttonIndex==0) {
-        ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
-        sendContacts_cls.delegate=self;
-        activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
-        activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
-        activityIndicator.center = self.view.center;
-        [self.view addSubview: activityIndicator];
-        [activityIndicator startAnimating];
-        
-        
-        NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
-        
-        
-        
-        
-        [sendContacts_cls callWebService:url];
-    }
+            }
 }
 -(void)SendwithImage_btnAction
 {
     
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
     
+    
+    NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
+    
+    
+   
+    
+    [sendContacts_cls callWebService:url];
+
 }
 -(void)getresponse:(NSString *)message :(id)data status:(BOOL)value
 {
@@ -541,7 +541,7 @@
     
     NSArray *totalPerson=[parsedObject objectForKey:@"Data"];
     
-    NSLog(@"NUMBER:/n/n/n/n%ld\n\n\n",[totalPerson count]);
+    NSLog(@"NUMBER:/n/n/n/n%ld\n\n\n",(unsigned long)[totalPerson count]);
     NSDictionary *dic=[totalPerson objectAtIndex:0];
     NSLog(@"DIC:/n/n/n/n%@\n\n\n",dic);
     
@@ -553,10 +553,16 @@
     NSDictionary *imgDic1=[a1 objectAtIndex:3];
     NSLog(@"\n\n\nIMAGE VALUE %@", [imgDic1 objectForKey:@"value"]);
     
-    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:[imgDic1 objectForKey:@"value"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
-    NSLog(@"\ndecodedString\n %@", decodedString);
-    UIImage *img=[UIImage imageWithData:decodedData];
+//    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:[imgDic1 objectForKey:@"value"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//    NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+//    NSLog(@"\ndecodedString\n %@", decodedString);
+    
+    
+//    NSString *str = @"data:image/jpg;base64,";
+//    str = [str stringByAppendingString:[imgDic1 objectForKey:@"value"]];
+    NSData *imageData = [[imgDic1 objectForKey:@"value"] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    UIImage *img=[UIImage imageWithData:imageData];
     
     UIImageView *i=[[UIImageView alloc] initWithFrame:CGRectMake(30, 30, 100, 100)];
     i.image=img;
@@ -565,21 +571,7 @@
 
 
 }
--(void)getcontentLists:(NSString *)sendContactStatus status:(BOOL)value
-{
-    [activityIndicator stopAnimating];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                    message: sendContactStatus
-                                                   delegate:self
-                                          cancelButtonTitle:@"Ok"
-                                          otherButtonTitles:Nil,Nil];
-   
-    [alert setTag:1];
-    [alert show];
-    
-   
 
-}
 -(void)sendwithoutImage_btnAction{
     
 

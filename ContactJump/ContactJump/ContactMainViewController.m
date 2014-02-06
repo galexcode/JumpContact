@@ -259,9 +259,9 @@
     //    [defaults setObject:@"" forKey:@"UserID"];
     //    [defaults synchronize];
     popUp=0;
-    NSString* val = [defaults objectForKey:@"UserID"];
-    
-     if (val==Nil)
+    NSString* val = [defaults valueForKey:@"UserID"];
+    NSLog(@"val  %@",val);
+     if (val==nil)
      {
          
          bg=[[UIView alloc] init];
@@ -296,12 +296,10 @@
     activityIndicator.center = self.view.center;
     [self.view addSubview: activityIndicator];
     [activityIndicator startAnimating];
-    CFUUIDRef uuid = CFUUIDCreate(NULL);
-    CFStringRef uuidStr = CFUUIDCreateString(NULL, uuid);
-   
-    NSLog(@"(__bridge NSString *) uuidStr : %@",(__bridge NSString *) uuidStr);
-    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl={\"deviceid\":\"%@\",\"phone\":\"%@\"}", (__bridge NSString *) uuidStr, self.uiasView.phntxtfld.text]];
-     CFRelease(uuid);
+    NSUUID* uuid = [[UIDevice currentDevice] identifierForVendor];
+    
+    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl={\"deviceid\":\"%@\",\"phone\":\"%@\"}", [uuid UUIDString], self.uiasView.phntxtfld.text]];
+    
 }
 
 -(void)getcontentLists:(NSData *)sendContactStatus status:(BOOL)value
@@ -309,42 +307,98 @@
     [activityIndicator stopAnimating];
     
     NSError *jsonParsingError = nil;
-    NSLog(@"xxx %@",sendContactStatus);
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:sendContactStatus options:kNilOptions error:&jsonParsingError];
-    
-    
-    if (jsonParsingError) {
-        NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
-    } else {
+    if (sendContactStatus !=nil)
+    {
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:sendContactStatus options:kNilOptions error:&jsonParsingError];
         
-        result=[json objectForKey:@"message"];
-        verficationCode=[json objectForKey:@"verification_code"];
+        
+        if (jsonParsingError) {
+            NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
+        }
+        else
+        {
+            if ([[json objectForKey:@"cmd"] isEqualToString:@"signup"]) {
+                response=[json objectForKey:@"result"];
+                result=[json objectForKey:@"message"];
+                verficationCode=[json objectForKey:@"verification_code"];
+                userID=[json objectForKey:@"user_id"];
+                NSLog(@"userID  %@",userID);
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:response
+                                                               message: result
+                                                              delegate:self
+                                                     cancelButtonTitle:@"Ok"
+                                                     otherButtonTitles:Nil,Nil];
+                
+                [alert setTag:1];
+                [alert show];
+
+            }
+            else if([[json objectForKey:@"cmd"] isEqualToString:@"verify"])
+            {
+                response=[json objectForKey:@"result"];
+                result=[json objectForKey:@"message"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:response
+                                                               message: result
+                                                              delegate:self
+                                                     cancelButtonTitle:@"Ok"
+                                                     otherButtonTitles:Nil,Nil];
+                
+                [alert setTag:2];
+                [alert show];
+                
+                NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+                
+                [defaults setValue:@"123" forKey:@"UserID"];
+                [defaults synchronize];
+                [self signupScreenShow ];
+            }
+            
+        
+        
+            }
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                    message: result
-                                                   delegate:self
-                                          cancelButtonTitle:@"Ok"
-                                          otherButtonTitles:Nil,Nil];
-    
-    [alert setTag:1];
-    [alert show];
-    
+    else
+    {
+        NSLog(@"Network error");
+    }
     
     
 }
 -(void)verify
 {
-    NSLog(@"sdfdfssd");
+    ContactSendContactDetailDelegate * sendContacts_cls=[[ContactSendContactDetailDelegate alloc]init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+   
+    
+    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=verify&pl={\"code\":\"%@\",\"userid\":\"%@\"}", verficationCode, userID]];
     
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==0) {
+    if (buttonIndex==0 && [response isEqualToString:@"success"] && alertView.tag==1) {
         
-         self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
-         self.uiasView.phntxtfld.text=verficationCode;
-        [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
-        [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
+        if ([result isEqualToString:@"Phone Number updated with device id"] || [result isEqualToString:@"device id updated with already existed number "])
+        {
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
+            [defaults setValue:@"123" forKey:@"UserID"];
+            [defaults synchronize];
+
+            [self signupScreenShow];
+        }
+        else {
+            self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
+            
+            self.uiasView.phntxtfld.text=verficationCode;
+            [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
+            [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
     }
 }
 -(void)signupScreenShow
@@ -372,6 +426,8 @@
             uiasViewFrame.origin.y = (self.view.frame.size.height + 230);
             
             self.uiasView.frame = uiasViewFrame;
+            [bg setHidden:YES];
+            [self.uiasView.phntxtfld resignFirstResponder];
         }];
         
     }
