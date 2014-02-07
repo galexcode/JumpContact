@@ -14,18 +14,20 @@
     
      
     ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
-    NSString* webStringURL = [Listtype stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *s=[NSString stringWithFormat:@"cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
+    NSString* webStringURL = [s stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSURL *url = [NSURL URLWithString:webStringURL];
+    NSURL *url = [NSURL URLWithString:Listtype];
     NSLog(@"%@",url);
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     
-    [request addValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue: @"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPMethod:@"POST"];
-    //[request setHTTPBody:obj.jsonString];
+    [request setValue:[NSString stringWithFormat:@"%d",[webStringURL length]] forHTTPHeaderField:@"Content-length"] ;
+    [request setHTTPBody:[webStringURL dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLConnection *connection =[[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connection start];
@@ -60,6 +62,7 @@
         
         result=[json objectForKey:@"message"];
         data1=[json objectForKey:@"data"];
+        [delegate getresponse:result :data1 status:TRUE];
     }
     
     
@@ -68,6 +71,6 @@
 	
     
     
-    [delegate getresponse:result :data1 status:TRUE];
+    
 }
 @end

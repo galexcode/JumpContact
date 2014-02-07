@@ -66,5 +66,6 @@
 
 
 @property (nonatomic, strong) UIImage *pic;
+@property (nonatomic, strong) UIImage *editablePic;
 
 @end

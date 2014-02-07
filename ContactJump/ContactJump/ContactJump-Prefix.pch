@@ -25,6 +25,6 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
-#define kBASEURL  @"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd="
+#define kBASEURL  @"http://204.197.244.110/~crmdalto/jump_contact/index.php?"
 BOOL isIphone5;
 BOOL isIpad;

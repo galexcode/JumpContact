@@ -554,16 +554,15 @@ static int k=0;
             [personName_DataArr addObject:dic_OrganizationData];
             
             
-            NSData *imageData = UIImagePNGRepresentation([[obj.contactsArray objectAtIndex:k] pic]);
+            NSData *imageData = UIImagePNGRepresentation([[obj.contactsArray objectAtIndex:k] editablePic]);
+            NSString *encodedString =[Base64 encode:imageData];
             
-            NSString *base64String = [imageData base64EncodedStringWithOptions:0];
-            NSLog(@"%@", base64String);
-            UIImageView *im=[[UIImageView alloc] initWithImage:[UIImage imageWithData:[base64String dataUsingEncoding:NSUTF8StringEncoding] ]];
-            im.frame=CGRectMake(100, 100, 100, 100);
-            [self.view addSubview:im];
+            //NSLog(@"\n\n\n\nencodedString \n\n\n%@", encodedString);
+            
+           
             NSMutableDictionary *dic_ImageData=[[NSMutableDictionary alloc] init];
             [dic_ImageData setObject:@"Image"  forKey:@"name"];
-            [dic_ImageData setObject:base64String  forKey:@"value"];
+            [dic_ImageData setObject:encodedString  forKey:@"value"];
             
             [personName_DataArr addObject:dic_ImageData];
             

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SelectShareMethodViewController.h"
 #import "ContactEditDetailsViewController.h"
+#import "Base64.h"
 @interface SelectContact_toShareViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *contentList;

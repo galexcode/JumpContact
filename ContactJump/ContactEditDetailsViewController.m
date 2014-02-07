@@ -45,10 +45,34 @@
     [back_btn addTarget:self action:@selector(back_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:back_btn];
     
-    img=[[UIImageView alloc] init];
-    img.image=per.pic;
+    
+    
+    imgvw=[[UIImageView alloc] initWithFrame:CGRectMake(80, 80, 20, 20)];
+    
+    image=[UIImage imageNamed:@"check-box.png"];
+    imgvw.image=image;
+    
+    img=[UIButton buttonWithType:UIButtonTypeCustom] ;
+   
     [img setBackgroundColor:[UIColor clearColor]];
+    if (per.pic ==nil) {
+        [img setUserInteractionEnabled:FALSE];
+        [img setBackgroundImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateNormal];
+        [img setBackgroundImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateSelected];
+    }
+    else{
+        [img setBackgroundImage:per.pic forState:UIControlStateNormal];
+        [img setBackgroundImage:per.pic forState:UIControlStateSelected];
+        image=[UIImage imageNamed:@"check-box.png"];
+        [img setSelected:YES];
+        
+    }
+    [img addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:img];
+    
+    [img addSubview:imgvw];
+    
+    
     
     navbartitle=[[UILabel alloc] init];
     navbartitle.text=[NSString stringWithFormat:@"Edit"];
@@ -121,6 +145,22 @@
         tblVw.frame=CGRectMake(0,200,320,280);
     }
 }
+
+-(void)sendImage:(id)sender
+{
+    if ([sender isSelected]) {
+        [sender setSelected:NO];
+        image=[UIImage imageNamed:@"check-box-disable.png"];
+        imgvw.image=image;
+        per.editablePic=nil;
+    } else {
+        [sender setSelected:YES];
+        image=[UIImage imageNamed:@"check-box.png"];
+        imgvw.image=image;
+        per.editablePic=per.pic;
+    }
+   
+}
 - (id)initWithPerson:(Person *)person
 {
     
@@ -143,7 +183,7 @@
 //        img.image=person.pic;
 //        NSLog(@"IMAGE :::%@",img.image);
    
-       
+       per.editablePic=person.pic;
         if ([person.phoneNumber_Value count] !=0)
         {
             [section_LabelType setObject:person.phoneNumber_Type forKey:@"1"];
@@ -221,6 +261,11 @@
 -(void)back_btnAction
 {
      per.fullName=first_Name.text;
+    if (![img isSelected]) {
+       
+        per.editablePic=nil;
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning

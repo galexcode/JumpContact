@@ -382,23 +382,31 @@
 {
     if (buttonIndex==0 && [response isEqualToString:@"success"] && alertView.tag==1) {
         
-        if ([result isEqualToString:@"Phone Number updated with device id"] || [result isEqualToString:@"device id updated with already existed number "])
-        {
-            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-            
-            [defaults setValue:@"123" forKey:@"UserID"];
-            [defaults synchronize];
-
-            [self signupScreenShow];
-        }
-        else {
+//        if ([result isEqualToString:@"Phone Number updated with device id"] || [result isEqualToString:@"device id updated with already existed number "])
+//        {
+//            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+//            
+//            [defaults setValue:@"123" forKey:@"UserID"];
+//            [defaults synchronize];
+//
+//            [self signupScreenShow];
+//        }
+//        else {
             self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
             
             self.uiasView.phntxtfld.text=verficationCode;
             [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
             [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
-        }
+      //  }
         
+    }
+    else if (buttonIndex==0 && [response isEqualToString:@"Fail"] && alertView.tag==1)
+    {
+        self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
+        
+        self.uiasView.phntxtfld.text=verficationCode;
+        [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
+        [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 -(void)signupScreenShow
@@ -466,6 +474,7 @@
         NSMutableArray *contacts = [[NSMutableArray alloc] init];
         
         UIImage* image;
+         UIImage* image1;
         for (int i = 0; i < nPeople; i++)
         {
             Person *person = [[Person alloc] init];
@@ -485,14 +494,32 @@
             
             if (ABPersonHasImageData(ref))
             {
+                
+                CGFloat compression = 0.9f;
+                CGFloat maxCompression = 0.1f;
+                int maxFileSize = 20*1024;
+                
+                
+                
+                
                 image = [UIImage imageWithData:(__bridge NSData *)(ABPersonCopyImageDataWithFormat(ref, kABPersonImageFormatThumbnail))];
+                 NSData *imageData = UIImageJPEGRepresentation(image, compression);
+                while ([imageData length] > maxFileSize && compression > maxCompression)
+                {
+                    compression -= 0.1;
+                    imageData = UIImageJPEGRepresentation(image, compression);
+                }
+                
+                image1=[UIImage imageWithData:imageData];
+                person.editablePic=image1;
             }
             else
             {
-                image = [UIImage imageNamed:@"done1.png"];
+                image1 = nil;
+                person.editablePic=nil;
             }
             
-            person.pic=image;
+            person.pic=image1;
             NSLog(@"pic %@",[person.pic description]);
             
             //*************************************BAsic data**************************************************

@@ -57,29 +57,6 @@
         date_Type= [[NSMutableArray alloc] init];
         
         
-//        
-//        editablePhoneNumber_Type= [[NSMutableArray alloc] init];
-//        editablePhoneNumber_Value= [[NSMutableArray alloc] init];
-//        
-//        editableEmail_Type= [[NSMutableArray alloc] init];
-//        editableEmail_Value= [[NSMutableArray alloc] init];
-//        
-//        editableUrl_Type= [[NSMutableArray alloc] init];
-//        editableUrl_Value= [[NSMutableArray alloc] init];
-//        
-//        
-//        editableIM_Type= [[NSMutableArray alloc] init];
-//        editableIM_Value= [[NSMutableArray alloc] init];
-//        
-//        editableSocialProfile_Type= [[NSMutableArray alloc] init];
-//        editableSocialProfile_Value= [[NSMutableArray alloc] init];
-//        
-//        editableAddress_Type= [[NSMutableArray alloc] init];
-//        editableAddress_Value= [[NSMutableArray alloc] init];
-//        
-//        
-//        editableDate_Type= [[NSMutableArray alloc] init];
-//        editableDate_Value= [[NSMutableArray alloc] init];
 
         
         

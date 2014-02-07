@@ -10,7 +10,7 @@
 
 @interface ContactEditDetailsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
-    UIImageView *img;
+    UIButton *img;
     UITextField *first_Name;
     UITextField *last_Name;
     UITextField *company_Name;
@@ -20,8 +20,9 @@
     NSString *fname;
     NSString *lname;
     NSString*cname;
-    
+    UIImage *image;
  
+    UIImageView *imgvw;
     
     NSMutableDictionary *section_Names;
     NSMutableDictionary *section_LabelType;

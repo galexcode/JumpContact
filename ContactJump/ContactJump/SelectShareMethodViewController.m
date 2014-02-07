@@ -504,9 +504,9 @@
     [activityIndicator startAnimating];
     
     
-    NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
+//    NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
     
-    
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
    
     
     [sendContacts_cls callWebService:url];
@@ -528,6 +528,9 @@
     //*****************************PARSING THE JSON**********************************************************
     NSData* data1 = [[data stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]  dataUsingEncoding:NSUTF8StringEncoding];
     NSError *localError = nil;
+    
+    if (data1!=nil) {
+    
     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data1 options:0 error:&localError];
    
    
@@ -551,16 +554,10 @@
     
     NSArray* a1=[imgDic objectForKey:@"data"];
     NSDictionary *imgDic1=[a1 objectAtIndex:3];
-    NSLog(@"\n\n\nIMAGE VALUE %@", [imgDic1 objectForKey:@"value"]);
+    NSLog(@"\n\n\nIMAGE VALUE %@", [imgDic1 objectForKey:@"value"] );
     
-//    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:[imgDic1 objectForKey:@"value"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//    NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
-//    NSLog(@"\ndecodedString\n %@", decodedString);
-    
-    
-//    NSString *str = @"data:image/jpg;base64,";
-//    str = [str stringByAppendingString:[imgDic1 objectForKey:@"value"]];
-    NSData *imageData = [[imgDic1 objectForKey:@"value"] dataUsingEncoding:NSUTF8StringEncoding];
+   
+    NSData *imageData = [Base64 decode:[[imgDic1 objectForKey:@"value"]stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
     
     UIImage *img=[UIImage imageWithData:imageData];
     
@@ -568,7 +565,8 @@
     i.image=img;
     [self.view addSubview:i];
     
-
+    }
+    
 
 }
 

@@ -71,6 +71,8 @@
 		DFABF5F41890FBBF00466CC7 /* sectionheaderbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */; };
 		DFABF5FB1891073A00466CC7 /* SelectContactsForBackupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */; };
 		DFB1CCD818A2001300D87783 /* ContactSignUpDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */; };
+		DFB3398618A49AB300863E11 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB3398518A49AB300863E11 /* Base64.m */; };
+		DFB3398818A4BECA00863E11 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = DFB3398718A4BECA00863E11 /* user.png */; };
 		DFB607EE18A3A36900138A9A /* CustomUIASView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB607ED18A3A36900138A9A /* CustomUIASView.m */; };
 		DFB94A1018963994005F768B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A0F18963994005F768B /* Person.m */; };
 		DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB94A1318966A28005F768B /* ContactEditDetailsViewController.m */; };
@@ -175,6 +177,9 @@
 		DFABF5FA1891073A00466CC7 /* SelectContactsForBackupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactsForBackupViewController.m; sourceTree = "<group>"; };
 		DFB1CCD618A2001300D87783 /* ContactSignUpDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSignUpDataService.h; sourceTree = "<group>"; };
 		DFB1CCD718A2001300D87783 /* ContactSignUpDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSignUpDataService.m; sourceTree = "<group>"; };
+		DFB3398418A49AB300863E11 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		DFB3398518A49AB300863E11 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		DFB3398718A4BECA00863E11 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		DFB607EC18A3A36900138A9A /* CustomUIASView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUIASView.h; sourceTree = "<group>"; };
 		DFB607ED18A3A36900138A9A /* CustomUIASView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUIASView.m; sourceTree = "<group>"; };
 		DFB94A0E18963994005F768B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
@@ -336,6 +341,7 @@
 		9DF749871875E70100CBB110 /* ContactJump */ = {
 			isa = PBXGroup;
 			children = (
+				DFB3398318A49AB300863E11 /* base64 */,
 				9D3F4CA21886DBD60078257D /* KxMenu.h */,
 				9D3F4CA31886DBD60078257D /* KxMenu.m */,
 				DFB607EC18A3A36900138A9A /* CustomUIASView.h */,
@@ -390,6 +396,7 @@
 		9DF749B31875E98500CBB110 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DFB3398718A4BECA00863E11 /* user.png */,
 				DF6487D818979BD70007E98F /* done1.png */,
 				DF6487D618979BB00007E98F /* logount-icon.png */,
 				DFABF5F31890FBBF00466CC7 /* sectionheaderbackground.png */,
@@ -455,6 +462,15 @@
 			);
 			name = "Contact Backup";
 			path = ..;
+			sourceTree = "<group>";
+		};
+		DFB3398318A49AB300863E11 /* base64 */ = {
+			isa = PBXGroup;
+			children = (
+				DFB3398418A49AB300863E11 /* Base64.h */,
+				DFB3398518A49AB300863E11 /* Base64.m */,
+			);
+			path = base64;
 			sourceTree = "<group>";
 		};
 		DFB94A1118965C62005F768B /* EditContactDetails */ = {
@@ -568,6 +584,7 @@
 				9DEDEE0F187C879100C809F9 /* cancel.png in Resources */,
 				9D0742641877DAD80046DA0B /* Header-logo.png in Resources */,
 				9D7C8BD21877E6730053BE91 /* recieved-icon.png in Resources */,
+				DFB3398818A4BECA00863E11 /* user.png in Resources */,
 				DFABF5F21890EC5200466CC7 /* back-button.png in Resources */,
 				9DEDEE0D187C80DB00C809F9 /* button-bg1.png in Resources */,
 				9D7C8BCE1877E2AB0053BE91 /* send-contacts-icon.png in Resources */,
@@ -604,6 +621,7 @@
 				9DF7498E1875E70100CBB110 /* main.m in Sources */,
 				DFB94A1018963994005F768B /* Person.m in Sources */,
 				DFB607EE18A3A36900138A9A /* CustomUIASView.m in Sources */,
+				DFB3398618A49AB300863E11 /* Base64.m in Sources */,
 				9D00C0DD18815316002A6E3E /* ContactGetSelectMethodViewController.m in Sources */,
 				DFB94A1418966A28005F768B /* ContactEditDetailsViewController.m in Sources */,
 				9D05B2601881F82300FD497D /* ContactReceivedViewController.m in Sources */,
