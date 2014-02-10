@@ -10,8 +10,8 @@
 #import "ContactGlobalDataClass.h"
 #import "CustomUIASView.h"
 #import "ContactSendContactDetailDelegate.h"
-
-@interface ContactMainViewController : UIViewController<UITextFieldDelegate,SendContactDetailDelegate,UIAlertViewDelegate>
+#import "ContactSignUpDataService.h"
+@interface ContactMainViewController : UIViewController<UITextFieldDelegate,SendContactDetailDelegate,UIAlertViewDelegate,ContactSignUpDelegate>
 {
     ContactGlobalDataClass *obj;
     int popUp;

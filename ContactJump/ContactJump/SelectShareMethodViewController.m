@@ -504,18 +504,19 @@
     [activityIndicator startAnimating];
     
     
-//    NSString* url=[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
-    
+
+    NSUUID* uuid = [[UIDevice currentDevice] identifierForVendor];
     NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"deviceid\":\"%@\",\"send\":\"%@\",\"receive\":\"%@\",\"note\":\"%@\"}",[uuid UUIDString],obj.jsonString,obj.jsonString_recipients,addNote_txtview.text];
    
     
-    [sendContacts_cls callWebService:url];
+    [sendContacts_cls callWebService:url :@"savecontacts" :payload];
 
 }
--(void)getresponse:(NSString *)message :(id)data status:(BOOL)value
+-(void)getresponse:(NSString *)result :(id)data :message status:(BOOL)value
 {
     [activityIndicator stopAnimating];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:result
                                                     message: message
                                                    delegate:nil
                                           cancelButtonTitle:@"Ok"

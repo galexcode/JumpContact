@@ -256,12 +256,11 @@
 {
     NSLog(@"xxxxxx");
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    //    [defaults setObject:@"" forKey:@"UserID"];
-    //    [defaults synchronize];
+  
     popUp=0;
-    NSString* val = [defaults valueForKey:@"UserID"];
+    NSString* val = [defaults stringForKey:@"UserID"];
     NSLog(@"val  %@",val);
-     if (val==nil)
+     if (val==NULL)
      {
          
          bg=[[UIView alloc] init];
@@ -311,7 +310,7 @@
     {
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:sendContactStatus options:kNilOptions error:&jsonParsingError];
         
-        
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         if (jsonParsingError) {
             NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
         }
@@ -323,6 +322,9 @@
                 verficationCode=[json objectForKey:@"verification_code"];
                 userID=[json objectForKey:@"user_id"];
                 NSLog(@"userID  %@",userID);
+                
+                [defaults setObject:userID forKey:@"UserID"];
+                [defaults synchronize];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:response
                                                                message: result
                                                               delegate:self
@@ -346,9 +348,9 @@
                 [alert setTag:2];
                 [alert show];
                 
-                NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
                 
-                [defaults setValue:@"123" forKey:@"UserID"];
+                
+                [defaults setObject:userID forKey:@"UserID"];
                 [defaults synchronize];
                 [self signupScreenShow ];
             }
@@ -373,9 +375,10 @@
     activityIndicator.center = self.view.center;
     [self.view addSubview: activityIndicator];
     [activityIndicator startAnimating];
-   
     
-    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=verify&pl={\"code\":\"%@\",\"userid\":\"%@\"}", verficationCode, userID]];
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=verify&pl={\"code\":\"%@\",\"userid\":\"%@\"}", verficationCode, [defaults valueForKey:@"UserID"]]];
     
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -909,8 +912,53 @@
 }
 -(void)received_btnAction{
     
-    ContactReceivedViewController *received_Cls=[[ContactReceivedViewController alloc]init];
-    [self.navigationController pushViewController:received_Cls animated:YES];
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+   
+
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"userid\":\"%@\"}",[defaults valueForKey:@"UserID"]];
+    
+    [sendContacts_cls callWebService:url :@"receive" :payload];
+    
+    
+    
+}
+-(void)getresponse:(NSString *)res :(id)data :message status:(BOOL)value
+{
+    [activityIndicator stopAnimating];
+    
+    if ([res isEqualToString:@"success"]) {
+        NSArray* senderData=[NSArray arrayWithArray:data] ;
+        ContactReceivedViewController *received_Cls=[[ContactReceivedViewController alloc]init];
+        [received_Cls senderDetails:senderData];
+        [self.navigationController pushViewController:received_Cls animated:YES];
+
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:res
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:Nil,Nil];
+        
+        
+        [alert show];
+    }
+   
+
+    
+    
 }
 
 -(void)Setting_btnAction22:(UIButton *)sender{

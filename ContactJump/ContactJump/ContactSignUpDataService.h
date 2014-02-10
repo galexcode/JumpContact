@@ -14,14 +14,15 @@
     id <ContactSignUpDelegate> delegate;
     NSMutableData * webData;
     NSString *result;
+    NSString *message;
     id data1;
 }
 
 @property(nonatomic, retain)id <ContactSignUpDelegate> delegate;
--(void)callWebService:(NSString *)url;
+-(void)callWebService:(NSString *)url :(NSString *)cmd :(NSString *)payLoad;
 @end
 
 @protocol ContactSignUpDelegate
--(void)getresponse:(NSString *)message :(id)data status:(BOOL)value;
+-(void)getresponse:(NSString *)message :(id)data :(NSString *)result status:(BOOL)value;
 @end
 

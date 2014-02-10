@@ -12,5 +12,7 @@
 {
     UITableView *tableview;
 }
+-(void)senderDetails:(NSArray*)detailsArray;
 
+@property (nonatomic,strong) NSArray* senderArray;
 @end

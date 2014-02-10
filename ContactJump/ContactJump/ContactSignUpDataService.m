@@ -10,11 +10,12 @@
 
 @implementation ContactSignUpDataService
 @synthesize delegate;
--(void)callWebService:(NSString *)Listtype{
+-(void)callWebService:(NSString *)Listtype :cmd :payLoad
+{
     
      
     ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
-    NSString *s=[NSString stringWithFormat:@"cmd=savecontacts&pl={\"deviceid\":\"1\",\"send\":\"%@\",\"receive\":\"%@\"}",obj.jsonString,obj.jsonString_recipients];
+    NSString *s=[NSString stringWithFormat:@"cmd=%@&pl=%@",cmd,payLoad];
     NSString* webStringURL = [s stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL *url = [NSURL URLWithString:Listtype];
@@ -26,7 +27,7 @@
     [request addValue: @"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPMethod:@"POST"];
-    [request setValue:[NSString stringWithFormat:@"%d",[webStringURL length]] forHTTPHeaderField:@"Content-length"] ;
+    [request setValue:[NSString stringWithFormat:@"%lu",(unsigned long)[webStringURL length]] forHTTPHeaderField:@"Content-length"] ;
     [request setHTTPBody:[webStringURL dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLConnection *connection =[[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -46,7 +47,7 @@
 	
 	webData = nil;
     
-    [delegate getresponse:nil :nil status:FALSE];
+    [delegate getresponse:nil :nil :nil status:FALSE];
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
@@ -60,9 +61,13 @@
         NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
     } else {
         
-        result=[json objectForKey:@"message"];
-        data1=[json objectForKey:@"data"];
-        [delegate getresponse:result :data1 status:TRUE];
+        message=[NSString stringWithFormat:@"%@,%@",[json objectForKey:@"message"],[json objectForKey:@"receive"]];
+        result=[json objectForKey:@"result"];
+        if ([json objectForKey:@"data"] !=NULL) {
+            data1=[json objectForKey:@"data"];
+        }
+        
+        [delegate getresponse:result :data1 :message status:TRUE];
     }
     
     
