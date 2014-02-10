@@ -853,7 +853,6 @@
         }
         CFRelease(addressBook);
         CFRelease(allPeople);
-        
         obj.contactDetails=[[NSMutableArray alloc] init];
         
         [obj setContactDetails:contacts];
