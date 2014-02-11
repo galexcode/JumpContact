@@ -19,7 +19,7 @@
 
       
       self.doneBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-      self.doneBtn.frame=CGRectMake(123,158,54,25);
+      self.doneBtn.frame=CGRectMake(123,170,54,25);
       [self.doneBtn setTitle:@"Done" forState:UIControlStateNormal];
        [self.doneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
       [self.doneBtn setBackgroundColor:[UIColor whiteColor]];
@@ -35,7 +35,7 @@
       self.celltxt_lbl3.frame=CGRectMake(25+10,34,250,64.5);
  
       self.celltxt_lbl3.numberOfLines=2;
-      self.celltxt_lbl3.text=[NSString stringWithFormat:@"Enter your mobile Number To be verfied"];
+      self.celltxt_lbl3.text=[NSString stringWithFormat:@"Enter your Name and Mobile Number To be verfied"];
       self.celltxt_lbl3.textAlignment=UITextAlignmentLeft;
       self.celltxt_lbl3.textColor= [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1];
       self.celltxt_lbl3.backgroundColor=[UIColor clearColor];
@@ -43,8 +43,18 @@
      
       [self addSubview:self.celltxt_lbl3];
       
+      self.nametxtfld=[[UITextField alloc] init];
+      self.nametxtfld.frame=CGRectMake(25+10,94,240,30);
+      self.nametxtfld.placeholder=@"Name";
+      self.nametxtfld.textAlignment=UITextAlignmentLeft;
+      self.nametxtfld.textColor= [UIColor blackColor];
+      self.nametxtfld.backgroundColor=[UIColor whiteColor];
+      self.nametxtfld.font=[UIFont systemFontOfSize:15.0f];
+      self.nametxtfld.keyboardType=UIKeyboardTypeNamePhonePad;
+      [self addSubview:self.nametxtfld];
+      
       self.phntxtfld=[[UITextField alloc] init];
-      self.phntxtfld.frame=CGRectMake(25+10,94,240,30);
+      self.phntxtfld.frame=CGRectMake(25+10,134,240,30);
       self.phntxtfld.placeholder=@"Phone Number";
       self.phntxtfld.textAlignment=UITextAlignmentLeft;
       self.phntxtfld.textColor= [UIColor blackColor];

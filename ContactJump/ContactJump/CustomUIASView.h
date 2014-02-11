@@ -17,5 +17,6 @@
 @property (nonatomic, retain) UILabel *celltxt_lbl3;
 @property (nonatomic, retain) UIButton *doneBtn;
 @property (nonatomic, retain) UITextField *phntxtfld;
+@property (nonatomic, retain) UITextField *nametxtfld;
 
 @end

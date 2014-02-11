@@ -26,8 +26,10 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
+    
     
     obj=[ContactGlobalDataClass getInstance];
     [obj setBackBtnActivate:@"0"];
@@ -196,20 +198,20 @@
     [sendwithImage_btn addTarget:self action:@selector(SendwithImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollview addSubview:sendwithImage_btn];
     
+    
+   
 #pragma mark send button sub title label.
    UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
     sendbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendbtnsubtitle_lbl.text=@"1.25 MB";
+    sendbtnsubtitle_lbl.text= [NSString stringWithFormat:@"%.2f KB",(float)([[obj.jsonString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] length]/1024.0f)];
     sendbtnsubtitle_lbl.textAlignment=1;
     sendbtnsubtitle_lbl.textColor= [UIColor whiteColor];
     sendbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
     sendbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
-    sendbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    sendbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
     [sendwithImage_btn addSubview:sendbtnsubtitle_lbl];
     
     
-    
+   
 #pragma mark SendwithoutImage Button
     UIButton *sendwithoutImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
     [sendwithoutImage_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"button-bg1" ofType:@"png"]] forState:UIControlStateNormal];
@@ -223,13 +225,11 @@
 #pragma mark send button sub title label.
     UILabel *sendwithoutbtnsubtitle_lbl=[[UILabel alloc] init];
     sendwithoutbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendwithoutbtnsubtitle_lbl.text=@"1.25 MB";
+    sendwithoutbtnsubtitle_lbl.text=[NSString stringWithFormat:@"%.2f KB",(float)([[obj.jsonString_withoutImages stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] length]/1024.0f)];
     sendwithoutbtnsubtitle_lbl.textAlignment=1;
     sendwithoutbtnsubtitle_lbl.textColor= [UIColor whiteColor];
     sendwithoutbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
     sendwithoutbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
-    sendwithoutbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
-    sendwithoutbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
     [sendwithoutImage_btn addSubview:sendwithoutbtnsubtitle_lbl];
     
     bg=[[UIView alloc] init];
@@ -298,6 +298,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     selectContact_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.contactsToBeShared_selected];
 
     recipients_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.recipients_selected];
@@ -504,10 +505,11 @@
     [activityIndicator startAnimating];
     
     
-
     NSUUID* uuid = [[UIDevice currentDevice] identifierForVendor];
+    NSLog(@"[uuid UUIDString] %@",[uuid UUIDString]);
+   
     NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
-    NSString* payload=[NSString stringWithFormat:@"{\"deviceid\":\"%@\",\"send\":\"%@\",\"receive\":\"%@\",\"note\":\"%@\"}",[uuid UUIDString],obj.jsonString,obj.jsonString_recipients,addNote_txtview.text];
+    NSString* payload=[NSString stringWithFormat:@"{\"deviceid\":\"%@\",\"send\":\"%@\",\"receive\":\"%@\",\"note\":\"%@\",\"count\":\"%@\"}",[uuid UUIDString],obj.jsonString,obj.jsonString_recipients,addNote_txtview.text,obj.contactsToBeShared_selected];
    
     
     [sendContacts_cls callWebService:url :@"savecontacts" :payload];

@@ -61,7 +61,7 @@
         NSLog(@"JSON ERROR: %@", [jsonParsingError localizedDescription]);
     } else {
         
-        message=[NSString stringWithFormat:@"%@,%@",[json objectForKey:@"message"],[json objectForKey:@"receive"]];
+        message=[NSString stringWithFormat:@"%@",[json objectForKey:@"message"]];
         result=[json objectForKey:@"result"];
         if ([json objectForKey:@"data"] !=NULL) {
             data1=[json objectForKey:@"data"];

@@ -11,7 +11,7 @@
 #import "SelectRecipientsViewController.h"
 #import "ContactSendContactDetailDelegate.h"
 #import "ContactSignUpDataService.h"
-@interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,SendContactDetailDelegate,UIAlertViewDelegate,ContactSignUpDelegate>{
+@interface SelectShareMethodViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIAlertViewDelegate,ContactSignUpDelegate>{
     
     UILabel *navbartitle;
     UIButton *back_btn;

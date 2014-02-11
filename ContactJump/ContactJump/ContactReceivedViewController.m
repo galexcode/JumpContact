@@ -129,8 +129,8 @@
         
 #pragma mark Name label  Cell.
         UILabel *name_lbl=[[UILabel alloc] init];
-        name_lbl.frame=CGRectMake(30, 8, 120, 20);
-        name_lbl.textAlignment=1;
+        name_lbl.frame=CGRectMake(60, 8, 120, 20);
+        name_lbl.textAlignment=UITextAlignmentLeft;
         [name_lbl setTag:40];
         name_lbl.textColor= [UIColor blackColor];
         name_lbl.backgroundColor=[UIColor clearColor];
@@ -139,8 +139,8 @@
         
 #pragma mark cell number of contacts label.
         UILabel *nofcontacts_lbl=[[UILabel alloc] init];
-        nofcontacts_lbl.frame=CGRectMake(30, 33, 120, 18);
-        nofcontacts_lbl.textAlignment=1;
+        nofcontacts_lbl.frame=CGRectMake(60, 33, 120, 18);
+        nofcontacts_lbl.textAlignment=UITextAlignmentLeft;
         [nofcontacts_lbl setTag:41];
         nofcontacts_lbl.textColor= [UIColor blackColor];
         nofcontacts_lbl.backgroundColor=[UIColor clearColor];
@@ -167,17 +167,21 @@
     UILabel *lblName =(UILabel*) [cell viewWithTag:40];
     
     
-    lblName.text=[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"senderphone"];
+    lblName.text=[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"sendername"];
     
     UILabel *lblNumberOfContacts =(UILabel*) [cell viewWithTag:41];
     
+    if ([[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"total_sharedcontacts"] isEqualToString:@"1"]) {
+        lblNumberOfContacts.text=[NSString stringWithFormat:@"%@ contact",[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"total_sharedcontacts"]];
+    } else {
+        lblNumberOfContacts.text=[NSString stringWithFormat:@"%@ contacts",[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"total_sharedcontacts"]];
+    }
     
-    lblNumberOfContacts.text=@"5 Contact";
     
     
     
      UILabel *lblTime =(UILabel*)[cell viewWithTag:42];
-    lblTime.text=@"12:41 PM";
+    lblTime.text=[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"created"];
 
     
 
@@ -186,7 +190,7 @@
     
 }
 
-
+//-(void)senderNoteText:(NSString *)note :(NSString*)recordId :(NSString*)name :(NSString*)time :(NSString*)totalContactsShared;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 55.0f;
 }
@@ -194,6 +198,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ContactDetailesViewController *contactDetails_Cls=[[ContactDetailesViewController  alloc]init];
+    
+    [contactDetails_Cls senderNoteText:[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"note"]
+                                     :[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"Record_id"]
+                                     :[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"sendername"]
+                                     :[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"created"]
+                                     :[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"total_sharedcontacts"]
+                                     :[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"sizewithimage"]
+                                     :[[self.senderArray objectAtIndex:indexPath.row] objectForKey:@"sizewithoutimage"]
+     
+     
+     ];
+    
     [self.navigationController pushViewController:contactDetails_Cls animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -212,9 +228,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)arrowbtn{
-    
-}
+
 
 
 

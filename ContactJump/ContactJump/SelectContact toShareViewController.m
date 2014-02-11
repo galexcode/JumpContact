@@ -86,7 +86,7 @@ static int k=0;
         }
     }
     
-   
+    
     for (Person *person in obj.contactDetails)
     {
         
@@ -525,6 +525,7 @@ static int k=0;
         
         
         NSMutableArray *allPersonArr=[[NSMutableArray alloc] init];
+        NSMutableArray *allPersonArr_withoutImg=[[NSMutableArray alloc] init];
         
         
         NSLog(@"%lu",(unsigned long)[obj.contactsArray count]);
@@ -533,42 +534,58 @@ static int k=0;
             NSMutableDictionary *person=[[NSMutableDictionary alloc] init];
             NSMutableArray *personArr=[[NSMutableArray alloc] init];
             
+            NSMutableDictionary *person_withoutImg=[[NSMutableDictionary alloc] init];
+            NSMutableArray *personArr_withoutImg=[[NSMutableArray alloc] init];
             
             NSMutableDictionary *dic_PersonName=[[NSMutableDictionary alloc] init];
+            NSMutableDictionary *dic_PersonName_withoutImg=[[NSMutableDictionary alloc] init];
             NSMutableArray *personName_DataArr=[[NSMutableArray alloc] init];
+            NSMutableArray *personName_DataArr_withoutImg=[[NSMutableArray alloc] init];
             
             NSMutableDictionary *dic_NameData=[[NSMutableDictionary alloc] init];
             [dic_NameData setObject:@"Name"  forKey:@"name"];
             [dic_NameData setObject:[[obj.contactsArray objectAtIndex:k] fullName]  forKey:@"value"];
             
             [personName_DataArr addObject:dic_NameData];
+            [personName_DataArr_withoutImg addObject:dic_NameData];
             
             NSMutableDictionary *dic_JobTitleData=[[NSMutableDictionary alloc] init];
             [dic_JobTitleData setObject:@"JobTitle"  forKey:@"name"];
             [dic_JobTitleData setObject:[[obj.contactsArray objectAtIndex:k] lastName]  forKey:@"value"];
             [personName_DataArr addObject:dic_JobTitleData];
+            [personName_DataArr_withoutImg addObject:dic_JobTitleData];
             
             NSMutableDictionary *dic_OrganizationData=[[NSMutableDictionary alloc] init];
             [dic_OrganizationData setObject:@"Organization"  forKey:@"name"];
             [dic_OrganizationData setObject:[[obj.contactsArray objectAtIndex:k] companyName]  forKey:@"value"];
             [personName_DataArr addObject:dic_OrganizationData];
-            
+            [personName_DataArr_withoutImg addObject:dic_OrganizationData];
             
             NSData *imageData = UIImagePNGRepresentation([[obj.contactsArray objectAtIndex:k] editablePic]);
             NSString *encodedString =[Base64 encode:imageData];
             
             //NSLog(@"\n\n\n\nencodedString \n\n\n%@", encodedString);
             
-           
+            NSMutableDictionary *dic_ImageData_withoutImg=[[NSMutableDictionary alloc] init];
+            [dic_ImageData_withoutImg setObject:@"Image"  forKey:@"name"];
+            [dic_ImageData_withoutImg setObject:@""  forKey:@"value"];
+            
             NSMutableDictionary *dic_ImageData=[[NSMutableDictionary alloc] init];
             [dic_ImageData setObject:@"Image"  forKey:@"name"];
             [dic_ImageData setObject:encodedString  forKey:@"value"];
             
             [personName_DataArr addObject:dic_ImageData];
+            NSLog(@"\n\n\n\nSize of Image \n\n\n%lu", (unsigned long)[encodedString length]);
+            [personName_DataArr_withoutImg addObject:dic_ImageData_withoutImg];
             
             [dic_PersonName setObject:@"General" forKey:@"category"];
             [dic_PersonName setObject:personName_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonName];
+            [dic_PersonName_withoutImg setObject:@"General" forKey:@"category"];
+            [dic_PersonName_withoutImg setObject:personName_DataArr_withoutImg forKey:@"data"];
+            [personArr_withoutImg addObject:dic_PersonName_withoutImg];
+            
+            
             
             NSMutableDictionary *dic_PersonPhone=[[NSMutableDictionary alloc] init];
             NSMutableArray *personPhone_DataArr=[[NSMutableArray alloc] init];
@@ -582,7 +599,7 @@ static int k=0;
             [dic_PersonPhone setObject:@"Phone" forKey:@"category"];
             [dic_PersonPhone setObject:personPhone_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonPhone];
-            
+            [personArr_withoutImg addObject:dic_PersonPhone];
             
             NSMutableDictionary *dic_PersonEmail=[[NSMutableDictionary alloc] init];
             NSMutableArray *personEmail_DataArr=[[NSMutableArray alloc] init];
@@ -597,7 +614,7 @@ static int k=0;
             [dic_PersonEmail setObject:@"Email_ID" forKey:@"category"];
             [dic_PersonEmail setObject:personEmail_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonEmail];
-            
+            [personArr_withoutImg addObject:dic_PersonEmail];
             
             
             NSMutableDictionary *dic_PersonAddress=[[NSMutableDictionary alloc] init];
@@ -612,7 +629,7 @@ static int k=0;
             [dic_PersonAddress setObject:@"Address" forKey:@"category"];
             [dic_PersonAddress setObject:personAddress_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonAddress];
-            
+            [personArr_withoutImg addObject:dic_PersonAddress];
             
             NSMutableDictionary *dic_PersonSocialProfile=[[NSMutableDictionary alloc] init];
             NSMutableArray *personSocialProfile_DataArr=[[NSMutableArray alloc] init];
@@ -626,6 +643,8 @@ static int k=0;
             [dic_PersonSocialProfile setObject:@"Social Profile" forKey:@"category"];
             [dic_PersonSocialProfile setObject:personSocialProfile_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonSocialProfile];
+            [personArr_withoutImg addObject:dic_PersonSocialProfile];
+            
             
             NSMutableDictionary *dic_PersonIM=[[NSMutableDictionary alloc] init];
             NSMutableArray *personIM_DataArr=[[NSMutableArray alloc] init];
@@ -640,7 +659,7 @@ static int k=0;
             [dic_PersonIM setObject:@"Instant Message ID" forKey:@"category"];
             [dic_PersonIM setObject:personIM_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonIM];
-            
+            [personArr_withoutImg addObject:dic_PersonIM];
             
             NSMutableDictionary *dic_PersonURL=[[NSMutableDictionary alloc] init];
             NSMutableArray *personURL_DataArr=[[NSMutableArray alloc] init];
@@ -654,6 +673,8 @@ static int k=0;
             [dic_PersonURL setObject:@"URL" forKey:@"category"];
             [dic_PersonURL setObject:personURL_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonURL];
+            [personArr_withoutImg addObject:dic_PersonURL];
+            
             
             NSMutableDictionary *dic_PersonDate=[[NSMutableDictionary alloc] init];
             NSMutableArray *personDate_DataArr=[[NSMutableArray alloc] init];
@@ -667,7 +688,7 @@ static int k=0;
             [dic_PersonDate setObject:@"Date" forKey:@"category"];
             [dic_PersonDate setObject:personDate_DataArr forKey:@"data"];
             [personArr addObject:dic_PersonDate];
-            
+            [personArr_withoutImg addObject:dic_PersonDate];
             
             
             
@@ -676,26 +697,36 @@ static int k=0;
             
             
             [person setObject:personArr forKey:@"Person"];
+            [person_withoutImg setObject:personArr_withoutImg forKey:@"Person"];
             [allPersonArr addObject:person];
+            [allPersonArr_withoutImg addObject:person_withoutImg];
         }
         
         NSDictionary *allPersonDic=[NSDictionary dictionaryWithObject:allPersonArr forKey:@"Data"];
+        NSDictionary *allPersonDic_withoutImg=[NSDictionary dictionaryWithObject:allPersonArr_withoutImg forKey:@"Data"];
         
-        NSLog(@"allPersonDic \n %@",allPersonDic);
+        NSLog(@"allPersonDic \n %@",allPersonDic_withoutImg);
         
         NSError* error;
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:allPersonDic
                                                            options:kNilOptions error:&error];
         
+        NSData* jsonData_withoutImg = [NSJSONSerialization dataWithJSONObject:allPersonDic_withoutImg
+                                                                      options:kNilOptions error:&error];
+        
+        NSString* strWithImg = [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding] ;
+        NSString* strWithoutImg = [[NSString alloc] initWithData:jsonData_withoutImg
+                                                        encoding:NSUTF8StringEncoding] ;
         
         
-        NSString* newStr = [[NSString alloc] initWithData:jsonData
-                                                 encoding:NSUTF8StringEncoding] ;
-        NSLog(@"JSON %@",newStr);
         
+       
+        NSLog(@"JSON %lu",(unsigned long)[strWithoutImg length]);
+        NSLog(@"JSON-- %lu",(unsigned long)[strWithImg length]);
         
-        obj.jsonString=  [newStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
+        obj.jsonString=  [strWithImg stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        obj.jsonString_withoutImages=  [strWithoutImg stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
         [obj setContactsToBeShared_selected:[NSString stringWithFormat:@"%d",k]];
         if (isBulkContacts==NO)
@@ -771,6 +802,7 @@ static int k=0;
             }
             
         }
+        [obj.contactsArray removeAllObjects];
         [obj.contactsArray addObjectsFromArray:obj.contactDetails];
         k=(int)[obj.contactDetails count];
         noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];

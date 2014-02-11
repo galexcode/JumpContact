@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ContactSignUpDataService.h"
+@interface ContactDetailesViewController : UIViewController<ContactSignUpDelegate>
+{
+    NSString *noteText;
+     NSString *time_shared;
+     NSString *name_sender;
+     NSString *size_withoutImage;
+     NSString *size_withImage;
+     NSString *numberOfContact_shared;
+    UIActivityIndicatorView *activityIndicator;
+}
 
-@interface ContactDetailesViewController : UIViewController
 
+-(void)senderNoteText:(NSString *)note :(NSString*)recordId :(NSString*)name :(NSString*)time :(NSString*)totalContactsShared :(NSString*)sizewithimage :(NSString*)sizeWithoutimage ;
+
+@property (nonatomic,strong) NSString* recordID;
 @end

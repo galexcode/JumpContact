@@ -278,6 +278,7 @@
          
          [self.uiasView.doneBtn addTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
          [self.uiasView.phntxtfld setDelegate:self];
+         [self.uiasView.nametxtfld setDelegate:self];
          [self.view addSubview:self.uiasView];
          [self signupScreenShow];
          
@@ -297,7 +298,7 @@
     [activityIndicator startAnimating];
     NSUUID* uuid = [[UIDevice currentDevice] identifierForVendor];
     
-    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl={\"deviceid\":\"%@\",\"phone\":\"%@\"}", [uuid UUIDString], self.uiasView.phntxtfld.text]];
+    [sendContacts_cls callWebService:[NSString stringWithFormat:@"http://204.197.244.110/~crmdalto/jump_contact/index.php?cmd=signup&pl={\"deviceid\":\"%@\",\"phone\":\"%@\",\"name\":\"%@\"}", [uuid UUIDString], self.uiasView.phntxtfld.text,self.uiasView.nametxtfld.text]];
     
 }
 
@@ -395,9 +396,11 @@
 //            [self signupScreenShow];
 //        }
 //        else {
-            self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
-            
+             self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
+             [self.uiasView.nametxtfld setHidden:YES];
+             self.uiasView.phntxtfld.frame=CGRectMake(25+10,94,240,30);
             self.uiasView.phntxtfld.text=verficationCode;
+            self.uiasView.doneBtn.frame=CGRectMake(123,158,54,25);
             [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
             [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
       //  }
@@ -405,11 +408,22 @@
     }
     else if (buttonIndex==0 && [response isEqualToString:@"Fail"] && alertView.tag==1)
     {
-        self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
+        if ([result isEqualToString:@"Already registered with Deviceid and Phone"]) {
+            
+           [self signupScreenShow ];
+        }
+        else
+        {
+            
+            self.uiasView.celltxt_lbl3.text=@"Enter Verification code";
+            [self.uiasView.nametxtfld setHidden:YES];
+            self.uiasView.phntxtfld.frame=CGRectMake(25+10,94,240,30);
+            self.uiasView.phntxtfld.text=verficationCode;
+            self.uiasView.doneBtn.frame=CGRectMake(123,158,54,25);
+            [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
+            [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
+        }
         
-        self.uiasView.phntxtfld.text=verficationCode;
-        [self.uiasView.doneBtn removeTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
-        [self.uiasView.doneBtn addTarget:self action:@selector(verify) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 -(void)signupScreenShow
@@ -1018,5 +1032,6 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.uiasView.phntxtfld resignFirstResponder];
+     [self.uiasView.nametxtfld resignFirstResponder];
 }
 @end

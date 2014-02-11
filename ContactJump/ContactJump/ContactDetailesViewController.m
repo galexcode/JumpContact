@@ -25,7 +25,17 @@
     }
     return self;
 }
-
+-(void)senderNoteText:(NSString *)note :(NSString *)recordId :(NSString *)name :(NSString *)time :(NSString *)totalContactsShared :(NSString *)sizewithimage :(NSString *)sizeWithoutimage
+{
+    NSLog(@"%@, %@ ",note,recordId);
+    self.recordID=recordId;
+    noteText=note;
+    time_shared=time;
+    name_sender=name;
+    size_withImage=sizewithimage;
+    size_withoutImage=sizeWithoutimage;
+    numberOfContact_shared=totalContactsShared;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,7 +67,7 @@
     
 #pragma Navigation Bar Title
     UILabel *navbartitle=[[UILabel alloc] init];
-    navbartitle.text=[NSString stringWithFormat:@"Jon Lax"];
+    navbartitle.text=[NSString stringWithFormat:@"%@",name_sender];
     navbartitle.textAlignment=1;
     navbartitle.textColor= [UIColor whiteColor];
     navbartitle.backgroundColor=[UIColor clearColor];
@@ -69,7 +79,7 @@
 #pragma mark number of selected contacts.
     UILabel *noofselectedcontacts=[[UILabel alloc] init];
     noofselectedcontacts.frame=CGRectMake(15, 100, 150, 40);
-    noofselectedcontacts.text=@"25 Contacts Recieved";
+    noofselectedcontacts.text=[NSString stringWithFormat:@"%@ Contacts Recieved",numberOfContact_shared];
     noofselectedcontacts.textAlignment=UITextAlignmentLeft;
     noofselectedcontacts.textColor= [UIColor blackColor];
     noofselectedcontacts.backgroundColor=[UIColor clearColor];
@@ -79,16 +89,13 @@
     [mainbg_img addSubview:noofselectedcontacts];
     
     
-    NSDate *localDate = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     
     
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"HH:mm a";
+    
+   
 #pragma Navigation Bar Title
     UILabel *time_lbl=[[UILabel alloc] init];
-    time_lbl.text=[NSString stringWithFormat:@"%@",[timeFormatter stringFromDate: localDate]];
+    time_lbl.text=[NSString stringWithFormat:@"%@",time_shared];
     time_lbl.frame=CGRectMake(235, 100, 80, 40);
     time_lbl.textAlignment=1;
     time_lbl.numberOfLines=2;
@@ -108,7 +115,7 @@
     
 #pragma mark Text View.
     UITextView *textview=[[UITextView alloc]init];
-    textview.text=[NSString stringWithFormat:@"2011 PayPal, Inc. All rights reserved. PayPal is a registered trademark of PayPal, Inc. The PayPal logo is a trademark of PayPal, Inc. Other trademarks and brands are the property of their respective owners.The information in this document belongs to PayPal, Inc. It may not be used, reproduced or disclosed without the written approval of PayPal, Inc."];
+    textview.text=[NSString stringWithFormat:@"%@",noteText];
     textview.scrollEnabled=YES;
     textview.frame=CGRectMake(5, 5, 280, 132.5);
     textview.backgroundColor=[UIColor clearColor];
@@ -121,13 +128,13 @@
     [sendwithImage_btn setTitle:@"Receive with Images" forState:UIControlStateNormal];
     [[sendwithImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:12]];
     [sendwithImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sendwithImage_btn addTarget:self action:@selector(SendwithImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [sendwithImage_btn addTarget:self action:@selector(recieveWithImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:sendwithImage_btn];
     
 #pragma mark send button sub title label.
     UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
     sendbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendbtnsubtitle_lbl.text=@"1.25 MB";
+    sendbtnsubtitle_lbl.text=[NSString stringWithFormat:@"%.2f KB",(float)([size_withImage floatValue]/1024.0f)];
     sendbtnsubtitle_lbl.textAlignment=1;
     sendbtnsubtitle_lbl.textColor= [UIColor whiteColor];
     sendbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
@@ -143,13 +150,13 @@
     [sendwithoutImage_btn setTitle:@"Receive without Images" forState:UIControlStateNormal];
     [[sendwithoutImage_btn titleLabel] setFont:[UIFont fontWithName:@"AmericanTypewriter" size:10]];
     [sendwithoutImage_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sendwithoutImage_btn addTarget:self action:@selector(sendwithoutImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [sendwithoutImage_btn addTarget:self action:@selector(recieveWithoutImage_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [mainbg_img addSubview:sendwithoutImage_btn];
  
 #pragma mark send button sub title label.
     UILabel *sendwithoutbtnsubtitle_lbl=[[UILabel alloc] init];
     sendwithoutbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendwithoutbtnsubtitle_lbl.text=@"1.25 MB";
+    sendwithoutbtnsubtitle_lbl.text=[NSString stringWithFormat:@"%.2f KB",(float)([size_withoutImage floatValue]/1024.0f)];
     sendwithoutbtnsubtitle_lbl.textAlignment=1;
     sendwithoutbtnsubtitle_lbl.textColor= [UIColor whiteColor];
     sendwithoutbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
@@ -198,19 +205,74 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)SendwithImage_btnAction{
+-(void)recieveWithImage_btnAction{
     
+    
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"recordid\":\"%@\",\"getimagewith\":\"1\"}",self.recordID];
+    
+    
+    [sendContacts_cls callWebService:url :@"receivedetails" :payload];
+
     SendContactsViewController *addContact_Cls=[[SendContactsViewController alloc]init];
     [self.navigationController pushViewController:addContact_Cls animated:YES];
     
 }
--(void)sendwithoutImage_btnAction{
+-(void)recieveWithoutImage_btnAction{
     
-    SendContactsViewController *addContact_Cls=[[SendContactsViewController alloc]init];
-    [self.navigationController pushViewController:addContact_Cls animated:YES];
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"recordid\":\"%@\",\"getimagewith\":\"0\"}",self.recordID];
+    
+    
+    [sendContacts_cls callWebService:url :@"receivedetails" :payload];
+
+    
 
 }
 
+-(void)getresponse:(NSString *)res :(id)data :(NSString *)message status:(BOOL)value
+{
+    [activityIndicator stopAnimating];
+    
+    if ([res isEqualToString:@"success"]) {
+        
+       
+        NSLog(@"DATA:%@ ",data);
+        SendContactsViewController *addContact_Cls=[[SendContactsViewController alloc]init];
+        [self.navigationController pushViewController:addContact_Cls animated:YES];
+        
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:res
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:Nil,Nil];
+        
+        
+        [alert show];
+    }
+    
 
+}
 
 @end
