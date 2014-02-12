@@ -20,7 +20,7 @@
     
    
     
-    
+    NSArray*personRecord;
     NSArray *sectionIndex;
     UIButton   * checkBox_all;
     
@@ -33,5 +33,5 @@
 @property (nonatomic,retain) NSMutableDictionary *alphabetsArray;
 @property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 
-
+-(void) getNewContacts :(NSArray*) newPersonRecord;
 @end

@@ -25,7 +25,19 @@ static int k=0;
     }
     return self;
 }
-
+-(void)getNewContacts:(NSArray *)newPersonRecord
+{
+//    for (int i = 0; i < [newPersonRecord count]; i++)
+//    {
+    
+       // ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(newPersonRecord), i);
+        personRecord=[NSArray arrayWithArray:newPersonRecord];
+        
+//        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
+//        
+//        
+//    }
+}
 - (void)viewDidLoad
 {
     
@@ -48,10 +60,11 @@ static int k=0;
     
     BOOL found;
     
-    // Loop through the books and create our keys
-    for (Person *chr in obj.contactDetails)
+    
+    for (int i = 0; i < [personRecord count]; i++)
     {
-        NSString *c = [chr.firstName substringToIndex:1];
+        ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(personRecord), i);
+        NSString *c = [(__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty) substringToIndex:1];
         
         found = NO;
         
@@ -72,12 +85,12 @@ static int k=0;
     }
     
     
-    for (Person *contct_name in obj.contactDetails)
+    for (int i = 0; i < [personRecord count]; i++)
     {
+        ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(personRecord), i);
         
-        
-        [[self.alphabetsArray objectForKey:[contct_name.firstName substringToIndex:1]] addObject:contct_name];
-        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[contct_name.firstName substringToIndex:1]]] addObject:@"1"];
+        [[self.alphabetsArray objectForKey:[(__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty) substringToIndex:1]] addObject:(__bridge id)(ref)];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[(__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty) substringToIndex:1]]] addObject:@"1"];
     }
     
     
@@ -275,7 +288,7 @@ static int k=0;
     name_lbl.frame=CGRectMake(60, 10, 150, 30);
     name_lbl.textAlignment=0;
     [name_lbl setTag:1];
-    name_lbl.text=[NSString stringWithFormat:@"%@",[(Person*)[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] firstName]];
+    name_lbl.text=[NSString stringWithFormat:@"%@",(__bridge NSString *)ABRecordCopyValue((__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]), kABPersonFirstNameProperty)];
     name_lbl.textColor= [UIColor blackColor];
     name_lbl.backgroundColor=[UIColor clearColor];
     name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];

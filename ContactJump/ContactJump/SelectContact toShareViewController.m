@@ -723,7 +723,7 @@ static int k=0;
         
        
         NSLog(@"JSON %lu",(unsigned long)[strWithoutImg length]);
-        NSLog(@"JSON-- %lu",(unsigned long)[strWithImg length]);
+        NSLog(@"JSON-- %@",strWithImg );
         
         obj.jsonString=  [strWithImg stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         obj.jsonString_withoutImages=  [strWithoutImg stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

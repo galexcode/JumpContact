@@ -17,6 +17,7 @@
      NSString *size_withImage;
      NSString *numberOfContact_shared;
     UIActivityIndicatorView *activityIndicator;
+    NSMutableArray *person_RecordRef;
 }
 
 

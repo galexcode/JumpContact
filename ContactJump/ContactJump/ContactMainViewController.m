@@ -699,7 +699,7 @@
                     
                 }
                 
-                NSLog(@"%@ ---- %@\n",person.socialProfile_Type,person.socialProfile_Value);
+                NSLog(@"%@ ---- %@\n %@",person.socialProfile_Type,person.socialProfile_Value,person.IM_Type);
             }
             
             //********************************* EMAIL IDs *********************************
@@ -710,7 +710,8 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(emails, j);
                 NSString* emailType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *email = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-                [person.email_Type addObject:emailType];
+                [person.email_Type addObject:[emailType stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                      withString:[[emailType substringToIndex:1] capitalizedString]]];
                 [person.email_Value addObject:email];
                 
                 CFRelease(typeTmp);
@@ -729,9 +730,11 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(phones, j);
                 NSString* phone_labeltype = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-                [person.phoneNumber_Type addObject:phone_labeltype];
+                [person.phoneNumber_Type addObject:[phone_labeltype stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                            withString:[[phone_labeltype substringToIndex:1] capitalizedString]]];
+                
                 [person.phoneNumber_Value addObject: phone];
-
+                
                 CFRelease(typeTmp);
                 
             }
@@ -777,14 +780,15 @@
                         NSString* urlType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                         NSString *urlValue = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(url, j);
                        
-                        [person.url_Type addObject:urlType];
+                        [person.url_Type addObject:[urlType stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                      withString:[[urlType substringToIndex:1] capitalizedString]]];
                         [person.url_Value addObject:urlValue];
                         
                         
                         CFRelease(typeTmp);
                     }
                     
-                    
+                    NSLog(@"%@ ----",person.url_Type);
                 }
                 
                 //********************************* Dates *********************************
@@ -807,7 +811,8 @@
                         NSLog(@"urlValuetype %@",dateType);
                         [person.date_Value addObject:dateValue];
                         
-                        [person.date_Type addObject:dateType];
+                        [person.date_Type addObject:[dateType stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                     withString:[[dateType substringToIndex:1] capitalizedString]]];
                         
                         
                         CFRelease(typeTmp);
