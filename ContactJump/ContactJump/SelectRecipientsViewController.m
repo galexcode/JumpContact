@@ -626,7 +626,8 @@ static int k1=0;
             }
             
         }
-         [obj.recipientsArray addObjectsFromArray:obj.contactDetails];
+        [obj.recipientsArray removeAllObjects];
+        [obj.recipientsArray addObjectsFromArray:obj.contactDetails];
         k1=(int)[obj.contactDetails count];
         noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
     }

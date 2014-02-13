@@ -27,16 +27,17 @@ static int k=0;
 }
 -(void)getNewContacts:(NSArray *)newPersonRecord
 {
-//    for (int i = 0; i < [newPersonRecord count]; i++)
-//    {
+    personRecord=[NSArray arrayWithArray:newPersonRecord];
+    for (int i = 0; i < [newPersonRecord count]; i++)
+    {
     
-       // ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(newPersonRecord), i);
-        personRecord=[NSArray arrayWithArray:newPersonRecord];
+        ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(newPersonRecord), i);
+    
         
-//        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
-//        
-//        
-//    }
+        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
+        NSLog(@"first name---->%@",firstName);
+        
+    }
 }
 - (void)viewDidLoad
 {
@@ -63,6 +64,7 @@ static int k=0;
     
     for (int i = 0; i < [personRecord count]; i++)
     {
+        
         ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(personRecord), i);
         NSString *c = [(__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty) substringToIndex:1];
         
@@ -272,12 +274,12 @@ static int k=0;
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:nil];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    }
+    
     
     NSLog(@"sssssss----\n%@",[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
     
@@ -288,17 +290,14 @@ static int k=0;
     name_lbl.frame=CGRectMake(60, 10, 150, 30);
     name_lbl.textAlignment=0;
     [name_lbl setTag:1];
-    name_lbl.text=[NSString stringWithFormat:@"%@",(__bridge NSString *)ABRecordCopyValue((__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]), kABPersonFirstNameProperty)];
     name_lbl.textColor= [UIColor blackColor];
     name_lbl.backgroundColor=[UIColor clearColor];
     name_lbl.font=[UIFont fontWithName:@"ArialMT" size:15];
-    name_lbl.shadowColor = [UIColor whiteColor];
-    name_lbl.shadowOffset = CGSizeMake(0,0);
     [cell.contentView addSubview:name_lbl];
     
     
     checkBox=[UIButton buttonWithType:UIButtonTypeCustom];
-    checkBox.tag=indexPath.row;
+    checkBox.tag=2;
     checkBox.frame=CGRectMake(20,15+3, 15, 15);
     [cell.contentView addSubview:checkBox];
     [checkBox setImage:[UIImage imageNamed:@"check-box-inactive.png"] forState:UIControlStateNormal];
@@ -310,22 +309,27 @@ static int k=0;
     
     editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
     editbtn.tag=indexPath.row;
-    
     editbtn.frame=CGRectMake(270,15, 20, 20);
     editbtn.backgroundColor=[UIColor clearColor];
-    //[cell.contentView addSubview:editbtn];
     [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
     [editbtn addTarget:self action:@selector(editbtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView=editbtn;
     
+    }
     
     
+    
+    UILabel* name_lbl1=(UILabel*)[cell viewWithTag:1];
+    name_lbl1.text=[NSString stringWithFormat:@"%@",(__bridge NSString *)ABRecordCopyValue((__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]), kABPersonFirstNameProperty)];
+    
+    
+    UIButton* checkBox1=(UIButton *)[cell viewWithTag:2];
     if ([[[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] objectAtIndex:indexPath.row] isEqualToString:@"0"]) {
-        [checkBox setSelected:NO];
+        [checkBox1 setSelected:NO];
         [cell.accessoryView setHidden:YES];
         //[editbtn setHidden:YES];
     } else {
-        [checkBox setSelected:YES];
+        [checkBox1 setSelected:YES];
         [cell.accessoryView setHidden:NO];
         //[editbtn setHidden:NO];
     }

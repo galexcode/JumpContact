@@ -10,6 +10,7 @@
 #import "SendContactsViewController.h"
 #import "SelectRecipientsViewController.h"
 #import "KxMenu.h"
+#import "Base64.h"
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 @interface ContactDetailesViewController ()
 
@@ -274,7 +275,7 @@
             
             for (int k=0; k<[totalPerson count]; k++)
             {
-                NSDictionary *dic=[totalPerson objectAtIndex:0];
+                NSDictionary *dic=[totalPerson objectAtIndex:k];
                 
                 
                 NSArray* a=[dic objectForKey:@"Person"];
@@ -291,6 +292,9 @@
                 ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:2] objectForKey:@"value"]), &error);
                 ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:1] objectForKey:@"value"]), &error);
                 
+                NSData *imageData = [Base64 decode:[[[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:0] objectForKey:@"value"] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+                
+                ABPersonSetImageData(newPerson, (__bridge CFDataRef)(imageData),  &error);
                 
                 ABMutableMultiValueRef multiPhone = ABMultiValueCreateMutable(kABMultiStringPropertyType);
                 for (int phoneCount=0; phoneCount<[[[a objectAtIndex:1] objectForKey:@"data"] count]; phoneCount++)
@@ -549,7 +553,7 @@
             
             
             
-         //   NSData *imageData = [Base64 decode:[[imgDic1 objectForKey:@"value"]stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+         
             
         }
         
