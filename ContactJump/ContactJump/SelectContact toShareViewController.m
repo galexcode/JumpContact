@@ -328,10 +328,8 @@ static int k=0;
     
     editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
     editbtn.tag=indexPath.row;
-    
     editbtn.frame=CGRectMake(270,15, 20, 20);
     editbtn.backgroundColor=[UIColor clearColor];
-    //[cell.contentView addSubview:editbtn];
     [editbtn setImage:[UIImage imageNamed:@"edit-icon.png"] forState:UIControlStateNormal];
     [editbtn addTarget:self action:@selector(editbtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView=editbtn;

@@ -660,18 +660,21 @@
                     
                     
                     CFDictionaryRef socialValue = ABMultiValueCopyValueAtIndex(socialProfile, i);
-                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFacebook, 0)==kCFCompareEqualTo) {
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFacebook, 0)==kCFCompareEqualTo)
+                    {
                         
                         [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceFacebook];
                         [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
-                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFlickr, 0)==kCFCompareEqualTo) {
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceFlickr, 0)==kCFCompareEqualTo)
+                    {
                         
                         [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceFlickr];
                         [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];
                     }
                     
-                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceLinkedIn, 0)==kCFCompareEqualTo) {
+                    if(CFStringCompare( CFDictionaryGetValue(socialValue, kABPersonSocialProfileServiceKey), kABPersonSocialProfileServiceLinkedIn, 0)==kCFCompareEqualTo)
+                    {
                         
                         [person.socialProfile_Type addObject:(NSString*) kABPersonSocialProfileServiceLinkedIn];
                         [person.socialProfile_Value addObject:(NSString*) CFDictionaryGetValue(socialValue, kABPersonSocialProfileUsernameKey)];

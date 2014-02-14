@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RecievedContactDetailsViewController.h"
 @interface SendContactsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *contentList;

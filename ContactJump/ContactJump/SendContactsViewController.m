@@ -306,7 +306,8 @@ static int k=0;
     
     
     
-    
+  
+
     editbtn=[UIButton buttonWithType:UIButtonTypeCustom];
     editbtn.tag=indexPath.row;
     editbtn.frame=CGRectMake(270,15, 20, 20);
@@ -360,7 +361,7 @@ static int k=0;
     //UIButton *editButton = (UIButton*)[cell.contentView.subviews objectAtIndex:2];
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        //[editButton setHidden:YES];
+        
         [cell.accessoryView setHidden:YES];
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
         if (k>0) {
@@ -372,7 +373,6 @@ static int k=0;
         
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
-        //[editButton setHidden:NO];
         [cell.accessoryView setHidden:NO];
         k++;
     }
@@ -477,6 +477,22 @@ static int k=0;
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"gdhd------%ld",(long)indexPath.section);
+    
+    
+    
+    
+    
+    ABRecordRef ref = (__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
+    
+    RecievedContactDetailsViewController *contactDetail_cls=[[RecievedContactDetailsViewController alloc] initWithPerson:ref];
+    [self.navigationController pushViewController:contactDetail_cls animated:YES];
+    
+    
+    
+
+    
+    
+    
 }
 
 
