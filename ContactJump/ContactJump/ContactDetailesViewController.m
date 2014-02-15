@@ -290,7 +290,8 @@
                 ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:2] objectForKey:@"value"]), &error);
                 ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:1] objectForKey:@"value"]), &error);
                 
-                NSData *imageData = [Base64 decode:[[[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:0] objectForKey:@"value"] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+                NSData *imageData = [Base64 decode:[[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:3] objectForKey:@"value"] ];
+               
                 
                 ABPersonSetImageData(newPerson, (__bridge CFDataRef)(imageData),  &error);
                 
@@ -599,7 +600,8 @@
                     else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Birthday"])
                     {
                         
-                        ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"]), &error);
+                        ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFDateRef)([[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"]), &error);
+                        
                     }
                     
                     

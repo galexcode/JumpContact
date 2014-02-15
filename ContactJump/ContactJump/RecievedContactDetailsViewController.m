@@ -59,6 +59,22 @@
         lname = (__bridge NSString *)ABRecordCopyValue(personRef, kABPersonJobTitleProperty);
         cname=(__bridge NSString *)ABRecordCopyValue(personRef, kABPersonOrganizationProperty);
         
+        
+        
+        
+        
+       UIImage* image = [UIImage imageWithData:(__bridge NSData *)(ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail))];
+        NSData *imageData = UIImageJPEGRepresentation(image, 1);
+    
+        
+        
+        image1=[UIImage imageWithData:imageData];
+        
+    
+   
+
+    
+    
         ABMultiValueRef phones = ABRecordCopyValue(personRef, kABPersonPhoneProperty);
         ABMultiValueRef emails = ABRecordCopyValue(personRef, kABPersonEmailProperty);
         ABMultiValueRef address = ABRecordCopyValue(personRef, kABPersonAddressProperty);
@@ -296,9 +312,9 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
                 NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 
-                NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
+                NSString *dateValue = (__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j);
                 
-                NSLog(@"urlValuetype %@",dateType);
+                NSLog(@"urlValuetype %@",(__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j));
                 [date_Value addObject:dateValue];
                 
                 [date_Type addObject:[dateType stringByReplacingCharactersInRange:NSMakeRange(0,1)
@@ -312,7 +328,7 @@
         }
         
         
-        NSString *date_BirthdayValue = [dateFormatter stringFromDate:(__bridge NSDate*)ABRecordCopyValue(personRef, kABPersonBirthdayProperty) ];
+        NSString *date_BirthdayValue = (__bridge NSString*)ABRecordCopyValue(personRef, kABPersonBirthdayProperty) ;
         
         
         if (date_BirthdayValue !=NULL) {
@@ -421,23 +437,19 @@
     
     UIImageView *imgvw=[[UIImageView alloc] init];
      UIImage *image;
-    image=[UIImage imageNamed:@"user.png"];
-    imgvw.image=image;
+    
     
    
-//    if (per.pic ==nil) {
-//        
-//       image=[UIImage imageNamed:@"user.png"];
-//       imgvw.image=image;
-//        
-//    }
-//    else{
-////        [img setBackgroundImage:per.pic forState:UIControlStateNormal];
-////        [img setBackgroundImage:per.pic forState:UIControlStateSelected];
-////        image=[UIImage imageNamed:@"check-box.png"];
-////        [img setSelected:YES];
-//        
-//    }
+    if (image1 ==nil) {
+        
+       image=[UIImage imageNamed:@"user.png"];
+       imgvw.image=image;
+        
+    }
+    else{
+        
+        imgvw.image=image1;
+    }
    
     [mainbg_img addSubview:imgvw];
     

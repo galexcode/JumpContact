@@ -537,7 +537,7 @@
             }
             
             person.pic=image1;
-            NSLog(@"pic %@",[person.pic description]);
+            
             
             //*************************************BAsic data**************************************************
             person.firstName =[NSString stringWithFormat:@"%@ %@",(firstName==NULL)?@"":firstName,(lastName==NULL)?@"":lastName];

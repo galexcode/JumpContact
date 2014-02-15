@@ -20,6 +20,7 @@
     NSString *fname;
     NSString *lname;
     NSString*cname;
+    UIImage* image1;
     
     NSMutableDictionary *section_Names;
     NSMutableDictionary *section_LabelType;

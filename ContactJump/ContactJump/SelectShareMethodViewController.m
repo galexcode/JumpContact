@@ -537,11 +537,11 @@
     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data1 options:0 error:&localError];
    
    
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:parsedObject
-                                                       options:kNilOptions error:&localError];
+//    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:parsedObject
+//                                                       options:kNilOptions error:&localError];
     
-    NSString* newStr = [[NSString alloc] initWithData:jsonData
-                                             encoding:NSUTF8StringEncoding] ;
+//    NSString* newStr = [[NSString alloc] initWithData:jsonData
+//                                             encoding:NSUTF8StringEncoding] ;
     
     NSLog(@"\n\n\njsonData %@", [parsedObject objectForKey:@"Data"]);
     
