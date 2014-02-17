@@ -811,7 +811,7 @@
 
                         NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
                         
-                        NSLog(@"urlValuetype %@",dateType);
+                        NSLog(@"urlValuetype %@",(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j));
                         [person.date_Value addObject:dateValue];
                         
                         [person.date_Type addObject:[dateType stringByReplacingCharactersInRange:NSMakeRange(0,1)

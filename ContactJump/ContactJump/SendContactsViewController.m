@@ -28,6 +28,7 @@ static int k=0;
 -(void)getNewContacts:(NSArray *)newPersonRecord
 {
     personRecord=[NSArray arrayWithArray:newPersonRecord];
+    contactsToBeAddedArray=[[NSMutableArray alloc] initWithArray:newPersonRecord];
     for (int i = 0; i < [newPersonRecord count]; i++)
     {
     
@@ -231,6 +232,14 @@ static int k=0;
 -(void)addcontact_btnAction
 {
     NSLog(@"BtnAction");
+    CFErrorRef error = NULL;
+    ABAddressBookRef iPhoneAddressBook = ABAddressBookCreate();
+    for (int i=0; i<[contactsToBeAddedArray count]; i++) {
+        ABAddressBookAddRecord(iPhoneAddressBook, (__bridge ABRecordRef)([contactsToBeAddedArray objectAtIndex:i]), &error);
+        
+    }
+    ABAddressBookSave(iPhoneAddressBook, &error);
+    
 }
 
 -(void)back_btnAction
@@ -361,7 +370,7 @@ static int k=0;
     //UIButton *editButton = (UIButton*)[cell.contentView.subviews objectAtIndex:2];
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        
+        [contactsToBeAddedArray removeObjectAtIndex:indexPath.row];
         [cell.accessoryView setHidden:YES];
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
         if (k>0) {
@@ -371,6 +380,8 @@ static int k=0;
     }
     else {
         
+       
+        [contactsToBeAddedArray addObject:[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
         [cell.accessoryView setHidden:NO];
@@ -395,7 +406,8 @@ static int k=0;
     
 }
 
--(void)checkBoxClicked:(id)sender {
+-(void)checkBoxClicked:(id)sender
+{
     
     
     //UIButton *editButton = (UIButton*)[[[sender superview] subviews] objectAtIndex:2];
@@ -478,18 +490,11 @@ static int k=0;
 {
     NSLog(@"gdhd------%ld",(long)indexPath.section);
     
-    
-    
-    
-    
+
     ABRecordRef ref = (__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
     
     RecievedContactDetailsViewController *contactDetail_cls=[[RecievedContactDetailsViewController alloc] initWithPerson:ref];
     [self.navigationController pushViewController:contactDetail_cls animated:YES];
-    
-    
-    
-
     
     
     

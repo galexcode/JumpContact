@@ -28,6 +28,7 @@
     UIButton   * checkBox;
     UIButton   * editbtn;
     ContactGlobalDataClass *obj;
+    NSMutableArray *contactsToBeAddedArray;
 }
 @property(nonatomic,retain)NSString *string1;
 @property (nonatomic,retain) NSMutableDictionary *alphabetsArray;

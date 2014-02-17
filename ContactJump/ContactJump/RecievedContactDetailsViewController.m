@@ -64,7 +64,7 @@
         
         
        UIImage* image = [UIImage imageWithData:(__bridge NSData *)(ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail))];
-        NSData *imageData = UIImageJPEGRepresentation(image, 1);
+        NSData *imageData = UIImageJPEGRepresentation(image, 0);
     
         
         
@@ -300,11 +300,12 @@
         //********************************* Dates *********************************
         
         
-        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+       
         
         if(date)
         {
+            
+            
             for(int j = 0; j < ABMultiValueGetCount(date); j++)
             {
                 
@@ -722,101 +723,21 @@
     NSLog(@"%@", cell.contentView.subviews);
     UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:0];
     
-//    if ([tappedButton isSelected]) {
-//        [tappedButton setSelected:NO];
-//        
-//        [[self.checkboxClicked_Dict objectForKey:[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
-//        
-//        
-//        if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"1"])
-//        {
-//            [per.editablePhoneNumber_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editablePhoneNumber_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//            NSLog(@"----------%@",[per.phoneNumber_Value objectAtIndex:indexPath.row]);
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"2"])
-//        {
-//            [per.editableAddress_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editableAddress_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"3"])
-//        {
-//            [per.editableEmail_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editableEmail_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"4"])
-//        {
-//            [per.editableSocialProfile_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editableSocialProfile_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"5"])
-//        {
-//            [per.editableIM_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editableIM_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"6"])
-//        {
-//            [per.editableUrl_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editableUrl_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"7"])
-//        {
-//            [per.editableDate_Type replaceObjectAtIndex:indexPath.row withObject:@""];
-//            [per.editableDate_Value replaceObjectAtIndex:indexPath.row withObject:@""];
-//        }
-//        NSLog(@"NOT SELECTED---%@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]);
-//        
-//    }
-//    else {
-//        
-//        
-//        [[self.checkboxClicked_Dict objectForKey:[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
-//        
-//        
-//        [tappedButton setSelected:YES];
-//        
-//        if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"1"])
-//        {
-//            [per.editablePhoneNumber_Value replaceObjectAtIndex:indexPath.row withObject:[per.phoneNumber_Value objectAtIndex:indexPath.row]];
-//            [per.editablePhoneNumber_Type replaceObjectAtIndex:indexPath.row withObject:[per.phoneNumber_Type objectAtIndex:indexPath.row]];
-//            
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"2"])
-//        {
-//            [per.editableAddress_Value replaceObjectAtIndex:indexPath.row withObject:[per.address_Value objectAtIndex:indexPath.row]];
-//            [per.editableAddress_Type replaceObjectAtIndex:indexPath.row withObject:[per.address_Type objectAtIndex:indexPath.row]];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"3"])
-//        {
-//            [per.editableEmail_Type replaceObjectAtIndex:indexPath.row withObject:[per.email_Type objectAtIndex:indexPath.row]];
-//            [per.editableEmail_Value replaceObjectAtIndex:indexPath.row withObject:[per.email_Value objectAtIndex:indexPath.row]];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"4"])
-//        {
-//            [per.editableSocialProfile_Type replaceObjectAtIndex:indexPath.row withObject:[per.socialProfile_Type objectAtIndex:indexPath.row]];
-//            [per.editableSocialProfile_Value replaceObjectAtIndex:indexPath.row withObject:[per.socialProfile_Value objectAtIndex:indexPath.row]];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"5"])
-//        {
-//            [per.editableIM_Type replaceObjectAtIndex:indexPath.row withObject:[per.IM_Type objectAtIndex:indexPath.row]];
-//            [per.editableIM_Value replaceObjectAtIndex:indexPath.row withObject:[per.IM_Value objectAtIndex:indexPath.row]];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"6"])
-//        {
-//            [per.editableUrl_Type replaceObjectAtIndex:indexPath.row withObject:[per.url_Type objectAtIndex:indexPath.row]];
-//            [per.editableUrl_Value replaceObjectAtIndex:indexPath.row withObject:[per.url_Value objectAtIndex:indexPath.row]];
-//        }
-//        else if ([[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section] isEqualToString:@"7"])
-//        {
-//            [per.editableDate_Type replaceObjectAtIndex:indexPath.row withObject:[per.date_Type objectAtIndex:indexPath.row]];
-//            [per.editableDate_Value replaceObjectAtIndex:indexPath.row withObject:[per.date_Value objectAtIndex:indexPath.row]];
-//        }
-//        
-//        
-//        NSLog(@"SELECTED---%@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]);
-//        
-//    }
-//    
+    if ([tappedButton isSelected])
+    {
+        [tappedButton setSelected:NO];
+        
+ 
+    }
+    else
+    {
+        
+        [tappedButton setSelected:YES];
+        
+        NSLog(@"SELECTED---%@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.row]);
+        
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 #pragma TextField Delegate Method

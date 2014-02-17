@@ -23,5 +23,6 @@
 
 -(void)senderNoteText:(NSString *)note :(NSString*)recordId :(NSString*)name :(NSString*)time :(NSString*)totalContactsShared :(NSString*)sizewithimage :(NSString*)sizeWithoutimage ;
 
+
 @property (nonatomic,strong) NSString* recordID;
 @end
