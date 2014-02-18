@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ContactSignUpDataService.h"
 
-@interface SelectRecipientsViewController : UIViewController<UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
+@interface SelectRecipientsViewController : UIViewController<UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,ContactSignUpDelegate, UIAlertViewDelegate>
 {
     NSMutableArray *contentList;
     NSMutableArray *filteredContentList;
@@ -18,7 +19,7 @@
     UIView *topview;
     UILabel *selectAll_lbl;
     UILabel *noofselected;
-    
+    UIActivityIndicatorView* activityIndicator;
   
     UIButton *back_btn;
     
@@ -29,8 +30,14 @@
     UIButton   * checkBox;
     UIButton   * editbtn;
     ContactGlobalDataClass *obj;
+    
+    BOOL forwardData;
 }
-@property(nonatomic,retain)NSString *string1;
+
+-(void)sendID:(NSString *)recordId :(BOOL)forward ;
+
+
+@property (nonatomic,strong) NSString* recordID;
 @property (nonatomic,retain) NSMutableDictionary *alphabetsArray;
 @property (nonatomic,retain) NSMutableDictionary *checkboxClicked_Dict;
 @end

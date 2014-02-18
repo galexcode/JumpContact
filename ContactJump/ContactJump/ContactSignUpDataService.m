@@ -63,7 +63,8 @@
         
         message=[NSString stringWithFormat:@"%@",[json objectForKey:@"message"]];
         result=[json objectForKey:@"result"];
-        if ([json objectForKey:@"data"] !=NULL) {
+        if ([json objectForKey:@"data"] !=NULL)
+        {
             data1=[json objectForKey:@"data"];
         }
         

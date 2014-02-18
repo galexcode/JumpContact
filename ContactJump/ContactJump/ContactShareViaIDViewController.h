@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ContactShareViaIDViewController : UIViewController<UITextFieldDelegate>{
+#import "ContactGlobalDataClass.h"
+#import "ContactSignUpDataService.h"
+@interface ContactShareViaIDViewController : UIViewController<UITextFieldDelegate,ContactSignUpDelegate,UIAlertViewDelegate>{
     
      UILabel *navbartitle;
     
@@ -20,8 +21,9 @@
     UIScrollView *scrollview3;
     UITextField *psw_Txt ;
     UILabel *enterpsw_lbl;
-    
-    
+    ContactGlobalDataClass* obj;
+    UIActivityIndicatorView *activityIndicator;
+    UILabel *id_lbl;
 }
 
 @end

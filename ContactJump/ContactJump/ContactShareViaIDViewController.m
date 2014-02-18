@@ -32,7 +32,7 @@
     [super viewDidLoad];
     
     
-    
+    obj=[ContactGlobalDataClass getInstance];
 #pragma Main BG ImageView
     UIImageView *mainbg_img = [[UIImageView alloc] init];
     mainbg_img.userInteractionEnabled=TRUE;
@@ -93,7 +93,6 @@
     shareContacts_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     CGFloat spacing = 50; // the amount of spacing to appear between image and title
     shareContacts_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing, 0, 0);
-    [shareContacts_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollview3 addSubview:shareContacts_btn];
     
     
@@ -112,7 +111,7 @@
     
 #pragma Navigation Bar Title
     selectContact_lbl=[[UILabel alloc] init];
-    selectContact_lbl.text=[NSString stringWithFormat:@"100 Contacts Selected"];
+    selectContact_lbl.text=[NSString stringWithFormat:@"%@",obj.recipients_selected];
     selectContact_lbl.textAlignment=0;
     selectContact_lbl.textColor= [UIColor whiteColor];
     selectContact_lbl.backgroundColor=[UIColor clearColor];
@@ -160,10 +159,10 @@
     seprator_image2.image=[UIImage imageNamed:@"seprator.png"];
     [scrollview3 addSubview:seprator_image2];
     
-    UILabel *id_lbl=[[UILabel alloc] init];
-    id_lbl.text=[NSString stringWithFormat:@"ID:1234567"];
+    id_lbl=[[UILabel alloc] init];
+    
     id_lbl.textAlignment=0;
- 
+    id_lbl.text=[NSString stringWithFormat:@"ID:"];
     id_lbl.textColor= [UIColor whiteColor];
     id_lbl.backgroundColor=[UIColor clearColor];
     id_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:15];
@@ -381,12 +380,64 @@
 
 
 
--(void)SendwithImage_btnAction{
+-(void)SendwithImage_btnAction
+{
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+   
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString* val = [defaults stringForKey:@"UserID"];
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"send\":\"%@\",\"password\":\"%@\",\"sender_id\":\"%@\"}",obj.jsonString,psw_Txt.text,val];
+    
+    
+    [sendContacts_cls callWebService:url :@"bulkcontact" :payload];
     
 }
-
--(void)sendwithoutImage_btnAction{
+          
+       
+        
     
+-(void)getresponse:(NSString *)result :(id)data :message status:(BOOL)value
+{
+        [activityIndicator stopAnimating];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:result
+                                                        message: message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:Nil,Nil];
+        
+        
+        [alert show];
+        id_lbl.text=[NSString stringWithFormat:@"ID:%@",data ];
+}
+-(void)sendwithoutImage_btnAction
+{
+   ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString* val = [defaults stringForKey:@"UserID"];
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"send\":\"%@\",\"password\":\"%@\",\"sender_id\":\"%@\"}",obj.jsonString_withoutImages,psw_Txt.text,val];
+    
+    
+    [sendContacts_cls callWebService:url :@"bulkcontact" :payload];
+
 }
 #pragma TextField Delegate Method
 -(void)textFieldDidBeginEditing:(UITextField *)textField{

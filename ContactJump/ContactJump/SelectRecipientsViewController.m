@@ -27,6 +27,7 @@ static int k1=0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [obj.recipientsArray removeAllObjects];
     if ([obj.backBtnActivate isEqualToString:@"0"] )
     {
         [back_btn setHidden:NO];
@@ -41,7 +42,7 @@ static int k1=0;
     [super viewDidLoad];
 
     
-  k1=0;
+     k1=0;
     obj=[ContactGlobalDataClass getInstance];
     
     
@@ -484,11 +485,16 @@ static int k1=0;
     }
 
 }
+-(void)sendID:(NSString *)recordId :(BOOL)forward
+{
+    forwardData=forward;
+    [self setRecordID:recordId];
+}
 -(void) createRecipientJson
 {
     NSMutableArray *allPersonArr=[[NSMutableArray alloc] init];
     
-    
+    [allPersonArr removeAllObjects];
     NSLog(@"%lu",(unsigned long)[obj.recipientsArray count]);
     for (int k=0; k<[obj.recipientsArray count]; k++)
     {
@@ -522,74 +528,129 @@ static int k1=0;
     
  
 }
+
+-(void)getresponse:(NSString *)message :(id)data :(NSString *)result status:(BOOL)value
+{
+    [activityIndicator stopAnimating];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:result
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"Ok"
+                                          otherButtonTitles:Nil,Nil];
+    
+    [alert setTag:1];
+    [alert show];
+
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag==1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
 -(void)done_btnAction
 {
     
     
-    
-    
-    [self createRecipientJson];
-    
-
-   
-    if (k1==0 || [noofselected.text isEqualToString:@" "])
+    if (forwardData)
     {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please select atleast one Recipient" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
+        forwardData=0;
+        if (k1==0 || [noofselected.text isEqualToString:@" "])
+        {
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please select atleast one Recipient" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert setTag:2];
+            [alert show];
+            
+        }
+        else
+        {
+            [self createRecipientJson];
+            ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+            sendContacts_cls.delegate=self;
+            activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+            activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+            activityIndicator.center = self.view.center;
+            [self.view addSubview: activityIndicator];
+            [activityIndicator startAnimating];
+            
+            
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            NSString* val = [defaults stringForKey:@"UserID"];
+            NSString* payload=[NSString stringWithFormat:@"{\"sendid\":\"%@\",\"receive\":\"%@\",\"sender_id\":\"%@\"}",self.recordID,obj.jsonString_recipients,val];
+             NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+            
+            [sendContacts_cls callWebService:url :@"forward" :payload];
+        }
         
     }
     else
     {
-        [obj setRecipients_selected:[NSString stringWithFormat:@"%d",k1]];
-
-        if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+        
+        [self createRecipientJson];
+        
+        
+        if (k1==0 || [noofselected.text isEqualToString:@" "])
         {
-            SelectShareMethodViewController *sharecontact=[[SelectShareMethodViewController alloc]init];
-            [self.navigationController pushViewController:sharecontact animated:YES];
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please select atleast one Recipient" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert setTag:3];
+            [alert show];
             
         }
-        else  if ([obj.from_ShareMethodViewController isEqualToString:@"1"])
+        else
         {
+            [obj setRecipients_selected:[NSString stringWithFormat:@"%d",k1]];
             
-            for (UIViewController *controller in obj.vcs)
+            if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+            {
+                SelectShareMethodViewController *sharecontact=[[SelectShareMethodViewController alloc]init];
+                [self.navigationController pushViewController:sharecontact animated:YES];
+                
+            }
+            else  if ([obj.from_ShareMethodViewController isEqualToString:@"1"])
             {
                 
-                if ([controller isKindOfClass:[SelectShareMethodViewController class]]) {
-                    if([self.navigationController.viewControllers containsObject:controller])
-                    {
-                        CATransition *transition = [CATransition animation];
-                        transition.duration =0;
-                        transition.type = kCATransitionPush;
-                        transition.subtype= kCATransitionFromRight;
-                        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-                        [self.navigationController popToViewController:controller
-                                                              animated:NO];
-                    }
-                    else
-                    {
-                        CATransition *transition = [CATransition animation];
-                        transition.duration =0;
-                        transition.type = kCATransitionPush;
-                        transition.subtype= kCATransitionFromRight;
-                        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-                        
-                        [self.navigationController pushViewController:controller
-                                                             animated:NO];
-                        
-                    }
-
+                for (UIViewController *controller in obj.vcs)
+                {
                     
-                  
-                    
-                    break;
+                    if ([controller isKindOfClass:[SelectShareMethodViewController class]]) {
+                        if([self.navigationController.viewControllers containsObject:controller])
+                        {
+                            CATransition *transition = [CATransition animation];
+                            transition.duration =0;
+                            transition.type = kCATransitionPush;
+                            transition.subtype= kCATransitionFromRight;
+                            [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                            [self.navigationController popToViewController:controller
+                                                                  animated:NO];
+                        }
+                        else
+                        {
+                            CATransition *transition = [CATransition animation];
+                            transition.duration =0;
+                            transition.type = kCATransitionPush;
+                            transition.subtype= kCATransitionFromRight;
+                            [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                            
+                            [self.navigationController pushViewController:controller
+                                                                 animated:NO];
+                            
+                        }
+                        
+                        
+                        
+                        
+                        break;
+                    }
                 }
+                
             }
             
+            
         }
-
-
     }
-    
 }
 
 

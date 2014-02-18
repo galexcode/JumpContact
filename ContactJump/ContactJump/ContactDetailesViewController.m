@@ -198,7 +198,11 @@
 }
 -(void)Setting_btnAction
 {
+    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
+    [obj setFrom_ShareMethodViewController:@"0"];
     SelectRecipientsViewController *selectRecipient=[[SelectRecipientsViewController alloc]init];
+    
+    [selectRecipient sendID:self.recordID :1];
     [self.navigationController pushViewController:selectRecipient animated:YES];
 }
 -(void)back_btnAction
@@ -266,11 +270,15 @@
         
         if (totalPeople_data!=nil) {
             
-            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:totalPeople_data options:0 error:&localError];
+            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:totalPeople_data options:NSJSONReadingAllowFragments error:&localError];
             
             
-            NSLog(@"\n\n\njsonData %@", [parsedObject objectForKey:@"Data"]);
-            
+            NSLog(@"\n\n\njsonData ContactDetailesViewController----->%@", [parsedObject objectForKey:@"Data"]);
+//            NSData* jsonData = [NSJSONSerialization dataWithJSONObject:parsedObject
+//                                                                   options:NSJSONWritingPrettyPrinted error:&localError];
+//            
+//            NSString* newStr = [[NSString alloc] initWithData:jsonData
+//                                                         encoding:NSUTF8StringEncoding] ;
             NSArray *totalPerson=[parsedObject objectForKey:@"Data"];
             
             for (int k=0; k<[totalPerson count]; k++)
@@ -290,9 +298,22 @@
                 ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:2] objectForKey:@"value"]), &error);
                 ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:1] objectForKey:@"value"]), &error);
                
-                NSData *imageData = [Base64 decode:[[[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:3] objectForKey:@"value"] stringByReplacingOccurrencesOfString:@" " withString:@"+"] ];
-               
+                NSString* imagestr = [[[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:3] objectForKey:@"value"] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
                 
+               
+                NSData *imageData;
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                    imageData = [[NSData alloc ] initWithBase64EncodedString:imagestr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+
+                } else {
+                    
+                    [Base64 initialize];
+                     imageData=[Base64 decode:imagestr];
+                }
+                
+               
+             
+
                 ABPersonSetImageData(newPerson, (__bridge CFDataRef)(imageData),  &error);
                 
                 ABMutableMultiValueRef multiPhone = ABMultiValueCreateMutable(kABMultiStringPropertyType);
@@ -592,43 +613,31 @@
                     if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Anniversary"])
                     {
                         
-                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                        [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ssZZZZZ"];
-                       [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-                        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-                        
-                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
-                        NSDate* dateObj =[NSDate date]  ;
-                        dateObj=[dateFormatter dateFromString:s];
-                        
                         
                        
-
-
-                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFTypeRef)dateObj, kABPersonAnniversaryLabel, NULL);
+                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                        NSDateFormatter *dformat = [[NSDateFormatter alloc]init];
+                        
+                        [dformat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssz"];
+                        NSDate *date=[[NSDate alloc] init];
+                        date = [dformat dateFromString:s];
+                        
+                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFDateRef)date, kABPersonAnniversaryLabel, NULL);
+                        
                         
                     }
                     else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Other"])
                     {
-                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-                        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-                        
                         NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
-                        NSDate* dateObj =[[NSDate alloc] init] ;
-                        dateObj=[dateFormatter dateFromString:s];
-                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFTypeRef)(dateObj), kABOtherLabel, NULL);
+                       
+                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFDateRef)s, kABOtherLabel, NULL);
                         
                     }
                     else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Birthday"])
                     {
-                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-                        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
                         NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
-                        NSDate* dateObj =[[NSDate alloc] init] ;
-                        dateObj=[dateFormatter dateFromString:s];
-                        ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFDateRef)dateObj, &error);
+
+                        ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFDateRef)s, &error);
                         
                     }
                     
@@ -638,33 +647,10 @@
                 ABRecordSetValue(newPerson, kABPersonDateProperty, multiDate,nil);
                 CFRelease(multiDate);
                 
-                 ABMultiValueRef date = ABRecordCopyValue(newPerson, kABPersonDateProperty);
-                if(date)
-                {
-                    
-                    
-                    for(int j = 0; j < ABMultiValueGetCount(date); j++)
-                    {
-                        
-                        
-                        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
-                        NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
-                        
-                        NSString *dateValue = (__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j);
-                        
-                        NSLog(@"urlValuetype %@",(__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j));
-                     
-                        
-                        
-                        CFRelease(typeTmp);
-                    }
-                    
-                    
-                }
+        
 
                 [person_RecordRef addObject:(__bridge id)(newPerson)];
-                //                ABAddressBookAddRecord(iPhoneAddressBook, newPerson, &error);
-                //                ABAddressBookSave(iPhoneAddressBook, &error);
+              
                 
                 if (error != NULL)
                 {
