@@ -23,6 +23,23 @@
     return self;
 }
 
+
+
+-(void)senderNoteText:(NSString *)note :(NSString *)recordId :(NSString *)name :(NSString *)time :(NSString *)totalContactsShared :(NSString *)sizewithimage :(NSString *)sizeWithoutimage
+{
+    NSLog(@"%@, %@ ",note,recordId);
+    self.recordID=recordId;
+    noteText=note;
+    time_shared=time;
+    name_sender=name;
+    size_withImage=sizewithimage;
+    size_withoutImage=sizeWithoutimage;
+    numberOfContact_shared=totalContactsShared;
+}
+
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,7 +69,7 @@
     
 #pragma Navigation Bar Title
     UILabel *navbartitle=[[UILabel alloc] init];
-    navbartitle.text=[NSString stringWithFormat:@"Jon Lax"];
+    navbartitle.text=[NSString stringWithFormat:@"%@",name_sender];
     navbartitle.textAlignment=1;
     navbartitle.textColor= [UIColor whiteColor];
     navbartitle.backgroundColor=[UIColor clearColor];
@@ -64,8 +81,8 @@
 #pragma mark number of selected contacts.
     UILabel *noofselectedcontacts=[[UILabel alloc] init];
     noofselectedcontacts.frame=CGRectMake(15, 100, 150, 40);
-    noofselectedcontacts.text=@"25 Contacts Sent";
-    noofselectedcontacts.textAlignment=UITextAlignmentLeft;
+    noofselectedcontacts.text=[NSString stringWithFormat:@"%@ Contacts sent",numberOfContact_shared];
+    noofselectedcontacts.textAlignment=NSTextAlignmentLeft;
     noofselectedcontacts.textColor= [UIColor blackColor];
     noofselectedcontacts.backgroundColor=[UIColor clearColor];
     noofselectedcontacts.font=[UIFont fontWithName:@"AmericanTypewriter" size:14];
@@ -74,16 +91,8 @@
     [mainbg_img addSubview:noofselectedcontacts];
     
     
-    NSDate *localDate = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    
-    
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"HH:mm a";
-#pragma Navigation Bar Title
     UILabel *time_lbl=[[UILabel alloc] init];
-    time_lbl.text=[NSString stringWithFormat:@"%@",[timeFormatter stringFromDate: localDate]];
+    time_lbl.text=[NSString stringWithFormat:@"%@",time_shared];
     time_lbl.frame=CGRectMake(235, 100, 80, 40);
     time_lbl.textAlignment=1;
     time_lbl.numberOfLines=2;
@@ -103,7 +112,7 @@
     
 #pragma mark Text View.
     UITextView *textview=[[UITextView alloc]init];
-    textview.text=[NSString stringWithFormat:@"2011 PayPal, Inc. All rights reserved. PayPal is a registered trademark of PayPal, Inc. The PayPal logo is a trademark of PayPal, Inc. Other trademarks and brands are the property of their respective owners.The information in this document belongs to PayPal, Inc. It may not be used, reproduced or disclosed without the written approval of PayPal, Inc."];
+    textview.text=[NSString stringWithFormat:@"%@",noteText];
     textview.scrollEnabled=YES;
     textview.frame=CGRectMake(5, 5, 280, 132.5);
     textview.backgroundColor=[UIColor clearColor];
@@ -134,12 +143,17 @@
 }
 -(void)Setting_btnAction
 {
+    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
+    [obj setFrom_ShareMethodViewController:@"0"];
     SelectRecipientsViewController *selectRecipient=[[SelectRecipientsViewController alloc]init];
+    
+    [selectRecipient sendID:self.recordID :1];
     [self.navigationController pushViewController:selectRecipient animated:YES];
 
 }
 -(void)back_btnAction
 {
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

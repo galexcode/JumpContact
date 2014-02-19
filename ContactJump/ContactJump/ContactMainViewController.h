@@ -21,6 +21,7 @@
     NSString* verficationCode;
     NSString* userID;
     NSString *response;
+    BOOL sentMessages;
 }
 @property (nonatomic, retain) CustomUIASView *uiasView;
 @end

@@ -111,7 +111,7 @@
     
 #pragma Navigation Bar Title
     selectContact_lbl=[[UILabel alloc] init];
-    selectContact_lbl.text=[NSString stringWithFormat:@"%@",obj.recipients_selected];
+    selectContact_lbl.text=[NSString stringWithFormat:@"%@ contacts selected",obj.contactsToBeShared_selected];
     selectContact_lbl.textAlignment=0;
     selectContact_lbl.textColor= [UIColor whiteColor];
     selectContact_lbl.backgroundColor=[UIColor clearColor];
@@ -123,12 +123,19 @@
     
     
     
+    UIButton *add_btn1 =[UIButton buttonWithType:UIButtonTypeCustom];
+    [add_btn1 setBackgroundColor:[UIColor clearColor]];
+    [add_btn1 addTarget:self action:@selector(addContactsToShare_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [scrollview3 addSubview:add_btn1];
     
     UIButton *add_btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+   
     [add_btn setBackgroundImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"add-icon" ofType:@"png"]] forState:UIControlStateNormal];
-    [add_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [scrollview3 addSubview:add_btn];
-
+   // [add_btn addTarget:self action:@selector(addContactsToShare_btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [add_btn1 addSubview:add_btn];
+    
+   
     
     
 //    UIImageView  *add_image =[[UIImageView alloc] init];
@@ -148,7 +155,7 @@
     createShareID_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     CGFloat spacing2 = 50; // the amount of spacing to appear between image and title
     createShareID_btn.titleEdgeInsets = UIEdgeInsetsMake(0, spacing2, 0, 0);
-    [createShareID_btn addTarget:self action:@selector(Setting_btnAction) forControlEvents:UIControlEventTouchUpInside];
+   
     [scrollview3 addSubview:createShareID_btn];
     
     UIImageView  *createShareID_image =[[UIImageView alloc] init];
@@ -249,7 +256,7 @@
 #pragma mark send button sub title label.
     UILabel *sendbtnsubtitle_lbl=[[UILabel alloc] init];
     sendbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendbtnsubtitle_lbl.text=@"1.25 MB";
+    sendbtnsubtitle_lbl.text=[NSString stringWithFormat:@"%.2f KB",(float)([[obj.jsonString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] length]/1024.0f)];
     sendbtnsubtitle_lbl.textAlignment=1;
     sendbtnsubtitle_lbl.textColor= [UIColor whiteColor];
     sendbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
@@ -273,7 +280,7 @@
 #pragma mark send button sub title label.
     UILabel *sendwithoutbtnsubtitle_lbl=[[UILabel alloc] init];
     sendwithoutbtnsubtitle_lbl.frame=CGRectMake(40, 22, 50, 18);
-    sendwithoutbtnsubtitle_lbl.text=@"1.25 MB";
+    sendwithoutbtnsubtitle_lbl.text=[NSString stringWithFormat:@"%.2f KB",(float)([[obj.jsonString_withoutImages stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] length]/1024.0f)];
     sendwithoutbtnsubtitle_lbl.textAlignment=1;
     sendwithoutbtnsubtitle_lbl.textColor= [UIColor whiteColor];
     sendwithoutbtnsubtitle_lbl.backgroundColor=[UIColor clearColor];
@@ -295,7 +302,8 @@
         share_image.frame=CGRectMake(20, 26, 20, 18);
         seprator_image.frame=CGRectMake(0,70, 320, 2);
         selectContact_lbl.frame=CGRectMake(50, 72, 150, 70);
-        add_btn.frame=CGRectMake(280, 146.75-50, 20, 20.5);
+        add_btn1.frame=CGRectMake(230, 70, 90, 70);
+         add_btn.frame=CGRectMake(35, 24.75, 20, 20.5);
         seprator_image1.frame=CGRectMake(0, 142, 320, 2);
         createShareID_btn.frame=CGRectMake(0,144, 320,70);
         createShareID_image.frame=CGRectMake(20, 25, 20, 20);
@@ -325,7 +333,8 @@
         share_image.frame=CGRectMake(20, 14.25, 20, 18);
         seprator_image.frame=CGRectMake(0,50, 320, 2);
         selectContact_lbl.frame=CGRectMake(50, 52, 150, 50);
-        add_btn.frame=CGRectMake(280, 146.75-80, 20, 20.5);
+        add_btn1.frame=CGRectMake(230, 50, 90, 50);
+         add_btn.frame=CGRectMake(35, 14.75, 20, 20.5);
         seprator_image1.frame=CGRectMake(0, 102, 320, 2);
         createShareID_btn.frame=CGRectMake(0,104, 320,50);
         createShareID_image.frame=CGRectMake(20, 15, 20, 20);
@@ -367,14 +376,50 @@
         }
    
 }
--(void)Setting_btnAction
+-(void)addContactsToShare_btnAction
 {
-    NSLog(@"BtnAction");
+    if ([obj.from_ShareMethodViewController isEqualToString:@"0"])
+    {
+        obj.vcs =  [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [self.navigationController setViewControllers:obj.vcs animated:NO];
+    }
+    
+    [obj setFrom_ShareMethodViewController:@"1"];
+    [obj setBackBtnActivate:@"1"];
+    
+        
+        
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[SelectContact_toShareViewController class]]) {
+                
+                if([self.navigationController.viewControllers containsObject:controller])
+                {
+                    [self.navigationController popToViewController:controller
+                                                          animated:YES];
+                    
+                }
+                else
+                {
+                    CATransition *transition = [CATransition animation];
+                    transition.duration =0;
+                    transition.type = kCATransitionPush;
+                    transition.subtype= kCATransitionFromLeft;
+                    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+                    [self.navigationController pushViewController:controller
+                                                         animated:YES];
+                }
+                break;
+            }
+        }
+        
+    
+
 }
 
 -(void)back_btnAction
 {
-    
+     [obj setBackBtnActivate:@"0"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ContactSignUpDataService.h"
+#import "Base64.h"
+#import "SendContactsViewController.h"
 
-@interface ContactGetSelectMethodViewController : UIViewController<UITextFieldDelegate>{
+@interface ContactGetSelectMethodViewController : UIViewController<UITextFieldDelegate,ContactSignUpDelegate >{
     
     UILabel *navbartitle;
     UITextField* psw_Txt;
     UITextField *id_Txt;
     UIScrollView* scrollview;
+    UIActivityIndicatorView* activityIndicator;
+    NSMutableArray *person_RecordRef;
 }
 
 @end

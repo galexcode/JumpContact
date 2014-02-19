@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ContacsSentDetailsViewController.h"
 @interface ContactsSentViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
 }
 
+-(void)sentDetails:(NSArray*)detailsArray;
 
+@property (nonatomic,strong) NSArray* senderArray;
 @end

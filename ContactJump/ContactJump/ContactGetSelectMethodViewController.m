@@ -173,7 +173,7 @@
 #pragma Navigation Bar Title
     UILabel  *id_lbl=[[UILabel alloc] init];
     id_lbl.text=[NSString stringWithFormat:@"ID"];
-    id_lbl.textAlignment=UITextAlignmentRight;
+    id_lbl.textAlignment=NSTextAlignmentRight;
     if (IS_IPHONE_5) {
          id_lbl.frame=CGRectMake(15, 230, 75, 25);
     } else {
@@ -225,7 +225,7 @@
 #pragma Navigation Bar Title
     UILabel  *psw_lbl=[[UILabel alloc] init];
     psw_lbl.text=[NSString stringWithFormat:@"Password"];
-    psw_lbl.textAlignment=UITextAlignmentLeft;
+    psw_lbl.textAlignment=NSTextAlignmentLeft;
     if (IS_IPHONE_5) {
         psw_lbl.frame=CGRectMake(15, 266, 75, 25);
     } else {
@@ -302,7 +302,7 @@
     sendbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
     sendbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
     sendbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
-    [sendwithImage_btn addSubview:sendbtnsubtitle_lbl];
+    //[sendwithImage_btn addSubview:sendbtnsubtitle_lbl];
 
 #pragma mark Done Button
     UIButton *sendwithoutImage_btn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -323,7 +323,7 @@
     sendwithoutbtnsubtitle_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:8];
     sendwithoutbtnsubtitle_lbl.shadowColor = [UIColor whiteColor];
     sendwithoutbtnsubtitle_lbl.shadowOffset = CGSizeMake(0,0);
-    [sendwithoutImage_btn addSubview:sendwithoutbtnsubtitle_lbl];
+    //[sendwithoutImage_btn addSubview:sendwithoutbtnsubtitle_lbl];
     
     
     if (IS_IPHONE_5) {
@@ -364,12 +364,501 @@
 
 -(void)SendwithImage_btnAction{
     
+    if ([id_Txt.text length] ==0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:@"Please enter the ID first"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:Nil,Nil];
+        
+        
+        [alert show];
+    }
+    else
+    {
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"uniqueid\":\"%@\",\"password\":\"%@\",\"image\":\"1\"}",id_Txt.text,psw_Txt.text];
+    
+    
+    [sendContacts_cls callWebService:url :@"getbulkcontact" :payload];
+    }
 }
 
 -(void)sendwithoutImage_btnAction{
     
+    if ([id_Txt.text length] ==0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:@"Please enter the ID first"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:Nil,Nil];
+        
+        
+        [alert show];
+    }
+    else
+    {
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"uniqueid\":\"%@\",\"password\":\"%@\",\"image\":\"0\"}",id_Txt.text,psw_Txt.text];
+    
+    
+    [sendContacts_cls callWebService:url :@"getbulkcontact" :payload];
+    }
 }
 
+-(void)getresponse:(NSString *)res :(id)data :(NSString *)message status:(BOOL)value
+{
+    [activityIndicator stopAnimating];
+    
+    if ([res isEqualToString:@"success"]) {
+        
+        
+        NSLog(@"DATA:%@ ",data);
+        
+        person_RecordRef=[[NSMutableArray alloc] init];
+        //NSDictionary *recievedData_dic=[NSDictionary dictionaryWithDictionary:[data objectAtIndex:0]];
+        //NSData* totalPeople_data=[recievedData_dic objectForKey:@"send_contacts"];
+        
+        
+        NSData* totalPeople_data = [[data stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]  dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *localError = nil;
+        
+        if (totalPeople_data!=nil) {
+            
+            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:totalPeople_data options:NSJSONReadingAllowFragments error:&localError];
+            
+            
+            NSLog(@"\n\n\njsonData ContactDetailesViewController----->%@", [parsedObject objectForKey:@"Data"]);
+            //            NSData* jsonData = [NSJSONSerialization dataWithJSONObject:parsedObject
+            //                                                                   options:NSJSONWritingPrettyPrinted error:&localError];
+            //
+            //            NSString* newStr = [[NSString alloc] initWithData:jsonData
+            //                                                         encoding:NSUTF8StringEncoding] ;
+            NSArray *totalPerson=[parsedObject objectForKey:@"Data"];
+            
+            for (int k=0; k<[totalPerson count]; k++)
+            {
+                NSDictionary *dic=[totalPerson objectAtIndex:k];
+                
+                
+                NSArray* a=[dic objectForKey:@"Person"];
+                
+                
+                CFErrorRef error = NULL;
+                
+                ABRecordRef newPerson = ABPersonCreate();
+                
+                ABRecordSetValue(newPerson, kABPersonFirstNameProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:0] objectForKey:@"value"]), &error);
+                
+                ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:2] objectForKey:@"value"]), &error);
+                ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)([[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:1] objectForKey:@"value"]), &error);
+                
+                NSString* imagestr = [[[[[a objectAtIndex:0] objectForKey:@"data"] objectAtIndex:3] objectForKey:@"value"] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+                
+                
+                NSData *imageData;
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                    imageData = [[NSData alloc ] initWithBase64EncodedString:imagestr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                    
+                } else {
+                    
+                    [Base64 initialize];
+                    imageData=[Base64 decode:imagestr];
+                }
+                
+                
+                
+                
+                ABPersonSetImageData(newPerson, (__bridge CFDataRef)(imageData),  &error);
+                
+                ABMutableMultiValueRef multiPhone = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+                for (int phoneCount=0; phoneCount<[[[a objectAtIndex:1] objectForKey:@"data"] count]; phoneCount++)
+                {
+                    if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Home"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABHomeLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Mobile"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABPersonPhoneMobileLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Work"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABWorkLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"IPhone"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABPersonPhoneIPhoneLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Main"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABPersonPhoneMainLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Home fax"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABPersonPhoneHomeFAXLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Work fax"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABPersonPhoneWorkFAXLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"name"] isEqualToString:@"Pager"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABPersonPhonePagerLabel, NULL);
+                    }
+                    else
+                    {
+                        ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)([[[[a objectAtIndex:1] objectForKey:@"data"] objectAtIndex:phoneCount] objectForKey:@"value"]), kABOtherLabel, NULL);
+                    }
+                    
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonPhoneProperty, multiPhone,nil);
+                CFRelease(multiPhone);
+                
+                
+                ABMutableMultiValueRef multiEmail = ABMultiValueCreateMutable(kABStringPropertyType);
+                for (int emailCount=0; emailCount<[[[a objectAtIndex:2] objectForKey:@"data"] count]; emailCount++)
+                {
+                    if ([[[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"name"] isEqualToString:@"Home"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiEmail, (__bridge CFTypeRef)([[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"value"]), kABHomeLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"name"] isEqualToString:@"Work"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiEmail, (__bridge CFTypeRef)([[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"value"]), kABWorkLabel, NULL);
+                    }
+                    
+                    else if ([[[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"name"] isEqualToString:@"Other"] || [[[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"name"] isEqualToString:@"ICloud"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiEmail, (__bridge CFTypeRef)([[[[a objectAtIndex:2] objectForKey:@"data"] objectAtIndex:emailCount] objectForKey:@"value"]), kABOtherLabel, NULL);
+                    }
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonEmailProperty, multiEmail,nil);
+                CFRelease(multiEmail);
+                
+                
+                
+                
+                ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+                for (int addressCount=0; addressCount<[[[a objectAtIndex:3] objectForKey:@"data"] count]; addressCount++)
+                {
+                    NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
+                    if ([[[[[a objectAtIndex:3] objectForKey:@"data"] objectAtIndex:addressCount] objectForKey:@"name"] isEqualToString:@"Home"])
+                    {
+                        [addressDictionary setObject:(__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:3] objectForKey:@"data"] objectAtIndex:addressCount] objectForKey:@"value"])) forKey:(NSString *) kABPersonAddressStreetKey];
+                        ABMultiValueAddValueAndLabel(multiAddress, (__bridge CFTypeRef)(addressDictionary), kABHomeLabel, NULL);
+                    }
+                    else  if ([[[[[a objectAtIndex:3] objectForKey:@"data"] objectAtIndex:addressCount] objectForKey:@"name"] isEqualToString:@"Work"])
+                    {
+                        [addressDictionary setObject:(__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:3] objectForKey:@"data"] objectAtIndex:addressCount] objectForKey:@"value"])) forKey:(NSString *) kABPersonAddressStreetKey];
+                        
+                        
+                        ABMultiValueAddValueAndLabel(multiAddress, (__bridge CFTypeRef)(addressDictionary), kABWorkLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:3] objectForKey:@"data"] objectAtIndex:addressCount] objectForKey:@"name"] isEqualToString:@"Other"])
+                    {
+                        [addressDictionary setObject:(__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:3] objectForKey:@"data"] objectAtIndex:addressCount] objectForKey:@"value"])) forKey:(NSString *) kABPersonAddressStreetKey];
+                        
+                        
+                        ABMultiValueAddValueAndLabel(multiAddress, (__bridge CFTypeRef)(addressDictionary), kABOtherLabel, NULL);
+                    }
+                    
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
+                CFRelease(multiAddress);
+                
+                
+                
+                
+                
+                
+                
+                ABMutableMultiValueRef multiSocialProfile = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+                for (int SPCount=0; SPCount<[[[a objectAtIndex:4] objectForKey:@"data"] count]; SPCount++)
+                {
+                    
+                    if ([[[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"name"] isEqualToString:@"twitter"])
+                    {
+                        
+                        
+                        ABMultiValueAddValueAndLabel(multiSocialProfile,(__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                              (NSString *)kABPersonSocialProfileServiceTwitter, kABPersonSocialProfileServiceKey,
+                                                                                              (__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"value"])), kABPersonSocialProfileUsernameKey,
+                                                                                              nil]) , kABPersonSocialProfileServiceTwitter, NULL);
+                        
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"name"] isEqualToString:@"facebook"])
+                    {
+                        
+                        
+                        ABMultiValueAddValueAndLabel(multiSocialProfile,(__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                              (NSString *)kABPersonSocialProfileServiceFacebook, kABPersonSocialProfileServiceKey,
+                                                                                              (__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"value"])), kABPersonSocialProfileUsernameKey,
+                                                                                              nil]), kABPersonSocialProfileServiceFacebook, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"name"] isEqualToString:@"flickr"])
+                    {
+                        
+                        ABMultiValueAddValueAndLabel(multiSocialProfile, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                               (NSString *)kABPersonSocialProfileServiceFlickr, kABPersonSocialProfileServiceKey,
+                                                                                               (__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"value"])), kABPersonSocialProfileUsernameKey,
+                                                                                               nil]), kABPersonSocialProfileServiceFlickr, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"name"] isEqualToString:@"linkedin"])
+                    {
+                        
+                        ABMultiValueAddValueAndLabel(multiSocialProfile, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                               (NSString *)kABPersonSocialProfileServiceLinkedIn, kABPersonSocialProfileServiceKey,
+                                                                                               (__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"value"])), kABPersonSocialProfileUsernameKey,
+                                                                                               nil]), kABPersonSocialProfileServiceLinkedIn, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"name"] isEqualToString:@"myspace"])
+                    {
+                        
+                        ABMultiValueAddValueAndLabel(multiSocialProfile, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                               (NSString *)kABPersonSocialProfileServiceMyspace, kABPersonSocialProfileServiceKey,
+                                                                                               (__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"value"])), kABPersonSocialProfileUsernameKey,
+                                                                                               nil]), kABPersonSocialProfileServiceMyspace, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"name"] isEqualToString:@"sinaweibo"])
+                    {
+                        
+                        ABMultiValueAddValueAndLabel(multiSocialProfile, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                               (NSString *)kABPersonSocialProfileServiceSinaWeibo, kABPersonSocialProfileServiceKey,
+                                                                                               (__bridge id)((__bridge CFTypeRef)([[[[a objectAtIndex:4] objectForKey:@"data"] objectAtIndex:SPCount] objectForKey:@"value"])), kABPersonSocialProfileUsernameKey,
+                                                                                               nil]), kABPersonSocialProfileServiceSinaWeibo, NULL);
+                    }
+                    
+                    
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonSocialProfileProperty, multiSocialProfile,&error);
+                CFRelease(multiSocialProfile);
+                
+                
+                
+                
+                ABMutableMultiValueRef multiIM = ABMultiValueCreateMutable(kABStringPropertyType);
+                for (int IMCount=0; IMCount<[[[a objectAtIndex:5] objectForKey:@"data"] count]; IMCount++)
+                {
+                    if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"Skype"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceSkype, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceSkype, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"MSN"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceMSN, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceMSN, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"GoogleTalk"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceGoogleTalk, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceGoogleTalk, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"Facebook"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceFacebook, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceFacebook, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"AIM"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceAIM, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceAIM, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"Yahoo"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceYahoo, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceYahoo, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"ICQ"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM,(__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                   (NSString *)kABPersonInstantMessageServiceICQ, kABPersonInstantMessageServiceKey,
+                                                                                   (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                   nil]), kABPersonInstantMessageServiceICQ, NULL);
+                        NSLog(@"%@",kABPersonInstantMessageServiceICQ);
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"Jabber"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceJabber, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceJabber, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"QQ"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceQQ, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceQQ, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"name"] isEqualToString:@"GaduGadu"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiIM, (__bridge CFTypeRef)([NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                    (NSString *)kABPersonInstantMessageServiceGaduGadu, kABPersonInstantMessageServiceKey,
+                                                                                    (__bridge CFTypeRef)([[[[a objectAtIndex:5] objectForKey:@"data"] objectAtIndex:IMCount] objectForKey:@"value"]), kABPersonInstantMessageUsernameKey,
+                                                                                    nil]), kABPersonInstantMessageServiceGaduGadu, NULL);
+                        
+                    }
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonInstantMessageProperty, multiIM,&error);
+                CFRelease(multiIM);
+                
+                
+                ABMutableMultiValueRef multiURL = ABMultiValueCreateMutable(kABStringPropertyType);
+                for (int URLCount=0; URLCount<[[[a objectAtIndex:6] objectForKey:@"data"] count]; URLCount++)
+                {
+                    
+                    if ([[[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Home"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiURL, (__bridge CFTypeRef)([[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"]), kABHomeLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Work"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiURL, (__bridge CFTypeRef)([[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"]), kABWorkLabel, NULL);
+                    }
+                    else if ([[[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Other"])
+                    {
+                        ABMultiValueAddValueAndLabel(multiURL, (__bridge CFTypeRef)([[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"]), kABOtherLabel, NULL);
+                    }
+                    else
+                    {
+                        ABMultiValueAddValueAndLabel(multiURL, (__bridge CFTypeRef)([[[[a objectAtIndex:6] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"]), kABPersonHomePageLabel, NULL);
+                    }
+                    
+                    
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonURLProperty, multiURL,nil);
+                CFRelease(multiURL);
+                
+                
+                
+                ABMutableMultiValueRef multiDate = ABMultiValueCreateMutable(kABMultiDateTimePropertyType);
+                for (int URLCount=0; URLCount<[[[a objectAtIndex:7] objectForKey:@"data"] count]; URLCount++)
+                {
+                    
+                    if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Anniversary"])
+                    {
+                        
+                        
+                        
+                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                        NSDateFormatter *dformat = [[NSDateFormatter alloc]init];
+                        
+                        [dformat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssz"];
+                        NSDate *date=[[NSDate alloc] init];
+                        date = [dformat dateFromString:s];
+                        
+                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFDateRef)date, kABPersonAnniversaryLabel, NULL);
+                        
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Other"])
+                    {
+                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                        
+                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFDateRef)s, kABOtherLabel, NULL);
+                        
+                    }
+                    else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Birthday"])
+                    {
+                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                        
+                        ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFDateRef)s, &error);
+                        
+                    }
+                    
+                    
+                }
+                
+                ABRecordSetValue(newPerson, kABPersonDateProperty, multiDate,nil);
+                CFRelease(multiDate);
+                
+                
+                
+                [person_RecordRef addObject:(__bridge id)(newPerson)];
+                
+                
+                if (error != NULL)
+                {
+                    
+                    NSLog(@"Errorrrrrrrrrr!");
+                    
+                }
+            }
+            
+            
+            
+            
+            
+        }
+        
+        
+        SendContactsViewController *addContact_Cls=[[SendContactsViewController alloc]init];
+        [addContact_Cls getNewContacts:person_RecordRef];
+        [self.navigationController pushViewController:addContact_Cls animated:YES];
+        
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:res
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:Nil,Nil];
+        
+        
+        [alert show];
+    }
+    
+    
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     

@@ -11,11 +11,11 @@
 @interface ContactDetailesViewController : UIViewController<ContactSignUpDelegate>
 {
     NSString *noteText;
-     NSString *time_shared;
-     NSString *name_sender;
-     NSString *size_withoutImage;
-     NSString *size_withImage;
-     NSString *numberOfContact_shared;
+    NSString *time_shared;
+    NSString *name_sender;
+    NSString *size_withoutImage;
+    NSString *size_withImage;
+    NSString *numberOfContact_shared;
     UIActivityIndicatorView *activityIndicator;
     NSMutableArray *person_RecordRef;
 }

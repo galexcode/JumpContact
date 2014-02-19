@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ContactGlobalDataClass.h"
 #import "ContactSignUpDataService.h"
+#import "SelectContact toShareViewController.h"
 @interface ContactShareViaIDViewController : UIViewController<UITextFieldDelegate,ContactSignUpDelegate,UIAlertViewDelegate>{
     
      UILabel *navbartitle;

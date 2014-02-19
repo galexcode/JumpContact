@@ -81,7 +81,7 @@
     UILabel *noofselectedcontacts=[[UILabel alloc] init];
     noofselectedcontacts.frame=CGRectMake(15, 100, 150, 40);
     noofselectedcontacts.text=[NSString stringWithFormat:@"%@ Contacts Recieved",numberOfContact_shared];
-    noofselectedcontacts.textAlignment=UITextAlignmentLeft;
+    noofselectedcontacts.textAlignment=NSTextAlignmentLeft;
     noofselectedcontacts.textColor= [UIColor blackColor];
     noofselectedcontacts.backgroundColor=[UIColor clearColor];
     noofselectedcontacts.font=[UIFont fontWithName:@"AmericanTypewriter" size:14];

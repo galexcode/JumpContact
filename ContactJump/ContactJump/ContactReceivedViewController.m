@@ -130,7 +130,7 @@
 #pragma mark Name label  Cell.
         UILabel *name_lbl=[[UILabel alloc] init];
         name_lbl.frame=CGRectMake(60, 8, 120, 20);
-        name_lbl.textAlignment=UITextAlignmentLeft;
+        name_lbl.textAlignment=NSTextAlignmentLeft;
         [name_lbl setTag:40];
         name_lbl.textColor= [UIColor blackColor];
         name_lbl.backgroundColor=[UIColor clearColor];
@@ -140,7 +140,7 @@
 #pragma mark cell number of contacts label.
         UILabel *nofcontacts_lbl=[[UILabel alloc] init];
         nofcontacts_lbl.frame=CGRectMake(60, 33, 120, 18);
-        nofcontacts_lbl.textAlignment=UITextAlignmentLeft;
+        nofcontacts_lbl.textAlignment=NSTextAlignmentLeft;
         [nofcontacts_lbl setTag:41];
         nofcontacts_lbl.textColor= [UIColor blackColor];
         nofcontacts_lbl.backgroundColor=[UIColor clearColor];

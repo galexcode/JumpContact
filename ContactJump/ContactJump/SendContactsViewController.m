@@ -28,6 +28,7 @@ static int k=0;
 -(void)getNewContacts:(NSArray *)newPersonRecord
 {
     personRecord=[NSArray arrayWithArray:newPersonRecord];
+    k=[personRecord count];
     contactsToBeAddedArray=[[NSMutableArray alloc] initWithArray:newPersonRecord];
     for (int i = 0; i < [newPersonRecord count]; i++)
     {
@@ -141,8 +142,6 @@ static int k=0;
     selectAll_lbl.textColor= [UIColor blackColor];
     selectAll_lbl.backgroundColor=[UIColor clearColor];
     selectAll_lbl.font=[UIFont fontWithName:@"AmericanTypewriter" size:16];
-    selectAll_lbl.shadowColor = [UIColor whiteColor];
-    selectAll_lbl.shadowOffset = CGSizeMake(0,0);
     [topview addSubview:selectAll_lbl];
     
     UIButton   * checkBox_all1=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -152,13 +151,11 @@ static int k=0;
     
 #pragma mark number of selected contacts label.
     noofselected=[[UILabel alloc] init];
-    noofselected.text=[NSString stringWithFormat:@"%d contacts selected",(int)[obj.contactDetails count]];
+    noofselected.text=[NSString stringWithFormat:@"%d contacts selected",(int)[personRecord count]];
     noofselected.textAlignment=1;
     noofselected.textColor= [UIColor blackColor];
     noofselected.backgroundColor=[UIColor clearColor];
     noofselected.font=[UIFont fontWithName:@"AmericanTypewriter" size:12];
-    noofselected.shadowColor = [UIColor whiteColor];
-    noofselected.shadowOffset = CGSizeMake(0,0);
     [topview addSubview:noofselected];
     
 #pragma Navigation Bar Title
@@ -168,8 +165,6 @@ static int k=0;
     navbartitle.textColor= [UIColor whiteColor];
     navbartitle.backgroundColor=[UIColor clearColor];
     navbartitle.font=[UIFont fontWithName:@"AmericanTypewriter" size:18];
-    navbartitle.shadowColor = [UIColor whiteColor];
-    navbartitle.shadowOffset = CGSizeMake(0,0);
     [mainbg_img addSubview:navbartitle];
     
 #pragma mark UITableview.
@@ -232,13 +227,25 @@ static int k=0;
 -(void)addcontact_btnAction
 {
     NSLog(@"BtnAction");
-    CFErrorRef error = NULL;
-    ABAddressBookRef iPhoneAddressBook = ABAddressBookCreate();
-    for (int i=0; i<[contactsToBeAddedArray count]; i++) {
-        ABAddressBookAddRecord(iPhoneAddressBook, (__bridge ABRecordRef)([contactsToBeAddedArray objectAtIndex:i]), &error);
+    
+    
+    if (k==0 || [noofselected.text isEqualToString:@" "])
+    {
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:nil message:@"Please select atleast one contact" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
         
     }
-    ABAddressBookSave(iPhoneAddressBook, &error);
+    else
+    {
+        
+        CFErrorRef error = NULL;
+        ABAddressBookRef iPhoneAddressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+        for (int i=0; i<[contactsToBeAddedArray count]; i++) {
+            ABAddressBookAddRecord(iPhoneAddressBook, (__bridge ABRecordRef)([contactsToBeAddedArray objectAtIndex:i]), &error);
+            
+        }
+        ABAddressBookSave(iPhoneAddressBook, &error);
+    }
     
 }
 
@@ -370,7 +377,7 @@ static int k=0;
     //UIButton *editButton = (UIButton*)[cell.contentView.subviews objectAtIndex:2];
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        [contactsToBeAddedArray removeObjectAtIndex:indexPath.row];
+        [contactsToBeAddedArray removeObject:[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
         [cell.accessoryView setHidden:YES];
         [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
         if (k>0) {
@@ -395,7 +402,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.contactDetails count]) {
+    if (k==[personRecord count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -438,8 +445,9 @@ static int k=0;
     
     if ([tappedButton isSelected]) {
         [tappedButton setSelected:NO];
-        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"0"];
-        //[editButton setHidden:YES];
+        
+        [contactsToBeAddedArray removeObject:[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"0"];
         [cell.accessoryView setHidden:YES];
         if (k>0) {
             k--;
@@ -448,10 +456,9 @@ static int k=0;
     }
     else {
         
-        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:[sender tag] withObject:@"1"];
+        [contactsToBeAddedArray addObject:[[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
+        [[self.checkboxClicked_Dict objectForKey:[NSString stringWithFormat:@"checked-%@",[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]]] replaceObjectAtIndex:indexPath.row withObject:@"1"];
         [tappedButton setSelected:YES];
-        //[editButton setHidden:NO];
-        
         [cell.accessoryView setHidden:NO];
         k++;
         
@@ -463,7 +470,7 @@ static int k=0;
         noofselected.text=[NSString stringWithFormat:@"%d Contacts Selected",k];
     }
     
-    if (k==[obj.contactDetails count]) {
+    if (k==[personRecord count]) {
         [checkBox_all setSelected:YES];
     }
     else
@@ -534,8 +541,8 @@ static int k=0;
             }
             
         }
-        k=(int)[obj.contactDetails count];
-        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[obj.contactDetails count]];
+        k=(int)[personRecord count];
+        noofselected.text=[NSString stringWithFormat:@"%lu Contacts Selected",(unsigned long)[personRecord count]];
     }
     
     
@@ -543,10 +550,7 @@ static int k=0;
     [tableview reloadData];
 }
 
--(void)addtocontact_btnAction{
-    
-    
-}
+
 
 
 

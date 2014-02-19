@@ -36,7 +36,7 @@
  
       self.celltxt_lbl3.numberOfLines=2;
       self.celltxt_lbl3.text=[NSString stringWithFormat:@"Enter your Name and Mobile Number To be verfied"];
-      self.celltxt_lbl3.textAlignment=UITextAlignmentLeft;
+      self.celltxt_lbl3.textAlignment=NSTextAlignmentLeft;
       self.celltxt_lbl3.textColor= [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1];
       self.celltxt_lbl3.backgroundColor=[UIColor clearColor];
       self.celltxt_lbl3.font=[UIFont systemFontOfSize:15.0f];
@@ -46,7 +46,7 @@
       self.nametxtfld=[[UITextField alloc] init];
       self.nametxtfld.frame=CGRectMake(25+10,94,240,30);
       self.nametxtfld.placeholder=@"Name";
-      self.nametxtfld.textAlignment=UITextAlignmentLeft;
+      self.nametxtfld.textAlignment=NSTextAlignmentLeft;
       self.nametxtfld.textColor= [UIColor blackColor];
       self.nametxtfld.backgroundColor=[UIColor whiteColor];
       self.nametxtfld.font=[UIFont systemFontOfSize:15.0f];
@@ -56,7 +56,7 @@
       self.phntxtfld=[[UITextField alloc] init];
       self.phntxtfld.frame=CGRectMake(25+10,134,240,30);
       self.phntxtfld.placeholder=@"Phone Number";
-      self.phntxtfld.textAlignment=UITextAlignmentLeft;
+      self.phntxtfld.textAlignment=NSTextAlignmentLeft;
       self.phntxtfld.textColor= [UIColor blackColor];
       self.phntxtfld.backgroundColor=[UIColor whiteColor];
       self.phntxtfld.font=[UIFont systemFontOfSize:15.0f];

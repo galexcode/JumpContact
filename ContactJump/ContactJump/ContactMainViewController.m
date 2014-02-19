@@ -475,7 +475,7 @@
             dispatch_semaphore_signal(sema);
         });
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        dispatch_release(sema);
+        //dispatch_release(sema);
     }
     else  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
@@ -876,7 +876,7 @@
         CFRelease(addressBook);
         CFRelease(allPeople);
         obj.contactDetails=[[NSMutableArray alloc] init];
-        
+        [obj.contactDetails removeAllObjects];
         [obj setContactDetails:contacts];
         NSLog(@"%@",obj.contactDetails);
         
@@ -922,9 +922,26 @@
 }
 -(void)Sent_btnAction{
     
-    ContactsSentViewController *send_Cls=[[ContactsSentViewController alloc]init];
-   [self.navigationController pushViewController:send_Cls animated:YES];
-//
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    sentMessages=1;
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"userid\":\"%@\"}",[defaults valueForKey:@"UserID"]];
+    
+    [sendContacts_cls callWebService:url :@"sentrecord" :payload];
+
+    
+
 }
 -(void)GetConttact_nAction{
     ContactGetSelectMethodViewController *getContact=[[ContactGetSelectMethodViewController alloc]init];
@@ -941,7 +958,7 @@
     [self.view addSubview: activityIndicator];
     [activityIndicator startAnimating];
     
-    
+    sentMessages=0;
     
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
    
@@ -960,9 +977,21 @@
     
     if ([res isEqualToString:@"success"]) {
         NSArray* senderData=[NSArray arrayWithArray:data] ;
-        ContactReceivedViewController *received_Cls=[[ContactReceivedViewController alloc]init];
-        [received_Cls senderDetails:senderData];
-        [self.navigationController pushViewController:received_Cls animated:YES];
+        
+        if (sentMessages) {
+            ContactsSentViewController *sent_Cls=[[ContactsSentViewController alloc]init];
+            [sent_Cls sentDetails:senderData];
+            [self.navigationController pushViewController:sent_Cls animated:YES];
+            
+        }
+        else
+        {
+            ContactReceivedViewController *received_Cls=[[ContactReceivedViewController alloc]init];
+            [received_Cls senderDetails:senderData];
+            [self.navigationController pushViewController:received_Cls animated:YES];
+        }
+        
+        
 
     }
     else

@@ -575,6 +575,23 @@
 
 -(void)sendwithoutImage_btnAction{
     
+    ContactSignUpDataService * sendContacts_cls=[[ContactSignUpDataService alloc] init];
+    sendContacts_cls.delegate=self;
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] ;
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+    
+    
+    NSUUID* uuid = [[UIDevice currentDevice] identifierForVendor];
+    NSLog(@"[uuid UUIDString] %@",[uuid UUIDString]);
+    
+    NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
+    NSString* payload=[NSString stringWithFormat:@"{\"deviceid\":\"%@\",\"send\":\"%@\",\"receive\":\"%@\",\"note\":\"%@\",\"count\":\"%@\"}",[uuid UUIDString],obj.jsonString_withoutImages,obj.jsonString_recipients,addNote_txtview.text,obj.contactsToBeShared_selected];
+    
+    
+    [sendContacts_cls callWebService:url :@"savecontacts" :payload];
 
 }
 
