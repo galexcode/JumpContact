@@ -47,7 +47,7 @@ static int k=0;
     
     obj=[ContactGlobalDataClass getInstance];
     [obj setFrom_ShareMethodViewController:@"0"];
-    
+    [obj.contactsArray removeAllObjects];
     
     sectionIndex = [NSArray arrayWithObjects:
                     @"A", @"B", @"C", @"D",

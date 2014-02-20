@@ -28,17 +28,29 @@ static int k=0;
 -(void)getNewContacts:(NSArray *)newPersonRecord
 {
     personRecord=[NSArray arrayWithArray:newPersonRecord];
-    k=[personRecord count];
+    k=(int)[personRecord count];
     contactsToBeAddedArray=[[NSMutableArray alloc] initWithArray:newPersonRecord];
     for (int i = 0; i < [newPersonRecord count]; i++)
     {
     
         ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(newPersonRecord), i);
     
+        ABMultiValueRef date = ABRecordCopyValue(ref, kABPersonDateProperty);
+        //NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonDateProperty);
+        for(int j = 0; j < ABMultiValueGetCount(date); j++)
+        {
+            
+            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
+            NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+            
+            NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
+            
+
+        NSLog(@"first name---->%@",dateValue);
         
-        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
-        NSLog(@"first name---->%@",firstName);
-        
+    }
     }
 }
 - (void)viewDidLoad

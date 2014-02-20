@@ -301,11 +301,13 @@
         
         
        
-        
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         if(date)
         {
             
-            
+           
+
             for(int j = 0; j < ABMultiValueGetCount(date); j++)
             {
                 
@@ -313,8 +315,8 @@
                 CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
                 NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
                 
-                NSString *dateValue = (__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j);
-                
+               // NSString *dateValue = (__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j);
+                 NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
                 NSLog(@"urlValuetype %@",(__bridge NSString *)ABMultiValueCopyValueAtIndex(date, j));
                 [date_Value addObject:dateValue];
                 
@@ -327,10 +329,9 @@
             
             
         }
-        
-        
-        NSString *date_BirthdayValue = (__bridge NSString*)ABRecordCopyValue(personRef, kABPersonBirthdayProperty) ;
-        
+                
+     
+        NSString *date_BirthdayValue = [dateFormatter stringFromDate:(__bridge NSDate*)ABRecordCopyValue(personRef, kABPersonBirthdayProperty) ];
         
         if (date_BirthdayValue !=NULL) {
             date_bday =date_BirthdayValue;
@@ -640,8 +641,9 @@
     
         UILabel *lblType = [[UILabel alloc]init];
         lblType.frame=CGRectMake(40, 0, 100, 100);
-        lblType.numberOfLines=1;
+        lblType.numberOfLines=8;
         lblType.tag = 41;
+        lblType.textAlignment=UIControlContentHorizontalAlignmentCenter;
         lblType.font = [UIFont systemFontOfSize:12];
         lblType.backgroundColor = [UIColor clearColor];
         lblType.textColor = [UIColor blueColor];
@@ -654,9 +656,10 @@
         
         UILabel *lblMainLabel = [[UILabel alloc]init];
         lblMainLabel.tag = 42;
-        lblMainLabel.textAlignment=NSTextAlignmentLeft;
-        lblMainLabel.frame=CGRectMake(145, 0, 170, 100);
-        lblMainLabel.numberOfLines=8;
+        lblMainLabel.textAlignment=NSTextAlignmentJustified;
+        //lblMainLabel.textAlignment=UIControlContentVerticalAlignmentCenter;
+        lblMainLabel.frame=CGRectMake(145, 10, 170, 90);
+        lblMainLabel.numberOfLines=6;
         lblMainLabel.font = [UIFont systemFontOfSize:12];
         lblMainLabel.backgroundColor = [UIColor clearColor];
         lblMainLabel.textColor = [UIColor blackColor];
@@ -719,24 +722,24 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell=(UITableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"%@", cell.contentView.subviews);
-    UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:0];
-    
-    if ([tappedButton isSelected])
-    {
-        [tappedButton setSelected:NO];
-        
- 
-    }
-    else
-    {
-        
-        [tappedButton setSelected:YES];
-        
-        NSLog(@"SELECTED---%@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.row]);
-        
-    }
+//    UITableViewCell *cell=(UITableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+//    NSLog(@"%@", cell.contentView.subviews);
+//    UIButton *tappedButton = (UIButton*)[cell.contentView.subviews objectAtIndex:0];
+//    
+//    if ([tappedButton isSelected])
+//    {
+//        [tappedButton setSelected:NO];
+//        
+// 
+//    }
+//    else
+//    {
+//        
+//        [tappedButton setSelected:YES];
+//        
+//        NSLog(@"SELECTED---%@",[[[section_Names allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.row]);
+//        
+//    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

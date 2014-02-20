@@ -221,9 +221,10 @@
     [self.view addSubview: activityIndicator];
     [activityIndicator startAnimating];
     
-    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString* val = [defaults stringForKey:@"UserID"];
     NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
-    NSString* payload=[NSString stringWithFormat:@"{\"recordid\":\"%@\",\"getimagewith\":\"1\"}",self.recordID];
+    NSString* payload=[NSString stringWithFormat:@"{\"senderid\":\"%@\",\"recordid\":\"%@\",\"getimagewith\":\"1\"}",val,self.recordID];
     
     
     [sendContacts_cls callWebService:url :@"receivedetails" :payload];
@@ -240,9 +241,10 @@
     [self.view addSubview: activityIndicator];
     [activityIndicator startAnimating];
     
-    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString* val = [defaults stringForKey:@"UserID"];
     NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
-    NSString* payload=[NSString stringWithFormat:@"{\"recordid\":\"%@\",\"getimagewith\":\"0\"}",self.recordID];
+    NSString* payload=[NSString stringWithFormat:@"{\"senderid\":\"%@\",\"recordid\":\"%@\",\"getimagewith\":\"0\"}",val,self.recordID];
     
     
     [sendContacts_cls callWebService:url :@"receivedetails" :payload];
@@ -576,8 +578,10 @@
                 ABRecordSetValue(newPerson, kABPersonInstantMessageProperty, multiIM,&error);
                 CFRelease(multiIM);
                 
-                
                 ABMutableMultiValueRef multiURL = ABMultiValueCreateMutable(kABStringPropertyType);
+                if ([a count] > 7)
+                {
+                
                 for (int URLCount=0; URLCount<[[[a objectAtIndex:6] objectForKey:@"data"] count]; URLCount++)
                 {
                     
@@ -600,54 +604,55 @@
                     
                     
                 }
-                
+               }
                 ABRecordSetValue(newPerson, kABPersonURLProperty, multiURL,nil);
                 CFRelease(multiURL);
                 
                 
                 
+              
                 ABMutableMultiValueRef multiDate = ABMultiValueCreateMutable(kABMultiDateTimePropertyType);
-                for (int URLCount=0; URLCount<[[[a objectAtIndex:7] objectForKey:@"data"] count]; URLCount++)
+                if ([a count] > 7)
                 {
                     
-                    if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Anniversary"])
+                    for (int URLCount=0; URLCount<[[[a objectAtIndex:7] objectForKey:@"data"] count]; URLCount++)
                     {
-                        
-                        
-                       
-                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
                         NSDateFormatter *dformat = [[NSDateFormatter alloc]init];
                         
-                        [dformat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssz"];
-                        NSDate *date=[[NSDate alloc] init];
-                        date = [dformat dateFromString:s];
-                        
-                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFDateRef)date, kABPersonAnniversaryLabel, NULL);
+                        [dformat setDateFormat:@"yyyy-MM-dd'"];
+                        if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Anniversary"])
+                        {
+                            
+                            
+                            
+                            NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                            
+                            ABMultiValueAddValueAndLabel(multiDate, (__bridge CFTypeRef)([dformat dateFromString:s]), kABPersonAnniversaryLabel, NULL);
+                            
+                            
+                        }
+                        else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Other"])
+                        {
+                            NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                            
+                            ABMultiValueAddValueAndLabel(multiDate, (__bridge CFTypeRef)([dformat dateFromString:s]), kABOtherLabel, NULL);
+                            
+                        }
+                        else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Birthday"])
+                        {
+                            NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
+                            
+                            
+                            ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFTypeRef)([dformat dateFromString:s]), &error);
+                            
+                        }
                         
                         
                     }
-                    else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Other"])
-                    {
-                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
-                       
-                        ABMultiValueAddValueAndLabel(multiDate, (__bridge CFDateRef)s, kABOtherLabel, NULL);
-                        
-                    }
-                    else if ([[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"name"] isEqualToString:@"Birthday"])
-                    {
-                        NSString *s=[[[[a objectAtIndex:7] objectForKey:@"data"] objectAtIndex:URLCount] objectForKey:@"value"];
-
-                        ABRecordSetValue(newPerson, kABPersonBirthdayProperty, (__bridge CFDateRef)s, &error);
-                        
-                    }
-                    
-                    
+   
                 }
-                
                 ABRecordSetValue(newPerson, kABPersonDateProperty, multiDate,nil);
                 CFRelease(multiDate);
-                
-        
 
                 [person_RecordRef addObject:(__bridge id)(newPerson)];
               

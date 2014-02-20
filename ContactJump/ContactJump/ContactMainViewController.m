@@ -495,6 +495,7 @@
         for (int i = 0; i < nPeople; i++)
         {
             Person *person = [[Person alloc] init];
+            
             ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
             
             

@@ -585,7 +585,7 @@
     
     
     NSUUID* uuid = [[UIDevice currentDevice] identifierForVendor];
-    NSLog(@"[uuid UUIDString] %@",[uuid UUIDString]);
+    NSLog(@"[uuid UUIDString] %@",obj.jsonString_withoutImages);
     
     NSString* url=[NSString stringWithFormat:@"%@",kBASEURL];
     NSString* payload=[NSString stringWithFormat:@"{\"deviceid\":\"%@\",\"send\":\"%@\",\"receive\":\"%@\",\"note\":\"%@\",\"count\":\"%@\"}",[uuid UUIDString],obj.jsonString_withoutImages,obj.jsonString_recipients,addNote_txtview.text,obj.contactsToBeShared_selected];
