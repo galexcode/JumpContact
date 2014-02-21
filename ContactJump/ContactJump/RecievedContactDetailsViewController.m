@@ -7,7 +7,7 @@
 //
 
 #import "RecievedContactDetailsViewController.h"
-
+#import "SendContactsViewController.h"
 @interface RecievedContactDetailsViewController ()
 
 @end
@@ -60,20 +60,11 @@
         cname=(__bridge NSString *)ABRecordCopyValue(personRef, kABPersonOrganizationProperty);
         
         
-        
-        
-        
-       UIImage* image = [UIImage imageWithData:(__bridge NSData *)(ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail))];
+
+        UIImage* image = [UIImage imageWithData:(__bridge NSData *)(ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail))];
         NSData *imageData = UIImageJPEGRepresentation(image, 0);
-    
-        
-        
         image1=[UIImage imageWithData:imageData];
         
-    
-   
-
-    
     
         ABMultiValueRef phones = ABRecordCopyValue(personRef, kABPersonPhoneProperty);
         ABMultiValueRef emails = ABRecordCopyValue(personRef, kABPersonEmailProperty);
@@ -533,9 +524,14 @@
 
 -(void)back_btnAction
 {
-   
     
+    ContactGlobalDataClass *obj=[ContactGlobalDataClass getInstance];
+    [obj setFromRecievedDetailsPage:@"1"];
+    [obj setEdit_lname:last_Name.text];
+    [obj setEdit_fullName:first_Name.text];
+    [obj setEdit_cname:company_Name.text];
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)didReceiveMemoryWarning
 {

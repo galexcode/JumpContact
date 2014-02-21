@@ -25,6 +25,10 @@
 @property (nonatomic, retain) NSString      *recipients_selected;
 @property (nonatomic, retain) NSString      *backBtnActivate;
 @property (nonatomic, retain) NSString      *from_ShareMethodViewController;
+@property (nonatomic, retain) NSString      *edit_fullName;
+@property (nonatomic, retain) NSString      *edit_cname;
+@property (nonatomic, retain) NSString      *edit_lname;
+@property (nonatomic, retain) NSString      *fromRecievedDetailsPage;
 
 
 

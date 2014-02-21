@@ -29,6 +29,9 @@
     UIButton   * editbtn;
     ContactGlobalDataClass *obj;
     NSMutableArray *contactsToBeAddedArray;
+    int index;
+    
+    ABRecordRef editedPersonRef;
 }
 @property(nonatomic,retain)NSString *string1;
 @property (nonatomic,retain) NSMutableDictionary *alphabetsArray;

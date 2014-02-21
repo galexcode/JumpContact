@@ -10,8 +10,8 @@
 
 @implementation ContactGlobalDataClass
 
-@synthesize contactDetails,contactsToBeShared_selected,recipients_selected,from_ShareMethodViewController;
-@synthesize vcs,backBtnActivate,contactsArray,jsonString,recipientsArray,jsonString_recipients,userID,jsonString_withoutImages;
+@synthesize contactDetails,contactsToBeShared_selected,recipients_selected,from_ShareMethodViewController,edit_cname,edit_fullName,edit_lname;
+@synthesize vcs,backBtnActivate,contactsArray,jsonString,recipientsArray,jsonString_recipients,userID,jsonString_withoutImages,fromRecievedDetailsPage;
 
 
 static ContactGlobalDataClass *instance =nil;
@@ -33,6 +33,7 @@ static ContactGlobalDataClass *instance =nil;
     if(self = [super init]){
         
         NSLog(@"creating array");
+        fromRecievedDetailsPage=@"0";
         contactsArray = [[NSMutableArray alloc] init];
         recipientsArray = [[NSMutableArray alloc] init];
     }

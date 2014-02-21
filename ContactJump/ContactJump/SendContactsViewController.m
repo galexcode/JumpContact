@@ -25,40 +25,61 @@ static int k=0;
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([obj.fromRecievedDetailsPage isEqualToString:@"1"])
+    {
+        [obj setFromRecievedDetailsPage:@"0"];
+       // ABRecordRef newPerson = CFArrayGetValueAtIndex((__bridge CFArrayRef)(personRecord), 0);
+        CFErrorRef error = NULL;
+        ABRecordSetValue(editedPersonRef, kABPersonFirstNameProperty, (__bridge CFTypeRef)(obj.edit_fullName), &error);
+        
+        ABRecordSetValue(editedPersonRef, kABPersonOrganizationProperty, (__bridge CFTypeRef)(obj.edit_lname), &error);
+        ABRecordSetValue(editedPersonRef, kABPersonJobTitleProperty, (__bridge CFTypeRef)(obj.edit_cname), &error);
+        
+        [tableview reloadData];
+    }
+    
+    
+}
+
 -(void)getNewContacts:(NSArray *)newPersonRecord
 {
+    obj=[ContactGlobalDataClass getInstance];
     personRecord=[NSArray arrayWithArray:newPersonRecord];
     k=(int)[personRecord count];
     contactsToBeAddedArray=[[NSMutableArray alloc] initWithArray:newPersonRecord];
-    for (int i = 0; i < [newPersonRecord count]; i++)
-    {
     
-        ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(newPersonRecord), i);
     
-        ABMultiValueRef date = ABRecordCopyValue(ref, kABPersonDateProperty);
-        //NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonDateProperty);
-        for(int j = 0; j < ABMultiValueGetCount(date); j++)
-        {
-            
-            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-            CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
-            NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
-            
-            NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
-            
-
-        NSLog(@"first name---->%@",dateValue);
-        
-    }
-    }
+//    for (int i = 0; i < [newPersonRecord count]; i++)
+//    {
+//    
+//        ABRecordRef ref = CFArrayGetValueAtIndex((__bridge CFArrayRef)(newPersonRecord), i);
+//    
+//        ABMultiValueRef date = ABRecordCopyValue(ref, kABPersonDateProperty);
+//        //NSString *firstName = (__bridge NSString *)ABRecordCopyValue(ref, kABPersonDateProperty);
+//        for(int j = 0; j < ABMultiValueGetCount(date); j++)
+//        {
+//            
+//            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+//            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+//            CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(date, j);
+//            NSString* dateType = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(typeTmp);
+//            
+//            NSString *dateValue = [dateFormatter stringFromDate:(__bridge NSDate *)ABMultiValueCopyValueAtIndex(date, j)];
+//            
+//
+//        NSLog(@"first name---->%@",dateValue);
+//        
+//    }
+//    }
 }
 - (void)viewDidLoad
 {
     
     
     [super viewDidLoad];
-    obj=[ContactGlobalDataClass getInstance];
+    
     
     
     sectionIndex = [NSArray arrayWithObjects:
@@ -511,7 +532,7 @@ static int k=0;
     
 
     ABRecordRef ref = (__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
-    
+    editedPersonRef=(__bridge ABRecordRef)([[self.alphabetsArray valueForKey:[[[self.alphabetsArray allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
     RecievedContactDetailsViewController *contactDetail_cls=[[RecievedContactDetailsViewController alloc] initWithPerson:ref];
     [self.navigationController pushViewController:contactDetail_cls animated:YES];
     

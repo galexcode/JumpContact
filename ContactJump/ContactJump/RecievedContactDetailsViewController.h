@@ -52,3 +52,5 @@
 - (id)initWithPerson:(ABRecordRef)person;
 
 @end
+
+
